@@ -72,16 +72,7 @@ interface DataProviderProps {
   initialTransactions?: any[];
 }
 
-// SQLite database interface
-interface ElectronAPI {
-  database: any;
-}
 
-declare global {
-  interface Window {
-    electronAPI: ElectronAPI;
-  }
-}
 
 export const DataProvider: React.FC<DataProviderProps> = ({
   children,
@@ -109,74 +100,65 @@ export const DataProvider: React.FC<DataProviderProps> = ({
   const isTestEnv = typeof window !== 'undefined' && (window as any).IS_TEST_ENV;
   const [isLoading, setIsLoading] = useState(!isTestEnv && (initialClients.length === 0 && initialLeads.length === 0 && initialTests.length === 0 && initialResellers.length === 0));
   const [error, setError] = useState<string | null>(null);
-  const [isElectron, setIsElectron] = useState(false);
   const alertedOverdue = useRef<Set<number>>(new Set());
   const alertedExpiringDays = useRef<Map<number, number>>(new Map());
   const alertedExpiredTests = useRef<Set<number>>(new Set());
   const { addNotification } = useCyberpunkNotification();
 
-  // Check if running in Electron environment
-  useEffect(() => {
-    const electronDetected = !!window.electronAPI;
-    setIsElectron(electronDetected);
-
-    if (electronDetected) {
-      console.log('🔋 Electron detectado - usando SQLite para armazenamento');
-      console.log('📁 Banco de dados:', 'C:\\Users\\harli\\OneDrive\\Documentos\\CyberpunkIPTV\\cyberpunk-iptv.db');
-    } else {
-      console.error('❌ Electron não detectado - SQLite não está disponível');
-      setError('Sistema SQLite requer Electron. Execute o aplicativo desktop.');
-    }
-  }, []);
-
   const addCreditTransaction = async (tx: Omit<CreditTransaction, 'id'>): Promise<CreditTransaction> => {
-    if (!isElectron || !window.electronAPI) {
-      throw new Error('SQLite não disponível');
+    try {
+      const payload = {
+        reseller_id: tx.resellerId ?? null,
+        type: tx.type,
+        quantity: tx.quantity,
+        unit_price: tx.unitPrice,
+        total: tx.total,
+        date: tx.date,
+        operator_name: (tx as any).operatorName ?? '',
+        party_name: tx.partyName ?? '',
+        server: tx.server ?? ''
+      };
+      const row = await api.creditTransactions.add(payload);
+      const normalized: CreditTransaction = {
+        id: row.id,
+        type: row.type,
+        operatorName: row.operator_name || payload.operator_name,
+        partyName: row.party_name || payload.party_name,
+        resellerId: row.reseller_id ?? undefined,
+        quantity: Number(row.quantity) || payload.quantity,
+        unitPrice: Number(row.unit_price) || payload.unit_price,
+        total: Number(row.total) || payload.total,
+        server: row.server || payload.server,
+        date: row.date,
+        status: 'ok'
+      };
+      return normalized;
+    } catch (error) {
+      console.error('Erro ao adicionar transação de crédito:', error);
+      throw error;
     }
-    const payload = {
-      resellerId: tx.resellerId ?? undefined,
-      type: tx.type,
-      quantity: tx.quantity,
-      unitPrice: tx.unitPrice,
-      total: tx.total,
-      date: tx.date,
-      operatorName: (tx as any).operatorName ?? '',
-      partyName: tx.partyName ?? '',
-      server: tx.server ?? ''
-    };
-    const row: any = await window.electronAPI.database.addCreditTransaction(payload);
-    const normalized: CreditTransaction = {
-      id: row.id,
-      type: row.type,
-      operatorName: row.operator_name || payload.operatorName,
-      partyName: row.party_name || payload.partyName,
-      resellerId: row.reseller_id ?? undefined,
-      quantity: Number(row.quantity) || payload.quantity,
-      unitPrice: Number(row.unit_price) || payload.unitPrice,
-      total: Number(row.total) || payload.total,
-      server: row.server || payload.server,
-      date: row.date,
-      status: 'ok'
-    };
-    return normalized;
   };
 
   const getCreditTransactionsByReseller = async (resellerId: number): Promise<CreditTransaction[]> => {
-    if (!isElectron || !window.electronAPI) return [];
-    const rows: any[] = await window.electronAPI.database.getCreditTransactionsByReseller(resellerId);
-    return (rows || []).map(r => ({
-      id: r.id,
-      type: r.type,
-      operatorName: r.operator_name || '',
-      partyName: r.party_name || '',
-      resellerId: r.reseller_id ?? undefined,
-      quantity: Number(r.quantity) || 0,
-      unitPrice: Number(r.unit_price) || 0,
-      total: Number(r.total) || 0,
-      server: r.server || '',
-      date: r.date,
-      status: 'ok'
-    }));
+    try {
+      const rows: any[] = await api.creditTransactions.getByReseller(resellerId);
+      return (rows || []).map(r => ({
+        id: r.id,
+        type: r.type,
+        operatorName: r.operator_name || '',
+        partyName: r.party_name || '',
+        resellerId: r.reseller_id ?? undefined,
+        quantity: Number(r.quantity) || 0,
+        unitPrice: Number(r.unit_price) || 0,
+        total: Number(r.total) || 0,
+        server: r.server || '',
+        date: r.date,
+        status: 'ok'
+      }));
+    } catch (error) {
+      console.error('Erro ao buscar transações de crédito:', error);
+      return [];
+    }
   };
 
   useEffect(() => {
@@ -194,17 +176,21 @@ export const DataProvider: React.FC<DataProviderProps> = ({
           api.systemLog.list()
         ]);
 
-        // Load settings (only if Electron for now, or fallback to defaults/supabase settings table later)
+        // Load settings via abstracted API (works for both Electron and Web/Supabase)
         let loadedPlanos = [], loadedServidores = [], loadedFormas = [], loadedDispositivos = [], loadedAplicativos = [], loadedFontes = [];
-        if (isElectron && window.electronAPI) {
+        try {
           [loadedPlanos, loadedServidores, loadedFormas, loadedDispositivos, loadedAplicativos, loadedFontes] = await Promise.all([
-            window.electronAPI.database.getPlanos(),
-            window.electronAPI.database.getServidores(),
-            window.electronAPI.database.getFormasPagamento(),
-            window.electronAPI.database.getDispositivos(),
-            window.electronAPI.database.getAplicativos(),
-            window.electronAPI.database.getFontesLead()
+            api.planos.list(),
+            api.servidores.list(),
+            api.formasPagamento.list(),
+            api.dispositivos.list(),
+            api.aplicativos.list(),
+            api.fontesLead.list()
           ]);
+          console.log(`✅ Configurações carregadas: ${loadedPlanos?.length || 0} planos, ${loadedServidores?.length || 0} servidores`);
+        } catch (settingsError) {
+          console.error('❌ Erro ao carregar configurações:', settingsError);
+          // Fallback to empty arrays if settings fail to load
         }
 
         setClients(loadedClients);
@@ -237,20 +223,18 @@ export const DataProvider: React.FC<DataProviderProps> = ({
         setAplicativos(loadedAplicativos || []);
         setProspeccoes(loadedFontes || []);
 
-        // Verificar e atualizar clientes vencidos (Somente Electron por enquanto, ou mover logica para backend)
-        if (isElectron) {
-          console.log('🔍 Verificando clientes vencidos na inicialização...');
-          for (const c of loadedClients) {
-            const exp = getExpirationStatus(String(c.vencimento || ''));
-            if (exp.status === 'Vencido') {
-              const needsUpdate = c.statusPagamento !== 'Pendente' || c.situacao !== 'Ativo';
-              if (needsUpdate) {
-                await api.clients.update({
-                  ...c,
-                  situacao: 'Ativo',
-                  statusPagamento: 'Pendente'
-                });
-              }
+        // Verificar e atualizar clientes vencidos
+        console.log('🔍 Verificando clientes vencidos na inicialização...');
+        for (const c of loadedClients) {
+          const exp = getExpirationStatus(String(c.vencimento || ''));
+          if (exp.status === 'Vencido') {
+            const needsUpdate = c.statusPagamento !== 'Pendente' || c.situacao !== 'Ativo';
+            if (needsUpdate) {
+              await api.clients.update({
+                ...c,
+                situacao: 'Ativo',
+                statusPagamento: 'Pendente'
+              });
             }
           }
         }
@@ -267,27 +251,24 @@ export const DataProvider: React.FC<DataProviderProps> = ({
     if (!isTestEnv) {
       loadDataAndSettings();
     }
-  }, [isElectron, isTestEnv]);
+  }, [isTestEnv]);
 
   const refreshAll = async (): Promise<void> => {
-    if (!isElectron || !window.electronAPI) return;
     try {
       setIsLoading(true);
       const [loadedClients, loadedLeads, loadedRevenue, loadedTests, loadedResellers, loadedSystemLog] = await Promise.all([
-        window.electronAPI.database.getClients(),
-        window.electronAPI.database.getLeads(),
-        window.electronAPI.database.getRevenueTransactions(),
-        window.electronAPI.database.getTests(),
-        window.electronAPI.database.getResellers(),
-        window.electronAPI.database.getSystemLog()
+        api.clients.list(),
+        api.leads.list(),
+        api.revenue.list(),
+        api.tests.list(),
+        api.resellers.list(),
+        api.systemLog.list()
       ]);
       setClients(loadedClients);
       setLeads(loadedLeads);
       setRevenueLog(loadedRevenue);
       setTests(loadedTests);
       setSystemLog(loadedSystemLog);
-      await runAutomaticLeadMigrations(loadedClients, loadedTests, loadedLeads);
-
     } finally {
       setIsLoading(false);
     }
@@ -388,15 +369,15 @@ export const DataProvider: React.FC<DataProviderProps> = ({
   }, [clients, tests, isTestEnv]);
 
 
+  // Periodic verification of expired clients (now using API)
   useEffect(() => {
-    if (!isElectron || isTestEnv) return;
+    if (isTestEnv) return;
     const interval = setInterval(async () => {
       try {
         console.log('🔍 Executando verificação automática de clientes vencidos...');
-        const [loadedClients, loadedLeads, loadedTests] = await Promise.all([
-          window.electronAPI.database.getClients(),
-          window.electronAPI.database.getLeads(),
-          window.electronAPI.database.getTests()
+        const [loadedClients, loadedTests] = await Promise.all([
+          api.clients.list(),
+          api.tests.list()
         ]);
         console.log(`📊 Verificando ${loadedClients.length} clientes...`);
         const now = Date.now();
@@ -410,9 +391,7 @@ export const DataProvider: React.FC<DataProviderProps> = ({
         }
         for (const c of loadedClients) {
           const exp = getExpirationStatus(String(c.vencimento || ''));
-          console.log(`Cliente: ${c.nome}, Vencimento: ${c.vencimento}, Status Exp: ${exp.status}, Situação: ${c.situacao}, Status Pag: ${c.statusPagamento}`);
           if (exp.status === 'Vencido') {
-            // Apenas atualiza statusPagamento para Pendente, mantém situacao como Ativo
             const needsUpdate = c.statusPagamento !== 'Pendente' || c.situacao !== 'Ativo';
             if (needsUpdate) {
               console.log(`✅ Atualizando cliente ${c.nome} para Ativo/Pendente (vencido)`);
@@ -421,20 +400,17 @@ export const DataProvider: React.FC<DataProviderProps> = ({
                 situacao: 'Ativo',
                 statusPagamento: 'Pendente'
               });
-            } else {
-              console.log(`⏭️ Cliente ${c.nome} já está Ativo/Pendente`);
             }
           }
         }
-        await runAutomaticLeadMigrations(loadedClients, loadedTests, loadedLeads);
         await refreshAll();
         console.log('✅ Verificação automática concluída!');
       } catch (e) {
         console.error('❌ Erro na verificação automática:', e);
       }
-    }, 5 * 60 * 1000); // 5 minutos - intervalo adequado para produção
+    }, 5 * 60 * 1000); // 5 minutos
     return () => clearInterval(interval);
-  }, [isElectron, isTestEnv]);
+  }, [isTestEnv]);
 
   // Generate alerts for overdue pending payments beyond tolerance
   useEffect(() => {
@@ -449,78 +425,49 @@ export const DataProvider: React.FC<DataProviderProps> = ({
           alertedOverdue.current.add(c.id);
           const evt = new CustomEvent('paymentOverdueAlert', { detail: { clientId: c.id, nome: c.nome, vencimento: c.vencimento } });
           window.dispatchEvent(evt);
-          if (isElectron && window.electronAPI) {
-            window.electronAPI.database.addSystemLogEntry({
-              date: new Date().toISOString(),
-              type: 'system',
-              clientId: c.id,
-              clientName: c.nome,
-              reason: 'Pagamento em atraso fora da tolerância'
-            } as any);
-          }
+          // Log to system
+          api.systemLog.add({
+            date: new Date().toISOString(),
+            type: 'system',
+            clientId: c.id,
+            clientName: c.nome,
+            reason: 'Pagamento em atraso fora da tolerância'
+          } as any).catch(() => { });
         }
       }
     } catch { }
-  }, [clients, isElectron, isTestEnv]);
+  }, [clients, isTestEnv]);
 
   useEffect(() => {
     const onSettingsUpdated = async () => {
       console.log('Evento settingsUpdated disparado. Recarregando configurações...');
-      if (!isElectron || !window.electronAPI) return;
       try {
         const [loadedPlanos, loadedServidores, loadedFormas, loadedDispositivos, loadedAplicativos, loadedFontes] = await Promise.all([
-          window.electronAPI.database.getPlanos(),
-          window.electronAPI.database.getServidores(),
-          window.electronAPI.database.getFormasPagamento(),
-          window.electronAPI.database.getDispositivos(),
-          window.electronAPI.database.getAplicativos(),
-          window.electronAPI.database.getFontesLead()
+          api.planos.list(),
+          api.servidores.list(),
+          api.formasPagamento.list(),
+          api.dispositivos.list(),
+          api.aplicativos.list(),
+          api.fontesLead.list()
         ]);
+        console.log(`✅ Configurações recarregadas: ${loadedPlanos?.length || 0} planos, ${loadedServidores?.length || 0} servidores`);
         if (!areArraysEqual(planos, loadedPlanos || [])) setPlanos(loadedPlanos || []);
         if (!areArraysEqual(servidores, loadedServidores || [])) setServidores(loadedServidores || []);
         if (!areArraysEqual(formasPagamento, loadedFormas || [])) setFormasPagamento(loadedFormas || []);
         if (!areArraysEqual(dispositivos, loadedDispositivos || [])) setDispositivos(loadedDispositivos || []);
         if (!areArraysEqual(aplicativos, loadedAplicativos || [])) setAplicativos(loadedAplicativos || []);
         if (!areArraysEqual(prospeccoes, loadedFontes || [])) setProspeccoes(loadedFontes || []);
-      } catch { }
+      } catch (error) {
+        console.error('❌ Erro ao recarregar configurações:', error);
+      }
     };
     if (!isTestEnv) {
       window.addEventListener('settingsUpdated', onSettingsUpdated as any);
       return () => window.removeEventListener('settingsUpdated', onSettingsUpdated as any);
     }
-  }, [isElectron, isTestEnv]);
+  }, [isTestEnv]);
 
-  const normalizationRun = useRef(false);
-  useEffect(() => {
-    const normalize = async () => {
-      if (normalizationRun.current) return;
-      normalizationRun.current = true;
-      if (!isElectron || !window.electronAPI) return;
-      try {
-        const map = new Map<number, Client>();
-        for (const c of clients) map.set(c.id, c);
-        const committed = (revenueLog || []).filter(r => r && r.type === 'subscription' && r.status !== 'reverted');
-        for (const r of committed) {
-          const client = map.get(r.clientId);
-          if (!client) continue;
-          const act = parseDateString(String(client.ativacao || (client as any).createdAt || ''));
-          if (!act || isNaN(act.getTime())) continue;
-          const rd = parseDateString(String(r.date)) || new Date(r.date);
-          const same = rd.getFullYear() === act.getFullYear() && rd.getMonth() === act.getMonth() && rd.getDate() === act.getDate();
-          if (same) continue;
-          const iso = act.toISOString();
-          const existingSameDay = committed.some(x => x.clientId === r.clientId && x.type === 'subscription' && (parseDateString(String(x.date)) || new Date(x.date)).toDateString() === act.toDateString());
-          if (!existingSameDay) {
-            await window.electronAPI.database.addRevenueTransaction({ clientId: r.clientId, clientName: r.clientName, amount: r.amount, type: 'subscription', date: iso, description: `Assinatura ajustada para data de ativação` } as any);
-          }
-          await window.electronAPI.database.revertRevenueTransaction({ transactionId: (r as any).id, reason: 'Normalize subscription date to activation' });
-        }
-        const updatedRevenue = await window.electronAPI.database.getRevenueTransactions();
-        setRevenueLog(updatedRevenue);
-      } catch { }
-    };
-    if (clients.length && revenueLog.length) normalize();
-  }, [clients, revenueLog, isElectron]);
+  // Normalization is now handled by backend/database directly
 
   // Client operations
   const addClient = async (clientData: Omit<Client, 'id'>): Promise<Client> => {
@@ -592,11 +539,6 @@ export const DataProvider: React.FC<DataProviderProps> = ({
 
       // Update via abstracted API
       await api.clients.update({ ...client, statusPagamento: 'Pago', situacao: 'Ativo' });
-
-      // Electron specific backup (if needed for other side effects in main process)
-      if (isElectron && window.electronAPI) {
-        await window.electronAPI.database.confirmPayment({ clientId, paymentDate });
-      }
 
       setClients(prevClients => prevClients.map(c => {
         if (c.id === clientId) {
@@ -811,42 +753,15 @@ export const DataProvider: React.FC<DataProviderProps> = ({
     }
   };
 
-  // Clear data operations
+  // Clear data operations (not supported in PWA - requires admin backend endpoint)
   const clearRevenueData = async (): Promise<void> => {
-    if (!isElectron || !window.electronAPI) {
-      console.warn('Operação disponível apenas no Desktop (Electron)');
-      return;
-    }
-
-    try {
-      await window.electronAPI.database.clearRevenueTransactions();
-      setRevenueLog([]);
-      console.log('✅ Dados de receita limpos com sucesso');
-    } catch (error) {
-      console.error('Erro ao limpar dados de receita:', error);
-      throw error;
-    }
+    console.warn('⚠️ clearRevenueData: Operação de limpeza em massa não disponível na versão PWA');
+    // Would need a dedicated admin API endpoint to clear all revenue data safely
   };
 
   const clearAllData = async (): Promise<void> => {
-    if (!isElectron || !window.electronAPI) {
-      console.warn('Operação disponível apenas no Desktop (Electron)');
-      return;
-    }
-
-    try {
-      await window.electronAPI.database.clearAllData();
-      setClients([]);
-      setLeads([]);
-      setRevenueLog([]);
-      setTests([]);
-      setResellers([]);
-      setSystemLog([]);
-      console.log('✅ Todos os dados limpos com sucesso');
-    } catch (error) {
-      console.error('Erro ao limpar todos os dados:', error);
-      throw error;
-    }
+    console.warn('⚠️ clearAllData: Operação de limpeza em massa não disponível na versão PWA');
+    // Would need a dedicated admin API endpoint to clear all data safely
   };
 
   // Test operations
@@ -869,15 +784,20 @@ export const DataProvider: React.FC<DataProviderProps> = ({
     setTests(prev => prev.filter(t => t.id !== id));
   };
 
+  // Automatic lead migrations (simplified for PWA - uses API)
   const runAutomaticLeadMigrations = async (clientsIn: Client[], testsIn: Test[], leadsIn: Lead[]): Promise<void> => {
-    if (!isElectron || !window.electronAPI) return;
     try {
-      const existingByClientId = new Set((leadsIn || []).filter(l => l.fromMigration && typeof l.migratedFromClientId === 'number').map(l => Number(l.migratedFromClientId)));
+      const existingByClientId = new Set(
+        (leadsIn || []).filter(l => l.fromMigration && typeof l.migratedFromClientId === 'number')
+          .map(l => Number(l.migratedFromClientId))
+      );
+
+      // Migrate expired clients to leads
       for (const c of clientsIn || []) {
         const exp = getExpirationStatus(String(c.vencimento || ''));
         if (exp.status === 'Vencido' && Math.abs(exp.days || 0) >= 10) {
           if (!existingByClientId.has(Number(c.id))) {
-            const newLead = await window.electronAPI.database.addLead({
+            const newLead = await api.leads.add({
               nome: c.nome,
               whatsapp: c.whatsapp || '',
               observacoes: 'Migrado automaticamente de cliente vencido',
@@ -893,18 +813,17 @@ export const DataProvider: React.FC<DataProviderProps> = ({
               migrationReason: 'Vencido há 10 dias',
               originalPlano: c.plano || '',
               originalValor: String(c.valor ?? '')
-            });
+            } as any);
             setLeads(prev => [...prev, newLead]);
-            await window.electronAPI.database.addSystemLogEntry({
+            await api.systemLog.add({
               date: new Date().toISOString(),
               type: 'client_migration',
               clientId: c.id,
               clientName: c.nome,
               leadId: newLead.id,
               leadName: newLead.nome,
-              reason: 'Migração automática de cliente vencido',
-              originalClient: c
-            });
+              reason: 'Migração automática de cliente vencido'
+            } as any);
             existingByClientId.add(Number(c.id));
             addNotification({
               type: 'info',
@@ -916,38 +835,32 @@ export const DataProvider: React.FC<DataProviderProps> = ({
               duration: 5000
             });
           }
-        } else if (exp.status === 'Vencido' && Math.abs(exp.days || 0) >= 10) {
-          if (existingByClientId.has(Number(c.id))) {
-            addNotification({
-              type: 'warning',
-              title: 'Lead não migrado',
-              message: `${c.nome} já possui lead por vencimento`,
-              priority: 'low',
-              read: false,
-              autoClose: true,
-              duration: 4000
-            });
-          }
         }
       }
 
+      // Migrate expired tests to leads
       const fiveDaysMs = 5 * 24 * 60 * 60 * 1000;
       const nowTs = Date.now();
       const normalizePhone = (v: string) => String(v || '').replace(/\D+/g, '');
+
       for (const t of testsIn || []) {
         const endStr = String(t.endAt || t.endDate || '');
         const parsed = parseDateString(endStr) || (endStr ? new Date(endStr) : null);
         const endTime = parsed && !isNaN(parsed.getTime()) ? parsed.getTime() : nowTs;
         const isOlder = nowTs - endTime >= fiveDaysMs;
+
         if (isOlder) {
           const existsByPhone = (leadsIn || []).some(l => {
             const a = normalizePhone(l.whatsapp || '');
             const b = normalizePhone(t.whatsapp || '');
             return a && b && a === b;
           });
-          const existsByName = (leadsIn || []).some(l => (l.nome || '').trim().toLowerCase() === (t.clientName || '').trim().toLowerCase());
+          const existsByName = (leadsIn || []).some(l =>
+            (l.nome || '').trim().toLowerCase() === (t.clientName || '').trim().toLowerCase()
+          );
+
           if (!existsByPhone && !existsByName) {
-            const newLead = await window.electronAPI.database.addLead({
+            const newLead = await api.leads.add({
               nome: t.clientName || 'Lead',
               whatsapp: t.whatsapp || '',
               observacoes: 'Migrado automaticamente de teste',
@@ -963,33 +876,21 @@ export const DataProvider: React.FC<DataProviderProps> = ({
               migrationReason: 'Teste com 5+ dias',
               originalPlano: '',
               originalValor: ''
-            });
+            } as any);
             setLeads(prev => [...prev, newLead]);
-            await window.electronAPI.database.addSystemLogEntry({
+            await api.systemLog.add({
               date: new Date().toISOString(),
               type: 'test_migration',
               testId: t.id,
               testPhone: t.whatsapp || '',
               leadId: newLead.id,
               leadName: newLead.nome,
-              reason: 'Migração automática de teste',
-              originalTest: t
-            });
+              reason: 'Migração automática de teste'
+            } as any);
             addNotification({
               type: 'info',
               title: 'Lead migrado',
               message: `${newLead.nome} migrado de teste vencido`,
-              priority: 'low',
-              read: false,
-              autoClose: true,
-              duration: 4000
-            });
-          }
-          else {
-            addNotification({
-              type: 'warning',
-              title: 'Lead não migrado',
-              message: `${t.clientName} já existe nos Leads`,
               priority: 'low',
               read: false,
               autoClose: true,

@@ -237,34 +237,7 @@ const CyberReports: React.FC = () => {
     }
   }, [isRefreshing])
 
-  // Consistency validation (inside component)
-  useEffect(() => {
-    const validate = async () => {
-      try {
-        const electronAPI = (window as any).electronAPI;
-        if (electronAPI?.database) {
-          const [remoteClients, remoteRevenue] = await Promise.all([
-            electronAPI.database.getClients(),
-            electronAPI.database.getRevenueTransactions(),
-          ])
-          const localRevenueSum = (revenueLog || []).filter((r: any) => r.status !== 'reverted').reduce((s: any, r: any) => s + (Number(r.amount) || 0), 0)
-          const remoteRevenueSum = (remoteRevenue || []).filter((r: any) => r.status !== 'reverted').reduce((s: any, r: any) => s + (Number(r.amount) || 0), 0)
-          if (clients.length !== remoteClients.length || Math.abs(localRevenueSum - remoteRevenueSum) > 0.01) {
-            await refreshAll()
-            await electronAPI.database.addSystemLogEntry({
-              date: new Date().toISOString(),
-              type: 'system',
-              clientId: 0,
-              clientName: 'SYSTEM',
-              reason: 'Auto-sync: gráficos e base corrigidos por inconsistência'
-            })
-          }
-        }
-      } catch { }
-    }
-    const debouncedValidate = debounce(validate, 1000); // Debounce por 1 segundo
-    debouncedValidate();
-  }, [clients, revenueLog])
+  // Data validation handled by DataContext - no need for manual sync
 
   return (
     <div className="space-y-6">

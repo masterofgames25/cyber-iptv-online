@@ -1089,9 +1089,9 @@ export default function CyberSystemSettings() {
                 onClick={async () => {
                   setConfirmLoading(true);
                   try {
-                    await window.electronAPI?.database.clearAllData();
-                    window.dispatchEvent(new CustomEvent('settingsUpdated'));
-                    showNotification('Limpeza concluída. Configurações preservadas.', 'success');
+                    // Clear all data not available in PWA - would need admin backend endpoint
+                    console.warn('⚠️ clearAllData não disponível na versão PWA');
+                    showNotification('Limpeza de dados em massa não disponível na versão online', 'error');
                     setConfirmClearAll(false);
                   } catch (error) {
                     console.error('Error clearing data:', error);
