@@ -589,14 +589,12 @@ export const DataProvider: React.FC<DataProviderProps> = ({
       if (!client) return;
 
       const paymentDate = new Date().toISOString();
-      // For payments, we might need a specific API method if it's complex logic
-      // But in SQLite it was confirmPayment. Let's assume updateClient for now or implement confirmPayment in API
-      // Checking old code: confirmPayment likely updates situacao/statusPagamento
 
-      const client = clients.find(c => c.id === clientId);
-      if (client) {
-        await api.clients.update({ ...client, statusPagamento: 'Pago', situacao: 'Ativo' });
-      } else if (isElectron) {
+      // Update via abstracted API
+      await api.clients.update({ ...client, statusPagamento: 'Pago', situacao: 'Ativo' });
+
+      // Electron specific backup (if needed for other side effects in main process)
+      if (isElectron && window.electronAPI) {
         await window.electronAPI.database.confirmPayment({ clientId, paymentDate });
       }
 
@@ -606,7 +604,7 @@ export const DataProvider: React.FC<DataProviderProps> = ({
         }
         return c;
       }));
-      const updatedRevenue = await window.electronAPI.database.getRevenueTransactions();
+      const updatedRevenue = await api.revenue.list();
       setRevenueLog(updatedRevenue);
     } catch (error) {
       console.error('Erro ao marcar cliente como pago:', error);
