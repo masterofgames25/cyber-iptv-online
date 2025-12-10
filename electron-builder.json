@@ -1,0 +1,30 @@
+{
+  "appId": "com.cyberpunk.iptv.crm",
+  "productName": "NEON",
+  "directories": {
+    "output": "dist-electron-build-new"
+  },
+  "files": [
+    "dist/**/*",
+    "electron/**/*",
+    "!electron/main.js",
+    "package.json"
+  ],
+  "mac": {
+    "category": "public.app-category.business",
+    "target": "dmg"
+  },
+  "win": {
+    "target": "nsis",
+    "icon": "projetoneon.ico"
+  },
+  "linux": {
+    "target": "AppImage"
+  },
+  "nsis": {
+    "oneClick": false,
+    "allowToChangeInstallationDirectory": true,
+    "createDesktopShortcut": true,
+    "createStartMenuShortcut": true
+  }
+}

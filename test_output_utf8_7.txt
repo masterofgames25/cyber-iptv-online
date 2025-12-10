@@ -1,0 +1,1787 @@
+﻿
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mD:/dowloads/cyberpunk-iptv-crm[39m
+
+[90mstdout[2m | src/test/CyberClientsList.test.tsx[2m > [22m[2mCyberClientsList[2m > [22m[2mComponent Rendering[2m > [22m[2mshould render the component without crashing
+[22m[39mWarning: React does not recognize the `whileHover` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `whilehover` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+    at button
+    at button (D:\dowloads\cyberpunk-iptv-crm\src\test\CyberClientsList.test.tsx:36:16)
+    at div
+    at div (D:\dowloads\cyberpunk-iptv-crm\src\test\CyberClientsList.test.tsx:31:13)
+    at div
+    at CyberClientsList (D:\dowloads\cyberpunk-iptv-crm\src\components\CyberClientsList.tsx:22:127)
+    at DataProvider (D:\dowloads\cyberpunk-iptv-crm\src\context\DataContext.tsx:27:3)
+    at CyberpunkNotificationProvider (D:\dowloads\cyberpunk-iptv-crm\src\components\CyberpunkNotification.tsx:347:42)
+Warning: React does not recognize the `whileTap` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `whiletap` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+    at button
+    at button (D:\dowloads\cyberpunk-iptv-crm\src\test\CyberClientsList.test.tsx:36:16)
+    at div
+    at div (D:\dowloads\cyberpunk-iptv-crm\src\test\CyberClientsList.test.tsx:31:13)
+    at div
+    at CyberClientsList (D:\dowloads\cyberpunk-iptv-crm\src\components\CyberClientsList.tsx:22:127)
+    at DataProvider (D:\dowloads\cyberpunk-iptv-crm\src\context\DataContext.tsx:27:3)
+    at CyberpunkNotificationProvider (D:\dowloads\cyberpunk-iptv-crm\src\components\CyberpunkNotification.tsx:347:42)
+
+ [31mÔØ»[39m src/test/CyberClientsList.test.tsx [2m([22m[2m24 tests[22m[2m | [22m[31m20 failed[39m[2m)[22m[33m 46078[2mms[22m[39m
+[31m   [31m├ù[31m CyberClientsList[2m > [22mComponent Rendering[2m > [22mshould display client status badges correctly[90m 109[2mms[22m[31m[39m
+[31m     ÔåÆ Found multiple elements with the text: Ativo
+
+Here are the matching elements:
+
+Ignored nodes: comments, script, style
+[36m<option[31m
+  [33mvalue[31m=[32m"Ativo"[31m
+[36m>[31m
+  [0mAtivo[0m
+[36m</option>[31m
+
+Ignored nodes: comments, script, style
+[36m<span[31m
+  [33mclass[31m=[32m"inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ml-2 border-green-500/30 bg-green-900/20 text-green-300"[31m
+[36m>[31m
+  [0mAtivo[0m
+[36m</span>[31m
+
+(If this is intentional, then use the `*AllBy*` variant of the query (like `queryAllByText`, `getAllByText`, or `findAllByText`)).
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<div[31m
+      [33mclass[31m=[32m"space-y-8"[31m
+    [36m>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6"[31m
+      [36m>[31m
+        [36m<div>[31m
+          [36m<h1[31m
+            [33mclass[31m=[32m"text-4xl font-bold neon-text mb-2"[31m
+          [36m>[31m
+            [0m­ƒæÑ Clientes[0m
+          [36m</h1>[31m
+          [36m<p[31m
+            [33mclass[31m=[32m"text-gray-400"[31m
+          [36m>[31m
+            [0mGerenciamento de assinantes com interface neural[0m
+          [36m</p>[31m
+        [36m</div>[31m
+        [36m<button[31m
+          [33mclass[31m=[32m"btn-cyber flex items-center gap-3"[31m
+          [33mwhilehover[31m=[32m"[object Object]"[31m
+          [33mwhiletap[31m=[32m"[object Object]"[31m
+        [36m>[31m
+          [36m<svg[31m
+            [33maria-hidden[31m=[32m"true"[31m
+            [33mclass[31m=[32m"w-5 h-5"[31m
+            [33mdata-slot[31m=[32m"icon"[31m
+            [33mfill[31m=[32m"none"[31m
+            [33mstroke[31m=[32m"currentColor"[31m
+            [33mstroke-width[31m=[32m"1.5"[31m
+            [33mviewBox[31m=[32m"0 0 24 24"[31m
+            [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+          [36m>[31m
+            [36m<path[31m
+              [33md[31m=[32m"M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z"[31m
+              [33mstroke-linecap[31m=[32m"round"[31m
+              [33mstroke-linejoin[31m=[32m"round"[31m
+            [36m/>[31m
+          [36m</svg>[31m
+          [0mNovo Cliente[0m
+        [36m</button>[31m
+      [36m</div>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"glass p-6 rounded-2xl overflow-visible relative z-50"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"grid grid-cols-1 xl:grid-cols-4 gap-4"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"relative"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"[31m
+              [33mdata-slot[31m=[32m"icon"[31m
+              [33mfill[31m=[32m"none"[31m
+              [33mstroke[31m=[32m"currentColor"[31m
+              [33mstroke-width[31m=[32m"1.5"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+              [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"[31m
+                [33mstroke-linecap[31m=[32m"round"[31m
+                [33mstroke-linejoin[31m=[32m"round"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+            [36m<input[31m
+              [33maria-label[31m=[32m"Buscar clientes"[31m
+              [33mclass[31m=[32m"w-full pl-10 pr-4 py-3 bg-black/30 border border-purple-500/30 rounded-xl text-white placeholder-gray-500 focus:border-purple-400 focus:outline-none transition-all duration-300"[31m
+              [33mplaceholder[31m=[32m"Buscar por nome, WhatsApp ou login..."[31m
+              [33mtype[31m=[32m"text"[31m
+              [33mvalue[31m=[32m""[31m
+            [36m/>[31m
+          [36m</div>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"relative"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"[31m
+              [33mdata-slot[31m=[32m"icon"[31m
+              [33mfill[31m=[32m"none"[31m
+              [33mstroke[31m=[32m"currentColor"[31m
+              [33mstroke-width[31m=[32m"1.5"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+              [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z"[31m
+                [33mstroke-linecap[31m=[32m"round"[31m
+                [33mstroke-linejoin[31m=[32m"round"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+            [36m<select[31m
+              [33maria-label[31m=[32m"Status"[31m
+              [33mclass[31m=[32m"w-full pl-10 pr-4 py-3 select-cyber focus:border-purple-400 transition-all duration-300"[31m
+            [36m>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m"all"[31m
+              [36m>[31m
+                [0mTodos os Status[0m
+              [36m</option>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m"Ativo"[31m
+              [36m>[31m
+                [0mAtivo[0m
+              [36m</option>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m"Inativo"[31m
+              [36m>[31m
+                [0mInativo[0m
+              [36m</option>[31m
+            [36m</select>[31m
+          [36m</div>[31m
+          [36m<select[31m
+            [33maria-label[31m=[32m"Filtro de Expira├º├úo"[31m
+            [33mclass[31m=[32m"px-4 py-3 select-cyber focus:border-purple-400 transition-all duration-300"[31m
+          [36m>[31m
+            [36m<option[31m
+              [33mvalue[31m=[32m"all"[31m
+            [36m>[31m
+              [0mTodas as Expira├º├Áes[0m
+            [36m</option>[31m
+            [36m<option[31m
+              [33mvalue[31m=[32m"expiring"[31m
+            [36m>[31m
+              [0mVencendo (7 dias)[0m
+            [36m</option>[31m
+            [36m<option[31m
+              [33mvalue[31m=[32m"expired"[31m
+            [36m>[31m
+              [0mVencidas[0m
+            [36m</option>[31m
+          [36m</select>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"flex items-center gap-3"[31m
+          [36m>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"flex bg-black/30 rounded-lg p-1 border border-purple-500/30"[31m
+            [36m>[31m
+              [36m<button[31m
+                [33mclass[31m=[32m"px-4 py-2 rounded-md text-sm font-medium transition-all text-gray-400 hover:text-white"[31m
+              [36m>[31m
+                [0mCards[0m
+              [36m</button>[31m
+              [36m<button[31m
+                [3...[39m
+[31m   [31m├ù[31m CyberClientsList[2m > [22mComponent Rendering[2m > [22mshould display payment status badges correctly[90m 61[2mms[22m[31m[39m
+[31m     ÔåÆ Found multiple elements with the text: Pagamento Pendente
+
+Here are the matching elements:
+
+Ignored nodes: comments, script, style
+[36m<span[31m
+  [33mclass[31m=[32m"inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ml-2 border-cyan-500/30 bg-cyan-900/20 text-cyan-300"[31m
+[36m>[31m
+  [0mPagamento Pendente[0m
+[36m</span>[31m
+
+Ignored nodes: comments, script, style
+[36m<span[31m
+  [33mclass[31m=[32m"inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ml-2 border-cyan-500/30 bg-cyan-900/20 text-cyan-300"[31m
+[36m>[31m
+  [0mPagamento Pendente[0m
+[36m</span>[31m
+
+(If this is intentional, then use the `*AllBy*` variant of the query (like `queryAllByText`, `getAllByText`, or `findAllByText`)).
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<div[31m
+      [33mclass[31m=[32m"space-y-8"[31m
+    [36m>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6"[31m
+      [36m>[31m
+        [36m<div>[31m
+          [36m<h1[31m
+            [33mclass[31m=[32m"text-4xl font-bold neon-text mb-2"[31m
+          [36m>[31m
+            [0m­ƒæÑ Clientes[0m
+          [36m</h1>[31m
+          [36m<p[31m
+            [33mclass[31m=[32m"text-gray-400"[31m
+          [36m>[31m
+            [0mGerenciamento de assinantes com interface neural[0m
+          [36m</p>[31m
+        [36m</div>[31m
+        [36m<button[31m
+          [33mclass[31m=[32m"btn-cyber flex items-center gap-3"[31m
+          [33mwhilehover[31m=[32m"[object Object]"[31m
+          [33mwhiletap[31m=[32m"[object Object]"[31m
+        [36m>[31m
+          [36m<svg[31m
+            [33maria-hidden[31m=[32m"true"[31m
+            [33mclass[31m=[32m"w-5 h-5"[31m
+            [33mdata-slot[31m=[32m"icon"[31m
+            [33mfill[31m=[32m"none"[31m
+            [33mstroke[31m=[32m"currentColor"[31m
+            [33mstroke-width[31m=[32m"1.5"[31m
+            [33mviewBox[31m=[32m"0 0 24 24"[31m
+            [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+          [36m>[31m
+            [36m<path[31m
+              [33md[31m=[32m"M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z"[31m
+              [33mstroke-linecap[31m=[32m"round"[31m
+              [33mstroke-linejoin[31m=[32m"round"[31m
+            [36m/>[31m
+          [36m</svg>[31m
+          [0mNovo Cliente[0m
+        [36m</button>[31m
+      [36m</div>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"glass p-6 rounded-2xl overflow-visible relative z-50"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"grid grid-cols-1 xl:grid-cols-4 gap-4"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"relative"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"[31m
+              [33mdata-slot[31m=[32m"icon"[31m
+              [33mfill[31m=[32m"none"[31m
+              [33mstroke[31m=[32m"currentColor"[31m
+              [33mstroke-width[31m=[32m"1.5"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+              [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"[31m
+                [33mstroke-linecap[31m=[32m"round"[31m
+                [33mstroke-linejoin[31m=[32m"round"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+            [36m<input[31m
+              [33maria-label[31m=[32m"Buscar clientes"[31m
+              [33mclass[31m=[32m"w-full pl-10 pr-4 py-3 bg-black/30 border border-purple-500/30 rounded-xl text-white placeholder-gray-500 focus:border-purple-400 focus:outline-none transition-all duration-300"[31m
+              [33mplaceholder[31m=[32m"Buscar por nome, WhatsApp ou login..."[31m
+              [33mtype[31m=[32m"text"[31m
+              [33mvalue[31m=[32m""[31m
+            [36m/>[31m
+          [36m</div>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"relative"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"[31m
+              [33mdata-slot[31m=[32m"icon"[31m
+              [33mfill[31m=[32m"none"[31m
+              [33mstroke[31m=[32m"currentColor"[31m
+              [33mstroke-width[31m=[32m"1.5"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+              [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z"[31m
+                [33mstroke-linecap[31m=[32m"round"[31m
+                [33mstroke-linejoin[31m=[32m"round"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+            [36m<select[31m
+              [33maria-label[31m=[32m"Status"[31m
+              [33mclass[31m=[32m"w-full pl-10 pr-4 py-3 select-cyber focus:border-purple-400 transition-all duration-300"[31m
+            [36m>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m"all"[31m
+              [36m>[31m
+                [0mTodos os Status[0m
+              [36m</option>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m"Ativo"[31m
+              [36m>[31m
+                [0mAtivo[0m
+              [36m</option>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m"Inativo"[31m
+              [36m>[31m
+                [0mInativo[0m
+              [36m</option>[31m
+            [36m</select>[31m
+          [36m</div>[31m
+          [36m<select[31m
+            [33maria-label[31m=[32m"Filtro de Expira├º├úo"[31m
+            [33mclass[31m=[32m"px-4 py-3 select-cyber focus:border-purple-400 transition-all duration-300"[31m
+          [36m>[31m
+            [36m<option[31m
+              [33mvalue[31m=[32m"all"[31m
+            [36m>[31m
+              [0mTodas as Expira├º├Áes[0m
+            [36m</option>[31m
+            [36m<option[31m
+              [33mvalue[31m=[32m"expiring"[31m
+            [36m>[31m
+              [0mVencendo (7 dias)[0m
+            [36m</option>[31m
+            [36m<option[31m
+              [33mvalue[31m=[32m"expired"[31m
+            [36m>[31m
+              [0mVencidas[0m
+            [36m</option>[31m
+          [36m</select>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"flex items-center gap-3"[31m
+          [36m>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"flex bg-black/30 rounded-lg p-1 border border-purple-500/30"[31m
+            [36m>[31m
+              [36m<button[31m
+                [33mclass[31m=[32m"px-4 py-2 rounded-md text-sm font-medium transition-all text-gray-400 hover:text-white"[31m
+              [36m>[31m
+                [0mCards[0m
+              [36m</button>[31m
+              [36m<button[31m
+                [3...[39m
+[31m   [31m├ù[31m CyberClientsList[2m > [22mSearch and Filtering[2m > [22mshould filter clients by search term[33m 5045[2mms[22m[31m[39m
+[31m     ÔåÆ Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".[39m
+[31m   [31m├ù[31m CyberClientsList[2m > [22mSearch and Filtering[2m > [22mshould filter by status[33m 5029[2mms[22m[31m[39m
+[31m     ÔåÆ Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".[39m
+[31m   [31m├ù[31m CyberClientsList[2m > [22mSearch and Filtering[2m > [22mshould filter by payment status[33m 5028[2mms[22m[31m[39m
+[31m     ÔåÆ Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".[39m
+[31m   [31m├ù[31m CyberClientsList[2m > [22mSearch and Filtering[2m > [22mshould show clients expiring within 7 days[33m 5042[2mms[22m[31m[39m
+[31m     ÔåÆ Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".[39m
+[31m   [31m├ù[31m CyberClientsList[2m > [22mClient Actions[2m > [22mshould open edit modal when edit button is clicked[33m 5034[2mms[22m[31m[39m
+[31m     ÔåÆ Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".[39m
+[31m   [31m├ù[31m CyberClientsList[2m > [22mClient Actions[2m > [22mshould show confirmation dialog when delete button is clicked[33m 5039[2mms[22m[31m[39m
+[31m     ÔåÆ Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".[39m
+[31m   [31m├ù[31m CyberClientsList[2m > [22mClient Actions[2m > [22mshould cancel deletion when cancel button is clicked[33m 5028[2mms[22m[31m[39m
+[31m     ÔåÆ Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".[39m
+[31m   [31m├ù[31m CyberClientsList[2m > [22mAdd New Client[2m > [22mshould open add client modal when add button is clicked[90m 43[2mms[22m[31m[39m
+[31m     ÔåÆ Unable to find a label with the text of: Adicionar novo cliente
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<div[31m
+      [33mclass[31m=[32m"space-y-8"[31m
+    [36m>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6"[31m
+      [36m>[31m
+        [36m<div>[31m
+          [36m<h1[31m
+            [33mclass[31m=[32m"text-4xl font-bold neon-text mb-2"[31m
+          [36m>[31m
+            [0m­ƒæÑ Clientes[0m
+          [36m</h1>[31m
+          [36m<p[31m
+            [33mclass[31m=[32m"text-gray-400"[31m
+          [36m>[31m
+            [0mGerenciamento de assinantes com interface neural[0m
+          [36m</p>[31m
+        [36m</div>[31m
+        [36m<button[31m
+          [33mclass[31m=[32m"btn-cyber flex items-center gap-3"[31m
+          [33mwhilehover[31m=[32m"[object Object]"[31m
+          [33mwhiletap[31m=[32m"[object Object]"[31m
+        [36m>[31m
+          [36m<svg[31m
+            [33maria-hidden[31m=[32m"true"[31m
+            [33mclass[31m=[32m"w-5 h-5"[31m
+            [33mdata-slot[31m=[32m"icon"[31m
+            [33mfill[31m=[32m"none"[31m
+            [33mstroke[31m=[32m"currentColor"[31m
+            [33mstroke-width[31m=[32m"1.5"[31m
+            [33mviewBox[31m=[32m"0 0 24 24"[31m
+            [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+          [36m>[31m
+            [36m<path[31m
+              [33md[31m=[32m"M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z"[31m
+              [33mstroke-linecap[31m=[32m"round"[31m
+              [33mstroke-linejoin[31m=[32m"round"[31m
+            [36m/>[31m
+          [36m</svg>[31m
+          [0mNovo Cliente[0m
+        [36m</button>[31m
+      [36m</div>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"glass p-6 rounded-2xl overflow-visible relative z-50"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"grid grid-cols-1 xl:grid-cols-4 gap-4"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"relative"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"[31m
+              [33mdata-slot[31m=[32m"icon"[31m
+              [33mfill[31m=[32m"none"[31m
+              [33mstroke[31m=[32m"currentColor"[31m
+              [33mstroke-width[31m=[32m"1.5"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+              [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"[31m
+                [33mstroke-linecap[31m=[32m"round"[31m
+                [33mstroke-linejoin[31m=[32m"round"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+            [36m<input[31m
+              [33maria-label[31m=[32m"Buscar clientes"[31m
+              [33mclass[31m=[32m"w-full pl-10 pr-4 py-3 bg-black/30 border border-purple-500/30 rounded-xl text-white placeholder-gray-500 focus:border-purple-400 focus:outline-none transition-all duration-300"[31m
+              [33mplaceholder[31m=[32m"Buscar por nome, WhatsApp ou login..."[31m
+              [33mtype[31m=[32m"text"[31m
+              [33mvalue[31m=[32m""[31m
+            [36m/>[31m
+          [36m</div>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"relative"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"[31m
+              [33mdata-slot[31m=[32m"icon"[31m
+              [33mfill[31m=[32m"none"[31m
+              [33mstroke[31m=[32m"currentColor"[31m
+              [33mstroke-width[31m=[32m"1.5"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+              [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z"[31m
+                [33mstroke-linecap[31m=[32m"round"[31m
+                [33mstroke-linejoin[31m=[32m"round"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+            [36m<select[31m
+              [33maria-label[31m=[32m"Status"[31m
+              [33mclass[31m=[32m"w-full pl-10 pr-4 py-3 select-cyber focus:border-purple-400 transition-all duration-300"[31m
+            [36m>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m"all"[31m
+              [36m>[31m
+                [0mTodos os Status[0m
+              [36m</option>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m"Ativo"[31m
+              [36m>[31m
+                [0mAtivo[0m
+              [36m</option>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m"Inativo"[31m
+              [36m>[31m
+                [0mInativo[0m
+              [36m</option>[31m
+            [36m</select>[31m
+          [36m</div>[31m
+          [36m<select[31m
+            [33maria-label[31m=[32m"Filtro de Expira├º├úo"[31m
+            [33mclass[31m=[32m"px-4 py-3 select-cyber focus:border-purple-400 transition-all duration-300"[31m
+          [36m>[31m
+            [36m<option[31m
+              [33mvalue[31m=[32m"all"[31m
+            [36m>[31m
+              [0mTodas as Expira├º├Áes[0m
+            [36m</option>[31m
+            [36m<option[31m
+              [33mvalue[31m=[32m"expiring"[31m
+            [36m>[31m
+              [0mVencendo (7 dias)[0m
+            [36m</option>[31m
+            [36m<option[31m
+              [33mvalue[31m=[32m"expired"[31m
+            [36m>[31m
+              [0mVencidas[0m
+            [36m</option>[31m
+          [36m</select>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"flex items-center gap-3"[31m
+          [36m>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"flex bg-black/30 rounded-lg p-1 border border-purple-500/30"[31m
+            [36m>[31m
+              [36m<button[31m
+                [33mclass[31m=[32m"px-4 py-2 rounded-md text-sm font-medium transition-all text-gray-400 hover:text-white"[31m
+              [36m>[31m
+                [0mCards[0m
+              [36m</button>[31m
+              [36m<button[31m
+                [3...[39m
+[31m   [31m├ù[31m CyberClientsList[2m > [22mAdd New Client[2m > [22mshould validate required fields in add form[90m 49[2mms[22m[31m[39m
+[31m     ÔåÆ Unable to find a label with the text of: Adicionar novo cliente
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<div[31m
+      [33mclass[31m=[32m"space-y-8"[31m
+    [36m>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6"[31m
+      [36m>[31m
+        [36m<div>[31m
+          [36m<h1[31m
+            [33mclass[31m=[32m"text-4xl font-bold neon-text mb-2"[31m
+          [36m>[31m
+            [0m­ƒæÑ Clientes[0m
+          [36m</h1>[31m
+          [36m<p[31m
+            [33mclass[31m=[32m"text-gray-400"[31m
+          [36m>[31m
+            [0mGerenciamento de assinantes com interface neural[0m
+          [36m</p>[31m
+        [36m</div>[31m
+        [36m<button[31m
+          [33mclass[31m=[32m"btn-cyber flex items-center gap-3"[31m
+          [33mwhilehover[31m=[32m"[object Object]"[31m
+          [33mwhiletap[31m=[32m"[object Object]"[31m
+        [36m>[31m
+          [36m<svg[31m
+            [33maria-hidden[31m=[32m"true"[31m
+            [33mclass[31m=[32m"w-5 h-5"[31m
+            [33mdata-slot[31m=[32m"icon"[31m
+            [33mfill[31m=[32m"none"[31m
+            [33mstroke[31m=[32m"currentColor"[31m
+            [33mstroke-width[31m=[32m"1.5"[31m
+            [33mviewBox[31m=[32m"0 0 24 24"[31m
+            [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+          [36m>[31m
+            [36m<path[31m
+              [33md[31m=[32m"M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z"[31m
+              [33mstroke-linecap[31m=[32m"round"[31m
+              [33mstroke-linejoin[31m=[32m"round"[31m
+            [36m/>[31m
+          [36m</svg>[31m
+          [0mNovo Cliente[0m
+        [36m</button>[31m
+      [36m</div>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"glass p-6 rounded-2xl overflow-visible relative z-50"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"grid grid-cols-1 xl:grid-cols-4 gap-4"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"relative"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"[31m
+              [33mdata-slot[31m=[32m"icon"[31m
+              [33mfill[31m=[32m"none"[31m
+              [33mstroke[31m=[32m"currentColor"[31m
+              [33mstroke-width[31m=[32m"1.5"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+              [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"[31m
+                [33mstroke-linecap[31m=[32m"round"[31m
+                [33mstroke-linejoin[31m=[32m"round"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+            [36m<input[31m
+              [33maria-label[31m=[32m"Buscar clientes"[31m
+              [33mclass[31m=[32m"w-full pl-10 pr-4 py-3 bg-black/30 border border-purple-500/30 rounded-xl text-white placeholder-gray-500 focus:border-purple-400 focus:outline-none transition-all duration-300"[31m
+              [33mplaceholder[31m=[32m"Buscar por nome, WhatsApp ou login..."[31m
+              [33mtype[31m=[32m"text"[31m
+              [33mvalue[31m=[32m""[31m
+            [36m/>[31m
+          [36m</div>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"relative"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"[31m
+              [33mdata-slot[31m=[32m"icon"[31m
+              [33mfill[31m=[32m"none"[31m
+              [33mstroke[31m=[32m"currentColor"[31m
+              [33mstroke-width[31m=[32m"1.5"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+              [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z"[31m
+                [33mstroke-linecap[31m=[32m"round"[31m
+                [33mstroke-linejoin[31m=[32m"round"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+            [36m<select[31m
+              [33maria-label[31m=[32m"Status"[31m
+              [33mclass[31m=[32m"w-full pl-10 pr-4 py-3 select-cyber focus:border-purple-400 transition-all duration-300"[31m
+            [36m>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m"all"[31m
+              [36m>[31m
+                [0mTodos os Status[0m
+              [36m</option>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m"Ativo"[31m
+              [36m>[31m
+                [0mAtivo[0m
+              [36m</option>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m"Inativo"[31m
+              [36m>[31m
+                [0mInativo[0m
+              [36m</option>[31m
+            [36m</select>[31m
+          [36m</div>[31m
+          [36m<select[31m
+            [33maria-label[31m=[32m"Filtro de Expira├º├úo"[31m
+            [33mclass[31m=[32m"px-4 py-3 select-cyber focus:border-purple-400 transition-all duration-300"[31m
+          [36m>[31m
+            [36m<option[31m
+              [33mvalue[31m=[32m"all"[31m
+            [36m>[31m
+              [0mTodas as Expira├º├Áes[0m
+            [36m</option>[31m
+            [36m<option[31m
+              [33mvalue[31m=[32m"expiring"[31m
+            [36m>[31m
+              [0mVencendo (7 dias)[0m
+            [36m</option>[31m
+            [36m<option[31m
+              [33mvalue[31m=[32m"expired"[31m
+            [36m>[31m
+              [0mVencidas[0m
+            [36m</option>[31m
+          [36m</select>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"flex items-center gap-3"[31m
+          [36m>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"flex bg-black/30 rounded-lg p-1 border border-purple-500/30"[31m
+            [36m>[31m
+              [36m<button[31m
+                [33mclass[31m=[32m"px-4 py-2 rounded-md text-sm font-medium transition-all text-gray-400 hover:text-white"[31m
+              [36m>[31m
+                [0mCards[0m
+              [36m</button>[31m
+              [36m<button[31m
+                [3...[39m
+[31m   [31m├ù[31m CyberClientsList[2m > [22mExport Functionality[2m > [22mshould export clients data[90m 46[2mms[22m[31m[39m
+[31m     ÔåÆ Unable to find a label with the text of: Exportar clientes
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<div[31m
+      [33mclass[31m=[32m"space-y-8"[31m
+    [36m>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6"[31m
+      [36m>[31m
+        [36m<div>[31m
+          [36m<h1[31m
+            [33mclass[31m=[32m"text-4xl font-bold neon-text mb-2"[31m
+          [36m>[31m
+            [0m­ƒæÑ Clientes[0m
+          [36m</h1>[31m
+          [36m<p[31m
+            [33mclass[31m=[32m"text-gray-400"[31m
+          [36m>[31m
+            [0mGerenciamento de assinantes com interface neural[0m
+          [36m</p>[31m
+        [36m</div>[31m
+        [36m<button[31m
+          [33mclass[31m=[32m"btn-cyber flex items-center gap-3"[31m
+          [33mwhilehover[31m=[32m"[object Object]"[31m
+          [33mwhiletap[31m=[32m"[object Object]"[31m
+        [36m>[31m
+          [36m<svg[31m
+            [33maria-hidden[31m=[32m"true"[31m
+            [33mclass[31m=[32m"w-5 h-5"[31m
+            [33mdata-slot[31m=[32m"icon"[31m
+            [33mfill[31m=[32m"none"[31m
+            [33mstroke[31m=[32m"currentColor"[31m
+            [33mstroke-width[31m=[32m"1.5"[31m
+            [33mviewBox[31m=[32m"0 0 24 24"[31m
+            [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+          [36m>[31m
+            [36m<path[31m
+              [33md[31m=[32m"M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z"[31m
+              [33mstroke-linecap[31m=[32m"round"[31m
+              [33mstroke-linejoin[31m=[32m"round"[31m
+            [36m/>[31m
+          [36m</svg>[31m
+          [0mNovo Cliente[0m
+        [36m</button>[31m
+      [36m</div>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"glass p-6 rounded-2xl overflow-visible relative z-50"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"grid grid-cols-1 xl:grid-cols-4 gap-4"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"relative"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"[31m
+              [33mdata-slot[31m=[32m"icon"[31m
+              [33mfill[31m=[32m"none"[31m
+              [33mstroke[31m=[32m"currentColor"[31m
+              [33mstroke-width[31m=[32m"1.5"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+              [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"[31m
+                [33mstroke-linecap[31m=[32m"round"[31m
+                [33mstroke-linejoin[31m=[32m"round"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+            [36m<input[31m
+              [33maria-label[31m=[32m"Buscar clientes"[31m
+              [33mclass[31m=[32m"w-full pl-10 pr-4 py-3 bg-black/30 border border-purple-500/30 rounded-xl text-white placeholder-gray-500 focus:border-purple-400 focus:outline-none transition-all duration-300"[31m
+              [33mplaceholder[31m=[32m"Buscar por nome, WhatsApp ou login..."[31m
+              [33mtype[31m=[32m"text"[31m
+              [33mvalue[31m=[32m""[31m
+            [36m/>[31m
+          [36m</div>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"relative"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"[31m
+              [33mdata-slot[31m=[32m"icon"[31m
+              [33mfill[31m=[32m"none"[31m
+              [33mstroke[31m=[32m"currentColor"[31m
+              [33mstroke-width[31m=[32m"1.5"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+              [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z"[31m
+                [33mstroke-linecap[31m=[32m"round"[31m
+                [33mstroke-linejoin[31m=[32m"round"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+            [36m<select[31m
+              [33maria-label[31m=[32m"Status"[31m
+              [33mclass[31m=[32m"w-full pl-10 pr-4 py-3 select-cyber focus:border-purple-400 transition-all duration-300"[31m
+            [36m>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m"all"[31m
+              [36m>[31m
+                [0mTodos os Status[0m
+              [36m</option>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m"Ativo"[31m
+              [36m>[31m
+                [0mAtivo[0m
+              [36m</option>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m"Inativo"[31m
+              [36m>[31m
+                [0mInativo[0m
+              [36m</option>[31m
+            [36m</select>[31m
+          [36m</div>[31m
+          [36m<select[31m
+            [33maria-label[31m=[32m"Filtro de Expira├º├úo"[31m
+            [33mclass[31m=[32m"px-4 py-3 select-cyber focus:border-purple-400 transition-all duration-300"[31m
+          [36m>[31m
+            [36m<option[31m
+              [33mvalue[31m=[32m"all"[31m
+            [36m>[31m
+              [0mTodas as Expira├º├Áes[0m
+            [36m</option>[31m
+            [36m<option[31m
+              [33mvalue[31m=[32m"expiring"[31m
+            [36m>[31m
+              [0mVencendo (7 dias)[0m
+            [36m</option>[31m
+            [36m<option[31m
+              [33mvalue[31m=[32m"expired"[31m
+            [36m>[31m
+              [0mVencidas[0m
+            [36m</option>[31m
+          [36m</select>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"flex items-center gap-3"[31m
+          [36m>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"flex bg-black/30 rounded-lg p-1 border border-purple-500/30"[31m
+            [36m>[31m
+              [36m<button[31m
+                [33mclass[31m=[32m"px-4 py-2 rounded-md text-sm font-medium transition-all text-gray-400 hover:text-white"[31m
+              [36m>[31m
+                [0mCards[0m
+              [36m</button>[31m
+              [36m<button[31m
+                [3...[39m
+[31m   [31m├ù[31m CyberClientsList[2m > [22mExport Functionality[2m > [22mshould export filtered results[33m 5037[2mms[22m[31m[39m
+[31m     ÔåÆ Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".[39m
+[31m   [31m├ù[31m CyberClientsList[2m > [22mImport Functionality[2m > [22mshould import clients from file[90m 34[2mms[22m[31m[39m
+[31m     ÔåÆ Unable to find a label with the text of: Importar clientes
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<div[31m
+      [33mclass[31m=[32m"space-y-8"[31m
+    [36m>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6"[31m
+      [36m>[31m
+        [36m<div>[31m
+          [36m<h1[31m
+            [33mclass[31m=[32m"text-4xl font-bold neon-text mb-2"[31m
+          [36m>[31m
+            [0m­ƒæÑ Clientes[0m
+          [36m</h1>[31m
+          [36m<p[31m
+            [33mclass[31m=[32m"text-gray-400"[31m
+          [36m>[31m
+            [0mGerenciamento de assinantes com interface neural[0m
+          [36m</p>[31m
+        [36m</div>[31m
+        [36m<button[31m
+          [33mclass[31m=[32m"btn-cyber flex items-center gap-3"[31m
+          [33mwhilehover[31m=[32m"[object Object]"[31m
+          [33mwhiletap[31m=[32m"[object Object]"[31m
+        [36m>[31m
+          [36m<svg[31m
+            [33maria-hidden[31m=[32m"true"[31m
+            [33mclass[31m=[32m"w-5 h-5"[31m
+            [33mdata-slot[31m=[32m"icon"[31m
+            [33mfill[31m=[32m"none"[31m
+            [33mstroke[31m=[32m"currentColor"[31m
+            [33mstroke-width[31m=[32m"1.5"[31m
+            [33mviewBox[31m=[32m"0 0 24 24"[31m
+            [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+          [36m>[31m
+            [36m<path[31m
+              [33md[31m=[32m"M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z"[31m
+              [33mstroke-linecap[31m=[32m"round"[31m
+              [33mstroke-linejoin[31m=[32m"round"[31m
+            [36m/>[31m
+          [36m</svg>[31m
+          [0mNovo Cliente[0m
+        [36m</button>[31m
+      [36m</div>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"glass p-6 rounded-2xl overflow-visible relative z-50"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"grid grid-cols-1 xl:grid-cols-4 gap-4"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"relative"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"[31m
+              [33mdata-slot[31m=[32m"icon"[31m
+              [33mfill[31m=[32m"none"[31m
+              [33mstroke[31m=[32m"currentColor"[31m
+              [33mstroke-width[31m=[32m"1.5"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+              [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"[31m
+                [33mstroke-linecap[31m=[32m"round"[31m
+                [33mstroke-linejoin[31m=[32m"round"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+            [36m<input[31m
+              [33maria-label[31m=[32m"Buscar clientes"[31m
+              [33mclass[31m=[32m"w-full pl-10 pr-4 py-3 bg-black/30 border border-purple-500/30 rounded-xl text-white placeholder-gray-500 focus:border-purple-400 focus:outline-none transition-all duration-300"[31m
+              [33mplaceholder[31m=[32m"Buscar por nome, WhatsApp ou login..."[31m
+              [33mtype[31m=[32m"text"[31m
+              [33mvalue[31m=[32m""[31m
+            [36m/>[31m
+          [36m</div>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"relative"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"[31m
+              [33mdata-slot[31m=[32m"icon"[31m
+              [33mfill[31m=[32m"none"[31m
+              [33mstroke[31m=[32m"currentColor"[31m
+              [33mstroke-width[31m=[32m"1.5"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+              [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z"[31m
+                [33mstroke-linecap[31m=[32m"round"[31m
+                [33mstroke-linejoin[31m=[32m"round"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+            [36m<select[31m
+              [33maria-label[31m=[32m"Status"[31m
+              [33mclass[31m=[32m"w-full pl-10 pr-4 py-3 select-cyber focus:border-purple-400 transition-all duration-300"[31m
+            [36m>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m"all"[31m
+              [36m>[31m
+                [0mTodos os Status[0m
+              [36m</option>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m"Ativo"[31m
+              [36m>[31m
+                [0mAtivo[0m
+              [36m</option>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m"Inativo"[31m
+              [36m>[31m
+                [0mInativo[0m
+              [36m</option>[31m
+            [36m</select>[31m
+          [36m</div>[31m
+          [36m<select[31m
+            [33maria-label[31m=[32m"Filtro de Expira├º├úo"[31m
+            [33mclass[31m=[32m"px-4 py-3 select-cyber focus:border-purple-400 transition-all duration-300"[31m
+          [36m>[31m
+            [36m<option[31m
+              [33mvalue[31m=[32m"all"[31m
+            [36m>[31m
+              [0mTodas as Expira├º├Áes[0m
+            [36m</option>[31m
+            [36m<option[31m
+              [33mvalue[31m=[32m"expiring"[31m
+            [36m>[31m
+              [0mVencendo (7 dias)[0m
+            [36m</option>[31m
+            [36m<option[31m
+              [33mvalue[31m=[32m"expired"[31m
+            [36m>[31m
+              [0mVencidas[0m
+            [36m</option>[31m
+          [36m</select>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"flex items-center gap-3"[31m
+          [36m>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"flex bg-black/30 rounded-lg p-1 border border-purple-500/30"[31m
+            [36m>[31m
+              [36m<button[31m
+                [33mclass[31m=[32m"px-4 py-2 rounded-md text-sm font-medium transition-all text-gray-400 hover:text-white"[31m
+              [36m>[31m
+                [0mCards[0m
+              [36m</button>[31m
+              [36m<button[31m
+                [3...[39m
+[31m   [31m├ù[31m CyberClientsList[2m > [22mImport Functionality[2m > [22mshould validate imported data[90m 37[2mms[22m[31m[39m
+[31m     ÔåÆ Unable to find a label with the text of: Importar clientes
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<div[31m
+      [33mclass[31m=[32m"space-y-8"[31m
+    [36m>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6"[31m
+      [36m>[31m
+        [36m<div>[31m
+          [36m<h1[31m
+            [33mclass[31m=[32m"text-4xl font-bold neon-text mb-2"[31m
+          [36m>[31m
+            [0m­ƒæÑ Clientes[0m
+          [36m</h1>[31m
+          [36m<p[31m
+            [33mclass[31m=[32m"text-gray-400"[31m
+          [36m>[31m
+            [0mGerenciamento de assinantes com interface neural[0m
+          [36m</p>[31m
+        [36m</div>[31m
+        [36m<button[31m
+          [33mclass[31m=[32m"btn-cyber flex items-center gap-3"[31m
+          [33mwhilehover[31m=[32m"[object Object]"[31m
+          [33mwhiletap[31m=[32m"[object Object]"[31m
+        [36m>[31m
+          [36m<svg[31m
+            [33maria-hidden[31m=[32m"true"[31m
+            [33mclass[31m=[32m"w-5 h-5"[31m
+            [33mdata-slot[31m=[32m"icon"[31m
+            [33mfill[31m=[32m"none"[31m
+            [33mstroke[31m=[32m"currentColor"[31m
+            [33mstroke-width[31m=[32m"1.5"[31m
+            [33mviewBox[31m=[32m"0 0 24 24"[31m
+            [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+          [36m>[31m
+            [36m<path[31m
+              [33md[31m=[32m"M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z"[31m
+              [33mstroke-linecap[31m=[32m"round"[31m
+              [33mstroke-linejoin[31m=[32m"round"[31m
+            [36m/>[31m
+          [36m</svg>[31m
+          [0mNovo Cliente[0m
+        [36m</button>[31m
+      [36m</div>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"glass p-6 rounded-2xl overflow-visible relative z-50"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"grid grid-cols-1 xl:grid-cols-4 gap-4"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"relative"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"[31m
+              [33mdata-slot[31m=[32m"icon"[31m
+              [33mfill[31m=[32m"none"[31m
+              [33mstroke[31m=[32m"currentColor"[31m
+              [33mstroke-width[31m=[32m"1.5"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+              [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"[31m
+                [33mstroke-linecap[31m=[32m"round"[31m
+                [33mstroke-linejoin[31m=[32m"round"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+            [36m<input[31m
+              [33maria-label[31m=[32m"Buscar clientes"[31m
+              [33mclass[31m=[32m"w-full pl-10 pr-4 py-3 bg-black/30 border border-purple-500/30 rounded-xl text-white placeholder-gray-500 focus:border-purple-400 focus:outline-none transition-all duration-300"[31m
+              [33mplaceholder[31m=[32m"Buscar por nome, WhatsApp ou login..."[31m
+              [33mtype[31m=[32m"text"[31m
+              [33mvalue[31m=[32m""[31m
+            [36m/>[31m
+          [36m</div>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"relative"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"[31m
+              [33mdata-slot[31m=[32m"icon"[31m
+              [33mfill[31m=[32m"none"[31m
+              [33mstroke[31m=[32m"currentColor"[31m
+              [33mstroke-width[31m=[32m"1.5"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+              [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z"[31m
+                [33mstroke-linecap[31m=[32m"round"[31m
+                [33mstroke-linejoin[31m=[32m"round"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+            [36m<select[31m
+              [33maria-label[31m=[32m"Status"[31m
+              [33mclass[31m=[32m"w-full pl-10 pr-4 py-3 select-cyber focus:border-purple-400 transition-all duration-300"[31m
+            [36m>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m"all"[31m
+              [36m>[31m
+                [0mTodos os Status[0m
+              [36m</option>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m"Ativo"[31m
+              [36m>[31m
+                [0mAtivo[0m
+              [36m</option>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m"Inativo"[31m
+              [36m>[31m
+                [0mInativo[0m
+              [36m</option>[31m
+            [36m</select>[31m
+          [36m</div>[31m
+          [36m<select[31m
+            [33maria-label[31m=[32m"Filtro de Expira├º├úo"[31m
+            [33mclass[31m=[32m"px-4 py-3 select-cyber focus:border-purple-400 transition-all duration-300"[31m
+          [36m>[31m
+            [36m<option[31m
+              [33mvalue[31m=[32m"all"[31m
+            [36m>[31m
+              [0mTodas as Expira├º├Áes[0m
+            [36m</option>[31m
+            [36m<option[31m
+              [33mvalue[31m=[32m"expiring"[31m
+            [36m>[31m
+              [0mVencendo (7 dias)[0m
+            [36m</option>[31m
+            [36m<option[31m
+              [33mvalue[31m=[32m"expired"[31m
+            [36m>[31m
+              [0mVencidas[0m
+            [36m</option>[31m
+          [36m</select>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"flex items-center gap-3"[31m
+          [36m>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"flex bg-black/30 rounded-lg p-1 border border-purple-500/30"[31m
+            [36m>[31m
+              [36m<button[31m
+                [33mclass[31m=[32m"px-4 py-2 rounded-md text-sm font-medium transition-all text-gray-400 hover:text-white"[31m
+              [36m>[31m
+                [0mCards[0m
+              [36m</button>[31m
+              [36m<button[31m
+                [3...[39m
+[31m   [31m├ù[31m CyberClientsList[2m > [22mAccessibility[2m > [22mshould be keyboard navigable[33m 5028[2mms[22m[31m[39m
+[31m     ÔåÆ Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".[39m
+[31m   [31m├ù[31m CyberClientsList[2m > [22mError Handling[2m > [22mshould handle empty client list gracefully[90m 22[2mms[22m[31m[39m
+[31m     ÔåÆ Unable to find an element with the text: Nenhum cliente encontrado. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<div[31m
+      [33mclass[31m=[32m"space-y-8"[31m
+    [36m>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6"[31m
+      [36m>[31m
+        [36m<div>[31m
+          [36m<h1[31m
+            [33mclass[31m=[32m"text-4xl font-bold neon-text mb-2"[31m
+          [36m>[31m
+            [0m­ƒæÑ Clientes[0m
+          [36m</h1>[31m
+          [36m<p[31m
+            [33mclass[31m=[32m"text-gray-400"[31m
+          [36m>[31m
+            [0mGerenciamento de assinantes com interface neural[0m
+          [36m</p>[31m
+        [36m</div>[31m
+        [36m<button[31m
+          [33mclass[31m=[32m"btn-cyber flex items-center gap-3"[31m
+          [33mwhilehover[31m=[32m"[object Object]"[31m
+          [33mwhiletap[31m=[32m"[object Object]"[31m
+        [36m>[31m
+          [36m<svg[31m
+            [33maria-hidden[31m=[32m"true"[31m
+            [33mclass[31m=[32m"w-5 h-5"[31m
+            [33mdata-slot[31m=[32m"icon"[31m
+            [33mfill[31m=[32m"none"[31m
+            [33mstroke[31m=[32m"currentColor"[31m
+            [33mstroke-width[31m=[32m"1.5"[31m
+            [33mviewBox[31m=[32m"0 0 24 24"[31m
+            [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+          [36m>[31m
+            [36m<path[31m
+              [33md[31m=[32m"M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z"[31m
+              [33mstroke-linecap[31m=[32m"round"[31m
+              [33mstroke-linejoin[31m=[32m"round"[31m
+            [36m/>[31m
+          [36m</svg>[31m
+          [0mNovo Cliente[0m
+        [36m</button>[31m
+      [36m</div>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"glass p-6 rounded-2xl overflow-visible relative z-50"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"grid grid-cols-1 xl:grid-cols-4 gap-4"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"relative"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"[31m
+              [33mdata-slot[31m=[32m"icon"[31m
+              [33mfill[31m=[32m"none"[31m
+              [33mstroke[31m=[32m"currentColor"[31m
+              [33mstroke-width[31m=[32m"1.5"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+              [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"[31m
+                [33mstroke-linecap[31m=[32m"round"[31m
+                [33mstroke-linejoin[31m=[32m"round"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+            [36m<input[31m
+              [33maria-label[31m=[32m"Buscar clientes"[31m
+              [33mclass[31m=[32m"w-full pl-10 pr-4 py-3 bg-black/30 border border-purple-500/30 rounded-xl text-white placeholder-gray-500 focus:border-purple-400 focus:outline-none transition-all duration-300"[31m
+              [33mplaceholder[31m=[32m"Buscar por nome, WhatsApp ou login..."[31m
+              [33mtype[31m=[32m"text"[31m
+              [33mvalue[31m=[32m""[31m
+            [36m/>[31m
+          [36m</div>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"relative"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"[31m
+              [33mdata-slot[31m=[32m"icon"[31m
+              [33mfill[31m=[32m"none"[31m
+              [33mstroke[31m=[32m"currentColor"[31m
+              [33mstroke-width[31m=[32m"1.5"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+              [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z"[31m
+                [33mstroke-linecap[31m=[32m"round"[31m
+                [33mstroke-linejoin[31m=[32m"round"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+            [36m<select[31m
+              [33maria-label[31m=[32m"Status"[31m
+              [33mclass[31m=[32m"w-full pl-10 pr-4 py-3 select-cyber focus:border-purple-400 transition-all duration-300"[31m
+            [36m>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m"all"[31m
+              [36m>[31m
+                [0mTodos os Status[0m
+              [36m</option>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m"Ativo"[31m
+              [36m>[31m
+                [0mAtivo[0m
+              [36m</option>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m"Inativo"[31m
+              [36m>[31m
+                [0mInativo[0m
+              [36m</option>[31m
+            [36m</select>[31m
+          [36m</div>[31m
+          [36m<select[31m
+            [33maria-label[31m=[32m"Filtro de Expira├º├úo"[31m
+            [33mclass[31m=[32m"px-4 py-3 select-cyber focus:border-purple-400 transition-all duration-300"[31m
+          [36m>[31m
+            [36m<option[31m
+              [33mvalue[31m=[32m"all"[31m
+            [36m>[31m
+              [0mTodas as Expira├º├Áes[0m
+            [36m</option>[31m
+            [36m<option[31m
+              [33mvalue[31m=[32m"expiring"[31m
+            [36m>[31m
+              [0mVencendo (7 dias)[0m
+            [36m</option>[31m
+            [36m<option[31m
+              [33mvalue[31m=[32m"expired"[31m
+            [36m>[31m
+              [0mVencidas[0m
+            [36m</option>[31m
+          [36m</select>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"flex items-center gap-3"[31m
+          [36m>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"flex bg-black/30 rounded-lg p-1 border border-purple-500/30"[31m
+            [36m>[31m
+              [36m<button[31m
+                [33mclass[31m=[32m"px-4 py-2 rounded-md text-sm font-medium transition-all text-gray-400 hover:text-white"[31m
+              [36m>[31m
+                [0mCards[0m
+              [36m</button>[31m
+              [36m<button[31m
+                [3...[39m
+[31m   [31m├ù[31m CyberClientsList[2m > [22mError Handling[2m > [22mshould handle invalid dates gracefully[90m 25[2mms[22m[31m[39m
+[31m     ÔåÆ Unable to find an element with the text: invalid-date-client. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<div[31m
+      [33mclass[31m=[32m"space-y-8"[31m
+    [36m>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6"[31m
+      [36m>[31m
+        [36m<div>[31m
+          [36m<h1[31m
+            [33mclass[31m=[32m"text-4xl font-bold neon-text mb-2"[31m
+          [36m>[31m
+            [0m­ƒæÑ Clientes[0m
+          [36m</h1>[31m
+          [36m<p[31m
+            [33mclass[31m=[32m"text-gray-400"[31m
+          [36m>[31m
+            [0mGerenciamento de assinantes com interface neural[0m
+          [36m</p>[31m
+        [36m</div>[31m
+        [36m<button[31m
+          [33mclass[31m=[32m"btn-cyber flex items-center gap-3"[31m
+          [33mwhilehover[31m=[32m"[object Object]"[31m
+          [33mwhiletap[31m=[32m"[object Object]"[31m
+        [36m>[31m
+          [36m<svg[31m
+            [33maria-hidden[31m=[32m"true"[31m
+            [33mclass[31m=[32m"w-5 h-5"[31m
+            [33mdata-slot[31m=[32m"icon"[31m
+            [33mfill[31m=[32m"none"[31m
+            [33mstroke[31m=[32m"currentColor"[31m
+            [33mstroke-width[31m=[32m"1.5"[31m
+            [33mviewBox[31m=[32m"0 0 24 24"[31m
+            [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+          [36m>[31m
+            [36m<path[31m
+              [33md[31m=[32m"M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z"[31m
+              [33mstroke-linecap[31m=[32m"round"[31m
+              [33mstroke-linejoin[31m=[32m"round"[31m
+            [36m/>[31m
+          [36m</svg>[31m
+          [0mNovo Cliente[0m
+        [36m</button>[31m
+      [36m</div>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"glass p-6 rounded-2xl overflow-visible relative z-50"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"grid grid-cols-1 xl:grid-cols-4 gap-4"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"relative"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"[31m
+              [33mdata-slot[31m=[32m"icon"[31m
+              [33mfill[31m=[32m"none"[31m
+              [33mstroke[31m=[32m"currentColor"[31m
+              [33mstroke-width[31m=[32m"1.5"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+              [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"[31m
+                [33mstroke-linecap[31m=[32m"round"[31m
+                [33mstroke-linejoin[31m=[32m"round"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+            [36m<input[31m
+              [33maria-label[31m=[32m"Buscar clientes"[31m
+              [33mclass[31m=[32m"w-full pl-10 pr-4 py-3 bg-black/30 border border-purple-500/30 rounded-xl text-white placeholder-gray-500 focus:border-purple-400 focus:outline-none transition-all duration-300"[31m
+              [33mplaceholder[31m=[32m"Buscar por nome, WhatsApp ou login..."[31m
+              [33mtype[31m=[32m"text"[31m
+              [33mvalue[31m=[32m""[31m
+            [36m/>[31m
+          [36m</div>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"relative"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"[31m
+              [33mdata-slot[31m=[32m"icon"[31m
+              [33mfill[31m=[32m"none"[31m
+              [33mstroke[31m=[32m"currentColor"[31m
+              [33mstroke-width[31m=[32m"1.5"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+              [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z"[31m
+                [33mstroke-linecap[31m=[32m"round"[31m
+                [33mstroke-linejoin[31m=[32m"round"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+            [36m<select[31m
+              [33maria-label[31m=[32m"Status"[31m
+              [33mclass[31m=[32m"w-full pl-10 pr-4 py-3 select-cyber focus:border-purple-400 transition-all duration-300"[31m
+            [36m>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m"all"[31m
+              [36m>[31m
+                [0mTodos os Status[0m
+              [36m</option>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m"Ativo"[31m
+              [36m>[31m
+                [0mAtivo[0m
+              [36m</option>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m"Inativo"[31m
+              [36m>[31m
+                [0mInativo[0m
+              [36m</option>[31m
+            [36m</select>[31m
+          [36m</div>[31m
+          [36m<select[31m
+            [33maria-label[31m=[32m"Filtro de Expira├º├úo"[31m
+            [33mclass[31m=[32m"px-4 py-3 select-cyber focus:border-purple-400 transition-all duration-300"[31m
+          [36m>[31m
+            [36m<option[31m
+              [33mvalue[31m=[32m"all"[31m
+            [36m>[31m
+              [0mTodas as Expira├º├Áes[0m
+            [36m</option>[31m
+            [36m<option[31m
+              [33mvalue[31m=[32m"expiring"[31m
+            [36m>[31m
+              [0mVencendo (7 dias)[0m
+            [36m</option>[31m
+            [36m<option[31m
+              [33mvalue[31m=[32m"expired"[31m
+            [36m>[31m
+              [0mVencidas[0m
+            [36m</option>[31m
+          [36m</select>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"flex items-center gap-3"[31m
+          [36m>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"flex bg-black/30 rounded-lg p-1 border border-purple-500/30"[31m
+            [36m>[31m
+              [36m<button[31m
+                [33mclass[31m=[32m"px-4 py-2 rounded-md text-sm font-medium transition-all text-gray-400 hover:text-white"[31m
+              [36m>[31m
+                [0mCards[0m
+              [36m</button>[31m
+              [36m<button[31m
+                [3...[39m
+[31m   [31m├ù[31m CyberClientsList[2m > [22mPerformance[2m > [22mshould handle large datasets efficiently[90m 86[2mms[22m[31m[39m
+[31m     ÔåÆ Unable to find an element with the text: Clientes. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<div[31m
+      [33mclass[31m=[32m"space-y-8"[31m
+    [36m>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6"[31m
+      [36m>[31m
+        [36m<div>[31m
+          [36m<h1[31m
+            [33mclass[31m=[32m"text-4xl font-bold neon-text mb-2"[31m
+          [36m>[31m
+            [0m­ƒæÑ Clientes[0m
+          [36m</h1>[31m
+          [36m<p[31m
+            [33mclass[31m=[32m"text-gray-400"[31m
+          [36m>[31m
+            [0mGerenciamento de assinantes com interface neural[0m
+          [36m</p>[31m
+        [36m</div>[31m
+        [36m<button[31m
+          [33mclass[31m=[32m"btn-cyber flex items-center gap-3"[31m
+          [33mwhilehover[31m=[32m"[object Object]"[31m
+          [33mwhiletap[31m=[32m"[object Object]"[31m
+        [36m>[31m
+          [36m<svg[31m
+            [33maria-hidden[31m=[32m"true"[31m
+            [33mclass[31m=[32m"w-5 h-5"[31m
+            [33mdata-slot[31m=[32m"icon"[31m
+            [33mfill[31m=[32m"none"[31m
+            [33mstroke[31m=[32m"currentColor"[31m
+            [33mstroke-width[31m=[32m"1.5"[31m
+            [33mviewBox[31m=[32m"0 0 24 24"[31m
+            [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+          [36m>[31m
+            [36m<path[31m
+              [33md[31m=[32m"M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z"[31m
+              [33mstroke-linecap[31m=[32m"round"[31m
+              [33mstroke-linejoin[31m=[32m"round"[31m
+            [36m/>[31m
+          [36m</svg>[31m
+          [0mNovo Cliente[0m
+        [36m</button>[31m
+      [36m</div>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"glass p-6 rounded-2xl overflow-visible relative z-50"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"grid grid-cols-1 xl:grid-cols-4 gap-4"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"relative"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"[31m
+              [33mdata-slot[31m=[32m"icon"[31m
+              [33mfill[31m=[32m"none"[31m
+              [33mstroke[31m=[32m"currentColor"[31m
+              [33mstroke-width[31m=[32m"1.5"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+              [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"[31m
+                [33mstroke-linecap[31m=[32m"round"[31m
+                [33mstroke-linejoin[31m=[32m"round"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+            [36m<input[31m
+              [33maria-label[31m=[32m"Buscar clientes"[31m
+              [33mclass[31m=[32m"w-full pl-10 pr-4 py-3 bg-black/30 border border-purple-500/30 rounded-xl text-white placeholder-gray-500 focus:border-purple-400 focus:outline-none transition-all duration-300"[31m
+              [33mplaceholder[31m=[32m"Buscar por nome, WhatsApp ou login..."[31m
+              [33mtype[31m=[32m"text"[31m
+              [33mvalue[31m=[32m""[31m
+            [36m/>[31m
+          [36m</div>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"relative"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"[31m
+              [33mdata-slot[31m=[32m"icon"[31m
+              [33mfill[31m=[32m"none"[31m
+              [33mstroke[31m=[32m"currentColor"[31m
+              [33mstroke-width[31m=[32m"1.5"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+              [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z"[31m
+                [33mstroke-linecap[31m=[32m"round"[31m
+                [33mstroke-linejoin[31m=[32m"round"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+            [36m<select[31m
+              [33maria-label[31m=[32m"Status"[31m
+              [33mclass[31m=[32m"w-full pl-10 pr-4 py-3 select-cyber focus:border-purple-400 transition-all duration-300"[31m
+            [36m>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m"all"[31m
+              [36m>[31m
+                [0mTodos os Status[0m
+              [36m</option>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m"Ativo"[31m
+              [36m>[31m
+                [0mAtivo[0m
+              [36m</option>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m"Inativo"[31m
+              [36m>[31m
+                [0mInativo[0m
+              [36m</option>[31m
+            [36m</select>[31m
+          [36m</div>[31m
+          [36m<select[31m
+            [33maria-label[31m=[32m"Filtro de Expira├º├úo"[31m
+            [33mclass[31m=[32m"px-4 py-3 select-cyber focus:border-purple-400 transition-all duration-300"[31m
+          [36m>[31m
+            [36m<option[31m
+              [33mvalue[31m=[32m"all"[31m
+            [36m>[31m
+              [0mTodas as Expira├º├Áes[0m
+            [36m</option>[31m
+            [36m<option[31m
+              [33mvalue[31m=[32m"expiring"[31m
+            [36m>[31m
+              [0mVencendo (7 dias)[0m
+            [36m</option>[31m
+            [36m<option[31m
+              [33mvalue[31m=[32m"expired"[31m
+            [36m>[31m
+              [0mVencidas[0m
+            [36m</option>[31m
+          [36m</select>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"flex items-center gap-3"[31m
+          [36m>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"flex bg-black/30 rounded-lg p-1 border border-purple-500/30"[31m
+            [36m>[31m
+              [36m<button[31m
+                [33mclass[31m=[32m"px-4 py-2 rounded-md text-sm font-medium transition-all text-gray-400 hover:text-white"[31m
+              [36m>[31m
+                [0mCards[0m
+              [36m</button>[31m
+              [36m<button[31m
+                [3...[39m
+[31m   [31m├ù[31m CyberClientsList[2m > [22mPerformance[2m > [22mshould debounce search input[90m 34[2mms[22m[31m[39m
+[31m     ÔåÆ Unable to find an element with the placeholder text of: Buscar clientes...
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<div[31m
+      [33mclass[31m=[32m"space-y-8"[31m
+    [36m>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6"[31m
+      [36m>[31m
+        [36m<div>[31m
+          [36m<h1[31m
+            [33mclass[31m=[32m"text-4xl font-bold neon-text mb-2"[31m
+          [36m>[31m
+            [0m­ƒæÑ Clientes[0m
+          [36m</h1>[31m
+          [36m<p[31m
+            [33mclass[31m=[32m"text-gray-400"[31m
+          [36m>[31m
+            [0mGerenciamento de assinantes com interface neural[0m
+          [36m</p>[31m
+        [36m</div>[31m
+        [36m<button[31m
+          [33mclass[31m=[32m"btn-cyber flex items-center gap-3"[31m
+          [33mwhilehover[31m=[32m"[object Object]"[31m
+          [33mwhiletap[31m=[32m"[object Object]"[31m
+        [36m>[31m
+          [36m<svg[31m
+            [33maria-hidden[31m=[32m"true"[31m
+            [33mclass[31m=[32m"w-5 h-5"[31m
+            [33mdata-slot[31m=[32m"icon"[31m
+            [33mfill[31m=[32m"none"[31m
+            [33mstroke[31m=[32m"currentColor"[31m
+            [33mstroke-width[31m=[32m"1.5"[31m
+            [33mviewBox[31m=[32m"0 0 24 24"[31m
+            [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+          [36m>[31m
+            [36m<path[31m
+              [33md[31m=[32m"M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z"[31m
+              [33mstroke-linecap[31m=[32m"round"[31m
+              [33mstroke-linejoin[31m=[32m"round"[31m
+            [36m/>[31m
+          [36m</svg>[31m
+          [0mNovo Cliente[0m
+        [36m</button>[31m
+      [36m</div>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"glass p-6 rounded-2xl overflow-visible relative z-50"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"grid grid-cols-1 xl:grid-cols-4 gap-4"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"relative"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"[31m
+              [33mdata-slot[31m=[32m"icon"[31m
+              [33mfill[31m=[32m"none"[31m
+              [33mstroke[31m=[32m"currentColor"[31m
+              [33mstroke-width[31m=[32m"1.5"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+              [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"[31m
+                [33mstroke-linecap[31m=[32m"round"[31m
+                [33mstroke-linejoin[31m=[32m"round"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+            [36m<input[31m
+              [33maria-label[31m=[32m"Buscar clientes"[31m
+              [33mclass[31m=[32m"w-full pl-10 pr-4 py-3 bg-black/30 border border-purple-500/30 rounded-xl text-white placeholder-gray-500 focus:border-purple-400 focus:outline-none transition-all duration-300"[31m
+              [33mplaceholder[31m=[32m"Buscar por nome, WhatsApp ou login..."[31m
+              [33mtype[31m=[32m"text"[31m
+              [33mvalue[31m=[32m""[31m
+            [36m/>[31m
+          [36m</div>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"relative"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"[31m
+              [33mdata-slot[31m=[32m"icon"[31m
+              [33mfill[31m=[32m"none"[31m
+              [33mstroke[31m=[32m"currentColor"[31m
+              [33mstroke-width[31m=[32m"1.5"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+              [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z"[31m
+                [33mstroke-linecap[31m=[32m"round"[31m
+                [33mstroke-linejoin[31m=[32m"round"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+            [36m<select[31m
+              [33maria-label[31m=[32m"Status"[31m
+              [33mclass[31m=[32m"w-full pl-10 pr-4 py-3 select-cyber focus:border-purple-400 transition-all duration-300"[31m
+            [36m>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m"all"[31m
+              [36m>[31m
+                [0mTodos os Status[0m
+              [36m</option>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m"Ativo"[31m
+              [36m>[31m
+                [0mAtivo[0m
+              [36m</option>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m"Inativo"[31m
+              [36m>[31m
+                [0mInativo[0m
+              [36m</option>[31m
+            [36m</select>[31m
+          [36m</div>[31m
+          [36m<select[31m
+            [33maria-label[31m=[32m"Filtro de Expira├º├úo"[31m
+            [33mclass[31m=[32m"px-4 py-3 select-cyber focus:border-purple-400 transition-all duration-300"[31m
+          [36m>[31m
+            [36m<option[31m
+              [33mvalue[31m=[32m"all"[31m
+            [36m>[31m
+              [0mTodas as Expira├º├Áes[0m
+            [36m</option>[31m
+            [36m<option[31m
+              [33mvalue[31m=[32m"expiring"[31m
+            [36m>[31m
+              [0mVencendo (7 dias)[0m
+            [36m</option>[31m
+            [36m<option[31m
+              [33mvalue[31m=[32m"expired"[31m
+            [36m>[31m
+              [0mVencidas[0m
+            [36m</option>[31m
+          [36m</select>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"flex items-center gap-3"[31m
+          [36m>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"flex bg-black/30 rounded-lg p-1 border border-purple-500/30"[31m
+            [36m>[31m
+              [36m<button[31m
+                [33mclass[31m=[32m"px-4 py-2 rounded-md text-sm font-medium transition-all text-gray-400 hover:text-white"[31m
+              [36m>[31m
+                [0mCards[0m
+              [36m</button>[31m
+              [36m<button[31m
+                [3...[39m
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m20 failed[39m[22m[2m | [22m[1m[32m4 passed[39m[22m[90m (24)[39m
+[2m   Start at [22m 00:28:40
+[2m   Duration [22m 52.30s[2m (transform 503ms, setup 345ms, collect 2.02s, tests 46.08s, environment 2.48s, prepare 644ms)[22m
+

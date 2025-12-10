@@ -1,0 +1,117 @@
+﻿
+> cyberpunk-iptv-crm@1.0.0 test
+> vitest renewClientPayment.test.tsx --run
+
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mD:/dowloads/cyberpunk-iptv-crm[39m
+
+[90mstdout[2m | src/test/renewClientPayment.test.tsx[2m > [22m[2mRenova├º├úo marca como Pago quando pendente[2m > [22m[2mao renovar um cliente pendente, muda status para Pago e registra receita
+[22m[39mError: Uncaught [Error: useCyberpunkNotification must be used within a CyberpunkNotificationProvider]
+    at reportException (D:\dowloads\cyberpunk-iptv-crm\node_modules\jsdom\lib\jsdom\living\helpers\runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (D:\dowloads\cyberpunk-iptv-crm\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:353:9)
+    at invokeEventListeners (D:\dowloads\cyberpunk-iptv-crm\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (D:\dowloads\cyberpunk-iptv-crm\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (D:\dowloads\cyberpunk-iptv-crm\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (D:\dowloads\cyberpunk-iptv-crm\node_modules\jsdom\lib\jsdom\living\generated\EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (D:\dowloads\cyberpunk-iptv-crm\node_modules\react-dom\cjs\react-dom.development.js:4213:16)
+    at invokeGuardedCallback (D:\dowloads\cyberpunk-iptv-crm\node_modules\react-dom\cjs\react-dom.development.js:4277:31)
+    at beginWork$1 (D:\dowloads\cyberpunk-iptv-crm\node_modules\react-dom\cjs\react-dom.development.js:27490:7)
+    at performUnitOfWork (D:\dowloads\cyberpunk-iptv-crm\node_modules\react-dom\cjs\react-dom.development.js:26599:12) Error: useCyberpunkNotification must be used within a CyberpunkNotificationProvider
+    at Module.useCyberpunkNotification [90m(D:\dowloads\cyberpunk-iptv-crm\[39msrc\components\CyberpunkNotification.tsx:376:11[90m)[39m
+    at DataProvider [90m(D:\dowloads\cyberpunk-iptv-crm\[39msrc\context\DataContext.tsx:115:31[90m)[39m
+    at renderWithHooks [90m(D:\dowloads\cyberpunk-iptv-crm\[39mnode_modules\[4mreact-dom[24m\cjs\react-dom.development.js:15486:18[90m)[39m
+    at mountIndeterminateComponent [90m(D:\dowloads\cyberpunk-iptv-crm\[39mnode_modules\[4mreact-dom[24m\cjs\react-dom.development.js:20103:13[90m)[39m
+    at beginWork [90m(D:\dowloads\cyberpunk-iptv-crm\[39mnode_modules\[4mreact-dom[24m\cjs\react-dom.development.js:21626:16[90m)[39m
+    at HTMLUnknownElement.callCallback [90m(D:\dowloads\cyberpunk-iptv-crm\[39mnode_modules\[4mreact-dom[24m\cjs\react-dom.development.js:4164:14[90m)[39m
+    at HTMLUnknownElement.callTheUserObjectsOperation [90m(D:\dowloads\cyberpunk-iptv-crm\[39mnode_modules\[4mjsdom[24m\lib\jsdom\living\generated\EventListener.js:26:30[90m)[39m
+    at innerInvokeEventListeners [90m(D:\dowloads\cyberpunk-iptv-crm\[39mnode_modules\[4mjsdom[24m\lib\jsdom\living\events\EventTarget-impl.js:350:25[90m)[39m
+    at invokeEventListeners [90m(D:\dowloads\cyberpunk-iptv-crm\[39mnode_modules\[4mjsdom[24m\lib\jsdom\living\events\EventTarget-impl.js:286:3[90m)[39m
+    at HTMLUnknownElementImpl._dispatch [90m(D:\dowloads\cyberpunk-iptv-crm\[39mnode_modules\[4mjsdom[24m\lib\jsdom\living\events\EventTarget-impl.js:233:9[90m)[39m
+Error: Uncaught [Error: useCyberpunkNotification must be used within a CyberpunkNotificationProvider]
+    at reportException (D:\dowloads\cyberpunk-iptv-crm\node_modules\jsdom\lib\jsdom\living\helpers\runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (D:\dowloads\cyberpunk-iptv-crm\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:353:9)
+    at invokeEventListeners (D:\dowloads\cyberpunk-iptv-crm\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (D:\dowloads\cyberpunk-iptv-crm\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (D:\dowloads\cyberpunk-iptv-crm\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (D:\dowloads\cyberpunk-iptv-crm\node_modules\jsdom\lib\jsdom\living\generated\EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (D:\dowloads\cyberpunk-iptv-crm\node_modules\react-dom\cjs\react-dom.development.js:4213:16)
+    at invokeGuardedCallback (D:\dowloads\cyberpunk-iptv-crm\node_modules\react-dom\cjs\react-dom.development.js:4277:31)
+    at beginWork$1 (D:\dowloads\cyberpunk-iptv-crm\node_modules\react-dom\cjs\react-dom.development.js:27490:7)
+    at performUnitOfWork (D:\dowloads\cyberpunk-iptv-crm\node_modules\react-dom\cjs\react-dom.development.js:26599:12) Error: useCyberpunkNotification must be used within a CyberpunkNotificationProvider
+    at Module.useCyberpunkNotification [90m(D:\dowloads\cyberpunk-iptv-crm\[39msrc\components\CyberpunkNotification.tsx:376:11[90m)[39m
+    at DataProvider [90m(D:\dowloads\cyberpunk-iptv-crm\[39msrc\context\DataContext.tsx:115:31[90m)[39m
+    at renderWithHooks [90m(D:\dowloads\cyberpunk-iptv-crm\[39mnode_modules\[4mreact-dom[24m\cjs\react-dom.development.js:15486:18[90m)[39m
+    at mountIndeterminateComponent [90m(D:\dowloads\cyberpunk-iptv-crm\[39mnode_modules\[4mreact-dom[24m\cjs\react-dom.development.js:20103:13[90m)[39m
+    at beginWork [90m(D:\dowloads\cyberpunk-iptv-crm\[39mnode_modules\[4mreact-dom[24m\cjs\react-dom.development.js:21626:16[90m)[39m
+    at HTMLUnknownElement.callCallback [90m(D:\dowloads\cyberpunk-iptv-crm\[39mnode_modules\[4mreact-dom[24m\cjs\react-dom.development.js:4164:14[90m)[39m
+    at HTMLUnknownElement.callTheUserObjectsOperation [90m(D:\dowloads\cyberpunk-iptv-crm\[39mnode_modules\[4mjsdom[24m\lib\jsdom\living\generated\EventListener.js:26:30[90m)[39m
+    at innerInvokeEventListeners [90m(D:\dowloads\cyberpunk-iptv-crm\[39mnode_modules\[4mjsdom[24m\lib\jsdom\living\events\EventTarget-impl.js:350:25[90m)[39m
+    at invokeEventListeners [90m(D:\dowloads\cyberpunk-iptv-crm\[39mnode_modules\[4mjsdom[24m\lib\jsdom\living\events\EventTarget-impl.js:286:3[90m)[39m
+    at HTMLUnknownElementImpl._dispatch [90m(D:\dowloads\cyberpunk-iptv-crm\[39mnode_modules\[4mjsdom[24m\lib\jsdom\living\events\EventTarget-impl.js:233:9[90m)[39m
+The above error occurred in the <DataProvider> component:
+
+    at DataProvider (D:\dowloads\cyberpunk-iptv-crm\src\context\DataContext.tsx:27:3)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+
+ [31mÔØ»[39m src/test/renewClientPayment.test.tsx [2m([22m[2m1 test[22m[2m | [22m[31m1 failed[39m[2m)[22m[90m 30[2mms[22m[39m
+[31m   [31m├ù[31m Renova├º├úo marca como Pago quando pendente[2m > [22mao renovar um cliente pendente, muda status para Pago e registra receita[90m 29[2mms[22m[31m[39m
+[31m     ÔåÆ useCyberpunkNotification must be used within a CyberpunkNotificationProvider[39m
+
+node.exe : [31mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[1m[7m Failed Tests 1 
+[27m[22mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[39m
+No linha:1 caractere:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo 
+...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([31mÔÄ»ÔÄ»ÔÄ»Ô...»ÔÄ»ÔÄ»ÔÄ» 
+   [39m:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+[31m[1m[7m FAIL [27m[22m[39m 
+src/test/renewClientPayment.test.tsx[2m > [22mRenova├º├úo marca como 
+Pago quando pendente[2m > [22mao renovar um cliente pendente, muda 
+status para Pago e registra receita
+[31m[1mError[22m: useCyberpunkNotification must be used within a 
+CyberpunkNotificationProvider[39m
+[36m [2mÔØ»[22m Module.useCyberpunkNotification 
+src/components/CyberpunkNotification.tsx:[2m376:11[22m[39m
+    [90m374| [39m  [35mconst[39m context [33m=[39m [33mReact[39m[
+33m.[39m[34museContext[39m([33mCyberpunkNotificationContext[39m)[33m
+;[39m
+    [90m375| [39m  [35mif[39m (context [33m===[39m undefined) {
+    [90m376| [39m    [35mthrow[39m [35mnew[39m 
+[33mError[39m([32m'useCyberpunkNotification must be used within a 
+Cy[39mÔÇª
+    [90m   | [39m          [31m^[39m
+    [90m377| [39m  }
+    [90m378| [39m  [35mreturn[39m context[33m;[39m
+[90m [2mÔØ»[22m DataProvider 
+src/context/DataContext.tsx:[2m115:31[22m[39m
+[90m [2mÔØ»[22m renderWithHooks 
+node_modules/react-dom/cjs/react-dom.development.js:[2m15486:18[22m[39m
+[90m [2mÔØ»[22m mountIndeterminateComponent 
+node_modules/react-dom/cjs/react-dom.development.js:[2m20103:13[22m[39m
+[90m [2mÔØ»[22m beginWork 
+node_modules/react-dom/cjs/react-dom.development.js:[2m21626:16[22m[39m
+[90m [2mÔØ»[22m beginWork$1 
+node_modules/react-dom/cjs/react-dom.development.js:[2m27465:14[22m[39m
+[90m [2mÔØ»[22m performUnitOfWork 
+node_modules/react-dom/cjs/react-dom.development.js:[2m26599:12[22m[39m
+[90m [2mÔØ»[22m workLoopSync 
+node_modules/react-dom/cjs/react-dom.development.js:[2m26505:5[22m[39m
+[90m [2mÔØ»[22m renderRootSync 
+node_modules/react-dom/cjs/react-dom.development.js:[2m26473:7[22m[39m
+[90m [2mÔØ»[22m recoverFromConcurrentError 
+node_modules/react-dom/cjs/react-dom.development.js:[2m25889:20[22m[39m
+
+[31m[2mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ
+»ÔÄ»ÔÄ»[1/1]ÔÄ»[22m[39m
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m   Start at [22m 16:06:21
+[2m   Duration [22m 4.28s[2m (transform 140ms, setup 337ms, collect 1.63s, tests 30ms, environment 1.72s, prepare 214ms)[22m
+
