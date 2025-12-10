@@ -1089,13 +1089,24 @@ export default function CyberSystemSettings() {
                 onClick={async () => {
                   setConfirmLoading(true);
                   try {
-                    // Clear all data not available in PWA - would need admin backend endpoint
-                    console.warn('⚠️ clearAllData não disponível na versão PWA');
-                    showNotification('Limpeza de dados em massa não disponível na versão online', 'error');
+                    // Import supabase for direct delete operations
+                    const { supabase } = await import('../lib/supabase');
+
+                    // Clear all data tables (not settings)
+                    await supabase.from('clients').delete().neq('id', 0);
+                    await supabase.from('leads').delete().neq('id', 0);
+                    await supabase.from('tests').delete().neq('id', 0);
+                    await supabase.from('resellers').delete().neq('id', 0);
+                    await supabase.from('revenue_transactions').delete().neq('id', 0);
+                    await supabase.from('credit_transactions').delete().neq('id', 0);
+                    await supabase.from('system_log').delete().neq('id', 0);
+
+                    window.dispatchEvent(new CustomEvent('settingsUpdated'));
+                    showNotification('✅ Todos os dados foram limpos com sucesso!', 'success');
                     setConfirmClearAll(false);
                   } catch (error) {
                     console.error('Error clearing data:', error);
-                    showNotification('Erro ao limpar dados', 'error');
+                    showNotification('Erro ao limpar dados: ' + (error as any)?.message, 'error');
                   } finally {
                     setConfirmLoading(false);
                   }
