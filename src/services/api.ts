@@ -1,6 +1,13 @@
 import { supabase } from '../lib/supabase';
 import { Client, Lead, RevenueTransaction, Test, Reseller, SystemLogEntry } from '../types';
 
+// Helper to get current user ID
+const getUserId = async (): Promise<string> => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user?.id) throw new Error('User not authenticated');
+    return user.id;
+};
+
 export const api = {
     clients: {
         list: async (): Promise<Client[]> => {
@@ -9,7 +16,8 @@ export const api = {
             return data || [];
         },
         add: async (client: Omit<Client, 'id'>): Promise<Client> => {
-            const { data, error } = await supabase.from('clients').insert(client).select().single();
+            const user_id = await getUserId();
+            const { data, error } = await supabase.from('clients').insert({ ...client, user_id }).select().single();
             if (error) throw error;
             return data;
         },
@@ -29,7 +37,8 @@ export const api = {
             return data || [];
         },
         add: async (lead: Omit<Lead, 'id' | 'createdAt'>): Promise<Lead> => {
-            const { data, error } = await supabase.from('leads').insert(lead).select().single();
+            const user_id = await getUserId();
+            const { data, error } = await supabase.from('leads').insert({ ...lead, user_id }).select().single();
             if (error) throw error;
             return data;
         },
@@ -49,7 +58,8 @@ export const api = {
             return data || [];
         },
         add: async (transaction: Omit<RevenueTransaction, 'id'>): Promise<RevenueTransaction> => {
-            const { data, error } = await supabase.from('revenue_transactions').insert(transaction).select().single();
+            const user_id = await getUserId();
+            const { data, error } = await supabase.from('revenue_transactions').insert({ ...transaction, user_id }).select().single();
             if (error) throw error;
             return data;
         }
@@ -61,7 +71,8 @@ export const api = {
             return data || [];
         },
         add: async (test: Omit<Test, 'id'>): Promise<Test> => {
-            const { data, error } = await supabase.from('tests').insert(test).select().single();
+            const user_id = await getUserId();
+            const { data, error } = await supabase.from('tests').insert({ ...test, user_id }).select().single();
             if (error) throw error;
             return data;
         },
@@ -81,7 +92,8 @@ export const api = {
             return data || [];
         },
         add: async (reseller: any): Promise<any> => {
-            const { data, error } = await supabase.from('resellers').insert(reseller).select().single();
+            const user_id = await getUserId();
+            const { data, error } = await supabase.from('resellers').insert({ ...reseller, user_id }).select().single();
             if (error) throw error;
             return data;
         },
@@ -101,7 +113,8 @@ export const api = {
             return data || [];
         },
         add: async (entry: Omit<SystemLogEntry, 'id'>): Promise<void> => {
-            await supabase.from('system_log').insert(entry);
+            const user_id = await getUserId();
+            await supabase.from('system_log').insert({ ...entry, user_id });
         }
     },
     creditTransactions: {
@@ -111,7 +124,8 @@ export const api = {
             return data || [];
         },
         add: async (transaction: any): Promise<any> => {
-            const { data, error } = await supabase.from('credit_transactions').insert(transaction).select().single();
+            const user_id = await getUserId();
+            const { data, error } = await supabase.from('credit_transactions').insert({ ...transaction, user_id }).select().single();
             if (error) throw error;
             return data;
         },
@@ -128,13 +142,14 @@ export const api = {
             return data || [];
         },
         save: async (planos: any[]): Promise<void> => {
-            // Get existing IDs
+            const user_id = await getUserId();
+            // Get existing IDs for this user
             const { data: existing } = await supabase.from('planos').select('id');
             const existingIds = new Set((existing || []).map(x => x.id));
 
-            // Upsert incoming
+            // Upsert incoming with user_id
             for (const p of planos) {
-                const { error } = await supabase.from('planos').upsert(p);
+                const { error } = await supabase.from('planos').upsert({ ...p, user_id });
                 if (error) throw error;
                 existingIds.delete(p.id);
             }
@@ -152,10 +167,11 @@ export const api = {
             return data || [];
         },
         save: async (items: any[]): Promise<void> => {
+            const user_id = await getUserId();
             const { data: existing } = await supabase.from('servidores').select('id');
             const existingIds = new Set((existing || []).map(x => x.id));
             for (const item of items) {
-                await supabase.from('servidores').upsert(item);
+                await supabase.from('servidores').upsert({ ...item, user_id });
                 existingIds.delete(item.id);
             }
             if (existingIds.size > 0) await supabase.from('servidores').delete().in('id', Array.from(existingIds));
@@ -168,10 +184,11 @@ export const api = {
             return data || [];
         },
         save: async (items: any[]): Promise<void> => {
+            const user_id = await getUserId();
             const { data: existing } = await supabase.from('formas_pagamento').select('id');
             const existingIds = new Set((existing || []).map(x => x.id));
             for (const item of items) {
-                await supabase.from('formas_pagamento').upsert(item);
+                await supabase.from('formas_pagamento').upsert({ ...item, user_id });
                 existingIds.delete(item.id);
             }
             if (existingIds.size > 0) await supabase.from('formas_pagamento').delete().in('id', Array.from(existingIds));
@@ -184,10 +201,11 @@ export const api = {
             return data || [];
         },
         save: async (items: any[]): Promise<void> => {
+            const user_id = await getUserId();
             const { data: existing } = await supabase.from('dispositivos').select('id');
             const existingIds = new Set((existing || []).map(x => x.id));
             for (const item of items) {
-                await supabase.from('dispositivos').upsert(item);
+                await supabase.from('dispositivos').upsert({ ...item, user_id });
                 existingIds.delete(item.id);
             }
             if (existingIds.size > 0) await supabase.from('dispositivos').delete().in('id', Array.from(existingIds));
@@ -200,10 +218,11 @@ export const api = {
             return data || [];
         },
         save: async (items: any[]): Promise<void> => {
+            const user_id = await getUserId();
             const { data: existing } = await supabase.from('aplicativos').select('id');
             const existingIds = new Set((existing || []).map(x => x.id));
             for (const item of items) {
-                await supabase.from('aplicativos').upsert(item);
+                await supabase.from('aplicativos').upsert({ ...item, user_id });
                 existingIds.delete(item.id);
             }
             if (existingIds.size > 0) await supabase.from('aplicativos').delete().in('id', Array.from(existingIds));
@@ -216,10 +235,11 @@ export const api = {
             return data || [];
         },
         save: async (items: any[]): Promise<void> => {
+            const user_id = await getUserId();
             const { data: existing } = await supabase.from('fontes_lead').select('id');
             const existingIds = new Set((existing || []).map(x => x.id));
             for (const item of items) {
-                await supabase.from('fontes_lead').upsert(item);
+                await supabase.from('fontes_lead').upsert({ ...item, user_id });
                 existingIds.delete(item.id);
             }
             if (existingIds.size > 0) await supabase.from('fontes_lead').delete().in('id', Array.from(existingIds));
