@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { Reseller, CreditTransaction } from '../types';
 import { useData } from '../context/DataContext';
+import { api } from '../services/api';
 import { useSystemData } from '../utils/systemData';
 import ResellerDashboard from './resellers/ResellerDashboard';
 import ResellerList from './resellers/ResellerList';
@@ -56,8 +57,8 @@ const CyberResellersManager: React.FC = () => {
         salePrice: priceMap[prev.servidor] ?? prev.salePrice
       }));
 
-      // Fetch all transactions for dashboard and history
-      window.electronAPI.database.getAllCreditTransactions()
+      // Fetch all transactions for dashboard and history using API
+      api.creditTransactions.list()
         .then((txs: any[]) => {
           const mappedTxs = (txs || []).map((tx: any) => ({
             ...tx,
@@ -181,10 +182,14 @@ const CyberResellersManager: React.FC = () => {
 
     await addCreditTransaction(payload);
 
-    // Refresh transactions
-    const txs = await window.electronAPI.database.getAllCreditTransactions();
-    const mappedTxs = (txs || []).map((tx: any) => ({ ...tx, operatorName: tx.operator_name || tx.operatorName, partyName: tx.party_name || tx.partyName, unitPrice: tx.unit_price || tx.unitPrice, resellerId: tx.reseller_id || tx.resellerId }));
-    setAllTransactions(mappedTxs);
+    // Refresh transactions via API
+    try {
+      const txs = await api.creditTransactions.list();
+      const mappedTxs = (txs || []).map((tx: any) => ({ ...tx, operatorName: tx.operator_name || tx.operatorName, partyName: tx.party_name || tx.partyName, unitPrice: tx.unit_price || tx.unitPrice, resellerId: tx.reseller_id || tx.resellerId }));
+      setAllTransactions(mappedTxs);
+    } catch (error) {
+      console.error("Error refreshing transactions", error);
+    }
 
     setPurchaseForm({ server: servers[0] || '', supplier: '', quantity: 0, unitPrice: (serverCostMap[servers[0] || ''] || 0) });
   };
@@ -211,10 +216,14 @@ const CyberResellersManager: React.FC = () => {
 
     await addCreditTransaction(payload);
 
-    // Refresh transactions
-    const txs = await window.electronAPI.database.getAllCreditTransactions();
-    const mappedTxs = (txs || []).map((tx: any) => ({ ...tx, operatorName: tx.operator_name || tx.operatorName, partyName: tx.party_name || tx.partyName, unitPrice: tx.unit_price || tx.unitPrice, resellerId: tx.reseller_id || tx.resellerId }));
-    setAllTransactions(mappedTxs);
+    // Refresh transactions via API
+    try {
+      const txs = await api.creditTransactions.list();
+      const mappedTxs = (txs || []).map((tx: any) => ({ ...tx, operatorName: tx.operator_name || tx.operatorName, partyName: tx.party_name || tx.partyName, unitPrice: tx.unit_price || tx.unitPrice, resellerId: tx.reseller_id || tx.resellerId }));
+      setAllTransactions(mappedTxs);
+    } catch (error) {
+      console.error("Error refreshing transactions", error);
+    }
 
     const updated = { ...reseller, creditsSold: (reseller.creditsSold || 0) + saleForm.quantity, totalSales: reseller.totalSales + total };
     await updateReseller(updated);

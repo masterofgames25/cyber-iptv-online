@@ -125,5 +125,19 @@ export const api = {
             if (isElectron) return (window as any).electronAPI.database.addSystemLogEntry(entry);
             await supabase.from('system_log').insert(entry);
         }
+    },
+    creditTransactions: {
+        list: async (): Promise<any[]> => {
+            if (isElectron) return (window as any).electronAPI.database.getAllCreditTransactions();
+            const { data, error } = await supabase.from('credit_transactions').select('*');
+            if (error) throw error;
+            return data || [];
+        },
+        add: async (transaction: any): Promise<any> => {
+            if (isElectron) return (window as any).electronAPI.database.addCreditTransaction(transaction);
+            const { data, error } = await supabase.from('credit_transactions').insert(transaction).select().single();
+            if (error) throw error;
+            return data;
+        }
     }
 };
