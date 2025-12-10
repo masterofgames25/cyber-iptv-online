@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { api } from '../services/api';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   PlusIcon,
@@ -63,14 +64,14 @@ export default function CyberSystemSettings() {
   const [dispositivos, setDispositivos] = useState<Dispositivo[]>([]);
   const [aplicativos, setAplicativos] = useState<Aplicativo[]>([]);
   const [fontesLead, setFontesLead] = useState<FonteLead[]>([]);
-  
+
   const [planoForm, setPlanoForm] = useState({ nome: '', meses: 1, preco: 0 });
   const [servidorForm, setServidorForm] = useState({ nome: '', custo: 0 });
   const [formaPagamentoForm, setFormaPagamentoForm] = useState('');
   const [dispositivoForm, setDispositivoForm] = useState('');
   const [aplicativoForm, setAplicativoForm] = useState('');
   const [fonteLeadForm, setFonteLeadForm] = useState('');
-  
+
   const [notification, setNotification] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
   const [confirmDeleteModal] = useState<{ open: boolean; section: 'planos' | 'servidores' | 'formas' | 'dispositivos' | 'aplicativos' | 'prospeccoes' | null }>({ open: false, section: null });
   const [confirmIndividualDeleteModal, setConfirmIndividualDeleteModal] = useState<{ open: boolean; item: any; section: string; itemName: string }>({ open: false, item: null, section: '', itemName: '' });
@@ -78,7 +79,7 @@ export default function CyberSystemSettings() {
   const [confirmLoading, setConfirmLoading] = useState(false);
   const confirmBtnRef = React.useRef<HTMLButtonElement | null>(null);
   const cancelBtnRef = React.useRef<HTMLButtonElement | null>(null);
-  
+
 
   // Load data from SQLite
   useEffect(() => {
@@ -88,27 +89,27 @@ export default function CyberSystemSettings() {
   const loadSystemSettings = async () => {
     try {
       // Load planos
-      const planosData = await window.electronAPI?.database.getPlanos() || [];
+      const planosData = await api.planos.list();
       setPlanos(planosData);
 
       // Load servidores
-      const servidoresData = await window.electronAPI?.database.getServidores() || [];
+      const servidoresData = await api.servidores.list();
       setServidores(servidoresData);
 
       // Load formas de pagamento
-      const formasData = await window.electronAPI?.database.getFormasPagamento() || [];
+      const formasData = await api.formasPagamento.list();
       setFormasPagamento(formasData);
 
       // Load dispositivos
-      const dispositivosData = await window.electronAPI?.database.getDispositivos() || [];
+      const dispositivosData = await api.dispositivos.list();
       setDispositivos(dispositivosData);
 
       // Load aplicativos
-      const aplicativosData = await window.electronAPI?.database.getAplicativos() || [];
+      const aplicativosData = await api.aplicativos.list();
       setAplicativos(aplicativosData);
 
       // Load fontes de lead
-      const fontesData = await window.electronAPI?.database.getFontesLead() || [];
+      const fontesData = await api.fontesLead.list();
       setFontesLead(fontesData);
     } catch (error) {
       console.error('Error loading system settings:', error);
@@ -116,7 +117,7 @@ export default function CyberSystemSettings() {
     }
   };
 
-  
+
 
   const showNotification = (message: string, type: 'success' | 'error') => {
     setNotification({ message, type });
@@ -152,27 +153,27 @@ export default function CyberSystemSettings() {
       if (section === 'planos') {
         const updatedPlanos = planos.filter(p => p.id !== item.id);
         setPlanos(updatedPlanos);
-        await window.electronAPI?.database.savePlanos(updatedPlanos);
+        await api.planos.save(updatedPlanos);
       } else if (section === 'servidores') {
         const updatedServidores = servidores.filter(s => s.id !== item.id);
         setServidores(updatedServidores);
-        await window.electronAPI?.database.saveServidores(updatedServidores);
+        await api.servidores.save(updatedServidores);
       } else if (section === 'formas') {
         const updatedFormas = formasPagamento.filter(f => f.id !== item.id);
         setFormasPagamento(updatedFormas);
-        await window.electronAPI?.database.saveFormasPagamento(updatedFormas);
+        await api.formasPagamento.save(updatedFormas);
       } else if (section === 'dispositivos') {
         const updatedDispositivos = dispositivos.filter(d => d.id !== item.id);
         setDispositivos(updatedDispositivos);
-        await window.electronAPI?.database.saveDispositivos(updatedDispositivos);
+        await api.dispositivos.save(updatedDispositivos);
       } else if (section === 'aplicativos') {
         const updatedAplicativos = aplicativos.filter(a => a.id !== item.id);
         setAplicativos(updatedAplicativos);
-        await window.electronAPI?.database.saveAplicativos(updatedAplicativos);
+        await api.aplicativos.save(updatedAplicativos);
       } else if (section === 'prospeccoes') {
         const updatedFontes = fontesLead.filter(f => f.id !== item.id);
         setFontesLead(updatedFontes);
-        await window.electronAPI?.database.saveFontesLead(updatedFontes);
+        await api.fontesLead.save(updatedFontes);
       }
 
       window.dispatchEvent(new CustomEvent('settingsUpdated'));
@@ -190,7 +191,7 @@ export default function CyberSystemSettings() {
       showNotification('Preencha o nome e preço do plano', 'error');
       return;
     }
-    
+
     const exists = planos.some(p => String(p.nome).trim().toLowerCase() === String(planoForm.nome).trim().toLowerCase());
     if (exists) { showNotification('Plano já existe', 'error'); return; }
     const newPlano: Plano = {
@@ -198,12 +199,12 @@ export default function CyberSystemSettings() {
       ...planoForm,
       ativo: true
     };
-    
+
     const updatedPlanos = [...planos, newPlano];
     setPlanos(updatedPlanos);
-    
+
     try {
-      await window.electronAPI?.database.savePlanos(updatedPlanos);
+      await api.planos.save(updatedPlanos);
       window.dispatchEvent(new CustomEvent('settingsUpdated'));
       setPlanoForm({ nome: '', meses: 1, preco: 0 });
       showNotification('Plano adicionado com sucesso!', 'success');
@@ -217,9 +218,9 @@ export default function CyberSystemSettings() {
     if (confirm('Tem certeza que deseja excluir este plano?')) {
       const updatedPlanos = planos.filter(plano => plano.id !== id);
       setPlanos(updatedPlanos);
-      
+
       try {
-        await window.electronAPI?.database.savePlanos(updatedPlanos);
+        await api.planos.save(updatedPlanos);
         window.dispatchEvent(new CustomEvent('settingsUpdated'));
         showNotification('Plano removido com sucesso!', 'success');
       } catch (error) {
@@ -234,7 +235,7 @@ export default function CyberSystemSettings() {
       showNotification('Preencha o nome e custo do servidor', 'error');
       return;
     }
-    
+
     const exists = servidores.some(s => String(s.nome).trim().toLowerCase() === String(servidorForm.nome).trim().toLowerCase());
     if (exists) { showNotification('Servidor já existe', 'error'); return; }
     const newServidor: Servidor = {
@@ -242,12 +243,12 @@ export default function CyberSystemSettings() {
       ...servidorForm,
       ativo: true
     };
-    
+
     const updatedServidores = [...servidores, newServidor];
     setServidores(updatedServidores);
-    
+
     try {
-      await window.electronAPI?.database.saveServidores(updatedServidores);
+      await api.servidores.save(updatedServidores);
       window.dispatchEvent(new CustomEvent('settingsUpdated'));
       setServidorForm({ nome: '', custo: 0 });
       showNotification('Servidor adicionado com sucesso!', 'success');
@@ -261,9 +262,9 @@ export default function CyberSystemSettings() {
     if (confirm('Tem certeza que deseja excluir este servidor?')) {
       const updatedServidores = servidores.filter(servidor => servidor.id !== id);
       setServidores(updatedServidores);
-      
+
       try {
-        await window.electronAPI?.database.saveServidores(updatedServidores);
+        await api.servidores.save(updatedServidores);
         window.dispatchEvent(new CustomEvent('settingsUpdated'));
         showNotification('Servidor removido com sucesso!', 'success');
       } catch (error) {
@@ -278,7 +279,7 @@ export default function CyberSystemSettings() {
       showNotification('Digite o nome da forma de pagamento', 'error');
       return;
     }
-    
+
     const exists = formasPagamento.some(f => String(f.nome).trim().toLowerCase() === String(formaPagamentoForm).trim().toLowerCase());
     if (exists) { showNotification('Forma de pagamento já existe', 'error'); return; }
     const newFormaPagamento: FormaPagamento = {
@@ -286,12 +287,12 @@ export default function CyberSystemSettings() {
       nome: formaPagamentoForm,
       ativo: true
     };
-    
+
     const updatedFormasPagamento = [...formasPagamento, newFormaPagamento];
     setFormasPagamento(updatedFormasPagamento);
-    
+
     try {
-      await window.electronAPI?.database.saveFormasPagamento(updatedFormasPagamento);
+      await api.formasPagamento.save(updatedFormasPagamento);
       window.dispatchEvent(new CustomEvent('settingsUpdated'));
       setFormaPagamentoForm('');
       showNotification('Forma de pagamento adicionada com sucesso!', 'success');
@@ -305,9 +306,9 @@ export default function CyberSystemSettings() {
     if (confirm('Tem certeza que deseja excluir esta forma de pagamento?')) {
       const updatedFormasPagamento = formasPagamento.filter(forma => forma.id !== id);
       setFormasPagamento(updatedFormasPagamento);
-      
+
       try {
-        await window.electronAPI?.database.saveFormasPagamento(updatedFormasPagamento);
+        await api.formasPagamento.save(updatedFormasPagamento);
         window.dispatchEvent(new CustomEvent('settingsUpdated'));
         showNotification('Forma de pagamento removida com sucesso!', 'success');
       } catch (error) {
@@ -322,7 +323,7 @@ export default function CyberSystemSettings() {
       showNotification('Digite o nome do dispositivo', 'error');
       return;
     }
-    
+
     const exists = dispositivos.some(d => String(d.nome).trim().toLowerCase() === String(dispositivoForm).trim().toLowerCase());
     if (exists) { showNotification('Dispositivo já existe', 'error'); return; }
     const newDispositivo: Dispositivo = {
@@ -330,12 +331,12 @@ export default function CyberSystemSettings() {
       nome: dispositivoForm,
       ativo: true
     };
-    
+
     const updatedDispositivos = [...dispositivos, newDispositivo];
     setDispositivos(updatedDispositivos);
-    
+
     try {
-      await window.electronAPI?.database.saveDispositivos(updatedDispositivos);
+      await api.dispositivos.save(updatedDispositivos);
       window.dispatchEvent(new CustomEvent('settingsUpdated'));
       setDispositivoForm('');
       showNotification('Dispositivo adicionado com sucesso!', 'success');
@@ -349,9 +350,9 @@ export default function CyberSystemSettings() {
     if (confirm('Tem certeza que deseja excluir este dispositivo?')) {
       const updatedDispositivos = dispositivos.filter(dispositivo => dispositivo.id !== id);
       setDispositivos(updatedDispositivos);
-      
+
       try {
-        await window.electronAPI?.database.saveDispositivos(updatedDispositivos);
+        await api.dispositivos.save(updatedDispositivos);
         window.dispatchEvent(new CustomEvent('settingsUpdated'));
         showNotification('Dispositivo removido com sucesso!', 'success');
       } catch (error) {
@@ -366,7 +367,7 @@ export default function CyberSystemSettings() {
       showNotification('Digite o nome do aplicativo', 'error');
       return;
     }
-    
+
     const exists = aplicativos.some(a => String(a.nome).trim().toLowerCase() === String(aplicativoForm).trim().toLowerCase());
     if (exists) { showNotification('Aplicativo já existe', 'error'); return; }
     const newAplicativo: Aplicativo = {
@@ -374,12 +375,12 @@ export default function CyberSystemSettings() {
       nome: aplicativoForm,
       ativo: true
     };
-    
+
     const updatedAplicativos = [...aplicativos, newAplicativo];
     setAplicativos(updatedAplicativos);
-    
+
     try {
-      await window.electronAPI?.database.saveAplicativos(updatedAplicativos);
+      await api.aplicativos.save(updatedAplicativos);
       window.dispatchEvent(new CustomEvent('settingsUpdated'));
       setAplicativoForm('');
       showNotification('Aplicativo adicionado com sucesso!', 'success');
@@ -393,9 +394,9 @@ export default function CyberSystemSettings() {
     if (confirm('Tem certeza que deseja excluir este aplicativo?')) {
       const updatedAplicativos = aplicativos.filter(aplicativo => aplicativo.id !== id);
       setAplicativos(updatedAplicativos);
-      
+
       try {
-        await window.electronAPI?.database.saveAplicativos(updatedAplicativos);
+        await api.aplicativos.save(updatedAplicativos);
         window.dispatchEvent(new CustomEvent('settingsUpdated'));
         showNotification('Aplicativo removido com sucesso!', 'success');
       } catch (error) {
@@ -410,7 +411,7 @@ export default function CyberSystemSettings() {
       showNotification('Digite o nome da fonte de lead', 'error');
       return;
     }
-    
+
     const exists = fontesLead.some(f => String(f.nome).trim().toLowerCase() === String(fonteLeadForm).trim().toLowerCase());
     if (exists) { showNotification('Prospecção já existe', 'error'); return; }
     const newFonteLead: FonteLead = {
@@ -418,12 +419,12 @@ export default function CyberSystemSettings() {
       nome: fonteLeadForm,
       ativo: true
     };
-    
+
     const updatedFontesLead = [...fontesLead, newFonteLead];
     setFontesLead(updatedFontesLead);
-    
+
     try {
-      await window.electronAPI?.database.saveFontesLead(updatedFontesLead);
+      await api.fontesLead.save(updatedFontesLead);
       window.dispatchEvent(new CustomEvent('settingsUpdated'));
       setFonteLeadForm('');
       showNotification('Fonte de lead adicionada com sucesso!', 'success');
@@ -437,9 +438,9 @@ export default function CyberSystemSettings() {
     if (confirm('Tem certeza que deseja excluir esta fonte de lead?')) {
       const updatedFontesLead = fontesLead.filter(fonte => fonte.id !== id);
       setFontesLead(updatedFontesLead);
-      
+
       try {
-        await window.electronAPI?.database.saveFontesLead(updatedFontesLead);
+        await api.fontesLead.save(updatedFontesLead);
         window.dispatchEvent(new CustomEvent('settingsUpdated'));
         showNotification('Fonte de lead removida com sucesso!', 'success');
       } catch (error) {
@@ -458,17 +459,17 @@ export default function CyberSystemSettings() {
 
   // Removed restoreConfigsFromBackup function - no longer needed with SQLite
 
-  
+
 
   const ensureDefaultConfigs = async () => {
     try {
       // Check if we have data in SQLite, if not create defaults
-      const planosData = await window.electronAPI?.database.getPlanos() || [];
-      const servidoresData = await window.electronAPI?.database.getServidores() || [];
-      const formasData = await window.electronAPI?.database.getFormasPagamento() || [];
-      const dispositivosData = await window.electronAPI?.database.getDispositivos() || [];
-      const aplicativosData = await window.electronAPI?.database.getAplicativos() || [];
-      const fontesData = await window.electronAPI?.database.getFontesLead() || [];
+      const planosData = await api.planos.list();
+      const servidoresData = await api.servidores.list();
+      const formasData = await api.formasPagamento.list();
+      const dispositivosData = await api.dispositivos.list();
+      const aplicativosData = await api.aplicativos.list();
+      const fontesData = await api.fontesLead.list();
 
 
       if (planosData.length === 0) {
@@ -478,9 +479,9 @@ export default function CyberSystemSettings() {
           { id: '3', nome: 'SEMESTRAL', meses: 6, preco: 180, ativo: true },
           { id: '4', nome: 'ANUAL', meses: 12, preco: 360, ativo: true }
         ];
-        await window.electronAPI?.database.savePlanos(defaults);
+        await api.planos.save(defaults);
       }
-      
+
       if (servidoresData.length === 0) {
         const defaults = [
           { id: '1', nome: 'BLAZE', custo: 4.0, valorCredito: 4.0, ativo: true },
@@ -488,9 +489,9 @@ export default function CyberSystemSettings() {
           { id: '3', nome: 'MEGGA', custo: 4.0, valorCredito: 4.0, ativo: true },
           { id: '4', nome: 'P2PNEWTVS', custo: 6.5, valorCredito: 6.5, ativo: true }
         ];
-        await window.electronAPI?.database.saveServidores(defaults);
+        await api.servidores.save(defaults);
       }
-      
+
       if (formasData.length === 0) {
         const defaults = [
           { id: '1', nome: 'PIX', ativo: true },
@@ -498,9 +499,9 @@ export default function CyberSystemSettings() {
           { id: '3', nome: 'Mercado Pago', ativo: true },
           { id: '4', nome: 'Cartão de Crédito', ativo: true }
         ];
-        await window.electronAPI?.database.saveFormasPagamento(defaults);
+        await api.formasPagamento.save(defaults);
       }
-      
+
       if (dispositivosData.length === 0) {
         const defaults = [
           { id: '1', nome: 'TV Box', ativo: true },
@@ -512,9 +513,9 @@ export default function CyberSystemSettings() {
           { id: '7', nome: 'Smart TV Multilazer', ativo: true },
           { id: '8', nome: 'Smart TV TLC', ativo: true }
         ];
-        await window.electronAPI?.database.saveDispositivos(defaults);
+        await api.dispositivos.save(defaults);
       }
-      
+
       if (aplicativosData.length === 0) {
         const defaults = [
           { id: '1', nome: 'IPTV Smarters', ativo: true },
@@ -531,9 +532,9 @@ export default function CyberSystemSettings() {
           { id: '12', nome: 'FUNPLAY', ativo: true },
           { id: '13', nome: 'PLAYSIM', ativo: true }
         ];
-        await window.electronAPI?.database.saveAplicativos(defaults);
+        await api.aplicativos.save(defaults);
       }
-      
+
       if (fontesData.length === 0) {
         const defaults = [
           { id: '1', nome: 'Redes Sociais', ativo: true },
@@ -543,9 +544,9 @@ export default function CyberSystemSettings() {
           { id: '5', nome: 'Outros', ativo: true },
           { id: '6', nome: 'Direto', ativo: true }
         ];
-        await window.electronAPI?.database.saveFontesLead(defaults);
+        await api.fontesLead.save(defaults);
       }
-      
+
       window.dispatchEvent(new CustomEvent('settingsUpdated'));
     } catch (error) {
       console.error('Error ensuring default configs:', error);
@@ -574,7 +575,7 @@ export default function CyberSystemSettings() {
           <CurrencyDollarIcon className="h-6 w-6 mr-3 text-cyan-400" />
           Planos
         </h2>
-        
+
         <div className="flex flex-col md:flex-row gap-4 mb-6">
           <input
             type="text"
@@ -606,48 +607,46 @@ export default function CyberSystemSettings() {
           </button>
         </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {planos.map((plano) => (
-              <motion.div
-                key={plano.id}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className={`bg-black/30 border border-gray-600 rounded-lg p-4 flex justify-between items-center hover:border-cyan-500/50 transition-all duration-300`}
-              >
-                <div>
-                  <h3 className={`font-semibold ${isProtectedItem('planos', plano.nome) ? 'text-yellow-400' : 'text-white'}`}>
-                    {plano.nome}
-                    {isProtectedItem('planos', plano.nome) && (
-                      <span className="ml-2 text-xs bg-yellow-600/20 text-yellow-400 px-2 py-1 rounded">Protegido</span>
-                    )}
-                  </h3>
-                  <p className="text-gray-400 text-sm">{plano.meses} meses</p>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <span className={`font-bold ${
-                    plano.preco <= 50 ? 'text-green-400' : 
-                    plano.preco <= 100 ? 'text-yellow-400' : 'text-red-400'
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {planos.map((plano) => (
+            <motion.div
+              key={plano.id}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className={`bg-black/30 border border-gray-600 rounded-lg p-4 flex justify-between items-center hover:border-cyan-500/50 transition-all duration-300`}
+            >
+              <div>
+                <h3 className={`font-semibold ${isProtectedItem('planos', plano.nome) ? 'text-yellow-400' : 'text-white'}`}>
+                  {plano.nome}
+                  {isProtectedItem('planos', plano.nome) && (
+                    <span className="ml-2 text-xs bg-yellow-600/20 text-yellow-400 px-2 py-1 rounded">Protegido</span>
+                  )}
+                </h3>
+                <p className="text-gray-400 text-sm">{plano.meses} meses</p>
+              </div>
+              <div className="flex items-center space-x-2">
+                <span className={`font-bold ${plano.preco <= 50 ? 'text-green-400' :
+                  plano.preco <= 100 ? 'text-yellow-400' : 'text-red-400'
                   }`}>
-                    R$ {plano.preco.toFixed(2)}
-                  </span>
-                  <div className="flex space-x-1">
-                    <button
-                      aria-label="Excluir item individualmente"
-                      onClick={() => openIndividualDeleteConfirmation('planos', plano, plano.nome)}
-                      disabled={isProtectedItem('planos', plano.nome)}
-                      className={`px-2 py-1 rounded transition-all duration-300 ${
-                        isProtectedItem('planos', plano.nome) ? 'bg-gray-700 text-gray-500 cursor-not-allowed' :
-                        'bg-red-600/20 text-red-400 hover:bg-red-600/40'
+                  R$ {plano.preco.toFixed(2)}
+                </span>
+                <div className="flex space-x-1">
+                  <button
+                    aria-label="Excluir item individualmente"
+                    onClick={() => openIndividualDeleteConfirmation('planos', plano, plano.nome)}
+                    disabled={isProtectedItem('planos', plano.nome)}
+                    className={`px-2 py-1 rounded transition-all duration-300 ${isProtectedItem('planos', plano.nome) ? 'bg-gray-700 text-gray-500 cursor-not-allowed' :
+                      'bg-red-600/20 text-red-400 hover:bg-red-600/40'
                       }`}
-                    >
-                      <TrashIcon className="h-4 w-4" />
-                    </button>
-                  </div>
+                  >
+                    <TrashIcon className="h-4 w-4" />
+                  </button>
                 </div>
-              </motion.div>
-            ))}
-          </div>
-          
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
       </motion.div>
 
       {/* Servidores Section */}
@@ -661,7 +660,7 @@ export default function CyberSystemSettings() {
           <CloudIcon className="h-6 w-6 mr-3 text-purple-400" />
           Servidores e Custo de Crédito
         </h2>
-        
+
         <div className="flex flex-col md:flex-row gap-4 mb-6">
           <input
             type="text"
@@ -702,17 +701,16 @@ export default function CyberSystemSettings() {
                   <span className="ml-2 text-xs bg-yellow-600/20 text-yellow-400 px-2 py-1 rounded">Protegido</span>
                 )}
               </span>
-                <div className="flex items-center space-x-2">
-                  <span className="font-bold text-orange-400">Custo R$ {servidor.custo.toFixed(2)}</span>
-                  <div className="flex space-x-1">
+              <div className="flex items-center space-x-2">
+                <span className="font-bold text-orange-400">Custo R$ {servidor.custo.toFixed(2)}</span>
+                <div className="flex space-x-1">
                   <button
                     aria-label="Excluir item individualmente"
                     onClick={() => openIndividualDeleteConfirmation('servidores', servidor, servidor.nome)}
                     disabled={isProtectedItem('servidores', servidor.nome)}
-                    className={`px-2 py-1 rounded transition-all duration-300 ${
-                      isProtectedItem('servidores', servidor.nome) ? 'bg-gray-700 text-gray-500 cursor-not-allowed' :
+                    className={`px-2 py-1 rounded transition-all duration-300 ${isProtectedItem('servidores', servidor.nome) ? 'bg-gray-700 text-gray-500 cursor-not-allowed' :
                       'bg-red-600/20 text-red-400 hover:bg-red-600/40'
-                    }`}
+                      }`}
                   >
                     <TrashIcon className="h-4 w-4" />
                   </button>
@@ -721,7 +719,7 @@ export default function CyberSystemSettings() {
             </motion.div>
           ))}
         </div>
-        
+
       </motion.div>
 
       {/* Grid de Configurações */}
@@ -737,7 +735,7 @@ export default function CyberSystemSettings() {
             <CreditCardIcon className="h-5 w-5 mr-2 text-green-400" />
             Formas de Pagamento
           </h3>
-          
+
           <div className="flex gap-2 mb-4">
             <input
               type="text"
@@ -774,10 +772,9 @@ export default function CyberSystemSettings() {
                     aria-label="Excluir item individualmente"
                     onClick={() => openIndividualDeleteConfirmation('formas', forma, forma.nome)}
                     disabled={isProtectedItem('formas', forma.nome)}
-                    className={`px-2 py-1 rounded transition-all duration-300 ${
-                      isProtectedItem('formas', forma.nome) ? 'bg-gray-700 text-gray-500 cursor-not-allowed' :
+                    className={`px-2 py-1 rounded transition-all duration-300 ${isProtectedItem('formas', forma.nome) ? 'bg-gray-700 text-gray-500 cursor-not-allowed' :
                       'bg-red-600/20 text-red-400 hover:bg-red-600/40'
-                    }`}
+                      }`}
                   >
                     <TrashIcon className="h-3 w-3" />
                   </button>
@@ -785,7 +782,7 @@ export default function CyberSystemSettings() {
               </motion.div>
             ))}
           </div>
-          
+
         </motion.div>
 
         {/* Dispositivos */}
@@ -799,7 +796,7 @@ export default function CyberSystemSettings() {
             <DevicePhoneMobileIcon className="h-5 w-5 mr-2 text-blue-400" />
             Dispositivos
           </h3>
-          
+
           <div className="flex gap-2 mb-4">
             <input
               type="text"
@@ -836,10 +833,9 @@ export default function CyberSystemSettings() {
                     aria-label="Excluir item individualmente"
                     onClick={() => openIndividualDeleteConfirmation('dispositivos', dispositivo, dispositivo.nome)}
                     disabled={isProtectedItem('dispositivos', dispositivo.nome)}
-                    className={`px-2 py-1 rounded transition-all duration-300 ${
-                      isProtectedItem('dispositivos', dispositivo.nome) ? 'bg-gray-700 text-gray-500 cursor-not-allowed' :
+                    className={`px-2 py-1 rounded transition-all duration-300 ${isProtectedItem('dispositivos', dispositivo.nome) ? 'bg-gray-700 text-gray-500 cursor-not-allowed' :
                       'bg-red-600/20 text-red-400 hover:bg-red-600/40'
-                    }`}
+                      }`}
                   >
                     <TrashIcon className="h-3 w-3" />
                   </button>
@@ -847,7 +843,7 @@ export default function CyberSystemSettings() {
               </motion.div>
             ))}
           </div>
-          
+
         </motion.div>
 
         {/* Aplicativos */}
@@ -861,7 +857,7 @@ export default function CyberSystemSettings() {
             <PlayIcon className="h-5 w-5 mr-2 text-purple-400" />
             Aplicativos
           </h3>
-          
+
           <div className="flex gap-2 mb-4">
             <input
               type="text"
@@ -898,10 +894,9 @@ export default function CyberSystemSettings() {
                     aria-label="Excluir item individualmente"
                     onClick={() => openIndividualDeleteConfirmation('aplicativos', aplicativo, aplicativo.nome)}
                     disabled={isProtectedItem('aplicativos', aplicativo.nome)}
-                    className={`px-2 py-1 rounded transition-all duration-300 ${
-                      isProtectedItem('aplicativos', aplicativo.nome) ? 'bg-gray-700 text-gray-500 cursor-not-allowed' :
+                    className={`px-2 py-1 rounded transition-all duration-300 ${isProtectedItem('aplicativos', aplicativo.nome) ? 'bg-gray-700 text-gray-500 cursor-not-allowed' :
                       'bg-red-600/20 text-red-400 hover:bg-red-600/40'
-                    }`}
+                      }`}
                   >
                     <TrashIcon className="h-3 w-3" />
                   </button>
@@ -909,7 +904,7 @@ export default function CyberSystemSettings() {
               </motion.div>
             ))}
           </div>
-          
+
         </motion.div>
       </div>
 
@@ -924,7 +919,7 @@ export default function CyberSystemSettings() {
           <ExclamationTriangleIcon className="h-5 w-5 mr-2 text-orange-400" />
           Prospecção
         </h3>
-        
+
         <div className="flex gap-2 mb-4">
           <input
             type="text"
@@ -961,10 +956,9 @@ export default function CyberSystemSettings() {
                   aria-label="Excluir item individualmente"
                   onClick={() => openIndividualDeleteConfirmation('prospeccoes', fonte, fonte.nome)}
                   disabled={isProtectedItem('prospeccoes', fonte.nome)}
-                  className={`px-2 py-1 rounded transition-all duration-300 ${
-                    isProtectedItem('prospeccoes', fonte.nome) ? 'bg-gray-700 text-gray-500 cursor-not-allowed' :
+                  className={`px-2 py-1 rounded transition-all duration-300 ${isProtectedItem('prospeccoes', fonte.nome) ? 'bg-gray-700 text-gray-500 cursor-not-allowed' :
                     'bg-red-600/20 text-red-400 hover:bg-red-600/40'
-                  }`}
+                    }`}
                 >
                   <TrashIcon className="h-3 w-3" />
                 </button>
@@ -972,7 +966,7 @@ export default function CyberSystemSettings() {
             </motion.div>
           ))}
         </div>
-        
+
       </motion.div>
 
       {/* Gerenciamento de Dados */}
@@ -986,9 +980,9 @@ export default function CyberSystemSettings() {
           <ExclamationTriangleIcon className="h-6 w-6 mr-3 text-red-400" />
           Gerenciamento de Dados
         </h2>
-        
+
         <p className="text-gray-400 mb-6">
-          Limpe todos os dados da aplicação. 
+          Limpe todos os dados da aplicação.
           Cuidado, algumas ações são irreversíveis.
         </p>
 
@@ -1041,7 +1035,7 @@ export default function CyberSystemSettings() {
         </div>
       </motion.div>
 
-      
+
 
       {confirmIndividualDeleteModal.open && (
         <div role="dialog" aria-modal="true" aria-labelledby="individual-confirm-title" aria-describedby="individual-confirm-desc" className="fixed inset-0 z-50 flex items-center justify-center">
@@ -1061,14 +1055,14 @@ export default function CyberSystemSettings() {
             </div>
             <p className="text-yellow-400 text-sm mb-4 font-mono">⚠️ Esta ação não pode ser desfeita.</p>
             <div className="flex gap-3">
-              <button 
-                onClick={performIndividualDeletion} 
+              <button
+                onClick={performIndividualDeletion}
                 className="flex-1 px-4 py-2 font-mono rounded bg-gradient-to-r from-red-500 to-pink-500 text-white shadow-[0_0_12px_#dc2626] hover:shadow-[0_0_20px_#dc2626] animate-pulse transition-all duration-300"
               >
                 Confirmar Exclusão
               </button>
-              <button 
-                onClick={() => setConfirmIndividualDeleteModal({ open: false, item: null, section: '', itemName: '' })} 
+              <button
+                onClick={() => setConfirmIndividualDeleteModal({ open: false, item: null, section: '', itemName: '' })}
                 className="flex-1 px-4 py-2 font-mono rounded bg-gray-700 text-white hover:bg-gray-600 transition-all duration-300"
               >
                 Cancelar
@@ -1091,7 +1085,7 @@ export default function CyberSystemSettings() {
             </p>
             <p className="text-yellow-400 text-sm mb-4 font-mono">⚠️ Esta ação não pode ser desfeita.</p>
             <div className="flex gap-3">
-              <button 
+              <button
                 onClick={async () => {
                   setConfirmLoading(true);
                   try {
@@ -1105,15 +1099,15 @@ export default function CyberSystemSettings() {
                   } finally {
                     setConfirmLoading(false);
                   }
-                }} 
+                }}
                 className="flex-1 px-4 py-2 font-mono rounded bg-gradient-to-r from-red-500 to-pink-500 text-white shadow-[0_0_12px_#dc2626] hover:shadow-[0_0_20px_#dc2626] transition-all duration-300"
                 ref={confirmBtnRef}
                 disabled={confirmLoading}
               >
                 Confirmar Limpeza
               </button>
-              <button 
-                onClick={() => setConfirmClearAll(false)} 
+              <button
+                onClick={() => setConfirmClearAll(false)}
                 className="flex-1 px-4 py-2 font-mono rounded bg-gray-700 text-white hover:bg-gray-600 transition-all duration-300"
                 ref={cancelBtnRef}
               >
@@ -1131,11 +1125,10 @@ export default function CyberSystemSettings() {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 50 }}
-            className={`fixed bottom-8 right-8 px-6 py-4 rounded-lg border backdrop-blur-xl z-50 ${
-              notification.type === 'success' 
-                ? 'bg-green-500/20 border-green-500/50 text-green-400' 
-                : 'bg-red-500/20 border-red-500/50 text-red-400'
-            }`}
+            className={`fixed bottom-8 right-8 px-6 py-4 rounded-lg border backdrop-blur-xl z-50 ${notification.type === 'success'
+              ? 'bg-green-500/20 border-green-500/50 text-green-400'
+              : 'bg-red-500/20 border-red-500/50 text-red-400'
+              }`}
           >
             <div className="flex items-center space-x-3">
               {notification.type === 'success' ? (

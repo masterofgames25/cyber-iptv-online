@@ -185,3 +185,43 @@ export interface SystemLogEntry {
   originalClient?: Client;
   originalTest?: Test;
 }
+
+export interface Plano {
+  id: number | string;
+  nome: string;
+  meses: number;
+  preco: number;
+  ativo: boolean;
+}
+
+export interface Servidor {
+  id: number | string;
+  nome: string;
+  custo: number;
+  valorCredito?: number;
+  ativo: boolean;
+}
+
+export interface FormaPagamento {
+  id: number | string;
+  nome: string;
+  ativo: boolean;
+}
+
+export interface Dispositivo {
+  id: number | string;
+  nome: string;
+  ativo: boolean;
+}
+
+export interface Aplicativo {
+  id: number | string;
+  nome: string;
+  ativo: boolean;
+}
+
+export interface FonteLead {
+  id: number | string;
+  nome: string;
+  ativo: boolean;
+}
