@@ -505,7 +505,7 @@ const CyberClientForm: React.FC<CyberClientFormProps> = ({
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <CyberDateInput
           value={formData.ativacao}
           onChange={(value) => handleInputChange('ativacao', value)}
@@ -732,8 +732,8 @@ const CyberClientForm: React.FC<CyberClientFormProps> = ({
               type="button"
               onClick={() => setActiveTab('main')}
               className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${activeTab === 'main'
-                  ? 'bg-cyan-500/20 text-cyan-400'
-                  : 'text-gray-400 hover:text-white'
+                ? 'bg-cyan-500/20 text-cyan-400'
+                : 'text-gray-400 hover:text-white'
                 }`}
             >
               Dados Principais
@@ -742,8 +742,8 @@ const CyberClientForm: React.FC<CyberClientFormProps> = ({
               type="button"
               onClick={() => setActiveTab('subscription')}
               className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${activeTab === 'subscription'
-                  ? 'bg-cyan-500/20 text-cyan-400'
-                  : 'text-gray-400 hover:text-white'
+                ? 'bg-cyan-500/20 text-cyan-400'
+                : 'text-gray-400 hover:text-white'
                 }`}
             >
               Assinatura
@@ -752,8 +752,8 @@ const CyberClientForm: React.FC<CyberClientFormProps> = ({
               type="button"
               onClick={() => setActiveTab('connection')}
               className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${activeTab === 'connection'
-                  ? 'bg-cyan-500/20 text-cyan-400'
-                  : 'text-gray-400 hover:text-white'
+                ? 'bg-cyan-500/20 text-cyan-400'
+                : 'text-gray-400 hover:text-white'
                 }`}
             >
               Conexão
