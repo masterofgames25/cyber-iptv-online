@@ -773,23 +773,14 @@ export const CyberClientsList: React.FC = () => {
 
       {/* Modal de Formulário */}
       {showForm && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            className="glass rounded-2xl p-8 w-full mx-4 max-w-[90vw] min-h-[70vh] max-h-[90vh] overflow-y-auto"
-          >
-            <CyberClientForm
-              client={editingClient}
-              onSave={handleSaveClient}
-              onClose={() => {
-                setShowForm(false);
-                setEditingClient(null);
-              }}
-            />
-          </motion.div>
-        </div>
+        <CyberClientForm
+          client={editingClient}
+          onSave={handleSaveClient}
+          onClose={() => {
+            setShowForm(false);
+            setEditingClient(null);
+          }}
+        />
       )}
 
       {/* Modal de Detalhes */}
