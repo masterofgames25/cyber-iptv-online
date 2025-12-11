@@ -97,8 +97,14 @@ export const CyberSidebar: React.FC<CyberSidebarProps> = ({ currentView, setCurr
 
 const InstallPrompt: React.FC = () => {
   const [deferredPrompt, setDeferredPrompt] = React.useState<any>(null);
+  const [isInstalled, setIsInstalled] = React.useState(false);
+  const [showInstructions, setShowInstructions] = React.useState(false);
 
   React.useEffect(() => {
+    if (typeof window !== 'undefined' && window.matchMedia('(display-mode: standalone)').matches) {
+      setIsInstalled(true);
+    }
+
     const handler = (e: any) => {
       e.preventDefault();
       setDeferredPrompt(e);
@@ -108,26 +114,68 @@ const InstallPrompt: React.FC = () => {
   }, []);
 
   const handleInstall = async () => {
-    if (!deferredPrompt) return;
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    if (outcome === 'accepted') {
-      setDeferredPrompt(null);
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        setDeferredPrompt(null);
+      }
+    } else {
+      setShowInstructions(true);
     }
   };
 
-  if (!deferredPrompt) return null;
+  if (isInstalled) return null;
 
   return (
-    <motion.button
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
-      onClick={handleInstall}
-      className="w-full mb-4 p-3 rounded-xl bg-gradient-to-r from-cyan-600 to-blue-600 text-white font-bold shadow-[0_0_15px_rgba(8,145,178,0.5)] flex items-center justify-center gap-2 group"
-    >
-      <ArrowDownTrayIcon className="w-5 h-5 group-hover:animate-bounce" />
-      <span className="text-sm">INSTALAR APP</span>
-    </motion.button>
+    <>
+      <motion.button
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        onClick={handleInstall}
+        className="w-full mb-4 p-3 rounded-xl bg-gradient-to-r from-cyan-600 to-blue-600 text-white font-bold shadow-[0_0_15px_rgba(8,145,178,0.5)] flex items-center justify-center gap-2 group"
+      >
+        <ArrowDownTrayIcon className="w-5 h-5 group-hover:animate-bounce" />
+        <span className="text-sm">INSTALAR APP</span>
+      </motion.button>
+
+      {showInstructions && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm" onClick={() => setShowInstructions(false)}>
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            className="bg-gray-900 border border-purple-500 rounded-2xl p-6 max-w-sm w-full shadow-2xl"
+            onClick={e => e.stopPropagation()}
+          >
+            <h3 className="text-xl font-bold text-white mb-4">Como Instalar</h3>
+            <div className="space-y-4 text-gray-300 text-sm">
+              <p>Instalação manual:</p>
+
+              <div className="bg-white/5 p-3 rounded-lg">
+                <strong className="text-cyan-400 block mb-1">PC (Chrome/Edge):</strong>
+                Clique no ícone de download na barra de endereço.
+              </div>
+
+              <div className="bg-white/5 p-3 rounded-lg">
+                <strong className="text-pink-400 block mb-1">Android (Chrome):</strong>
+                Menu (3 pontos) ➝ "Instalar aplicativo".
+              </div>
+
+              <div className="bg-white/5 p-3 rounded-lg">
+                <strong className="text-white block mb-1">iPhone (Safari):</strong>
+                Compartilhar ➝ "Adicionar à Tela de Início".
+              </div>
+            </div>
+            <button
+              onClick={() => setShowInstructions(false)}
+              className="mt-6 w-full py-2 bg-purple-600 hover:bg-purple-500 text-white rounded-lg font-semibold"
+            >
+              Entendi
+            </button>
+          </motion.div>
+        </div>
+      )}
+    </>
   );
 };
 
