@@ -578,13 +578,13 @@ const CyberTestsList: React.FC = () => {
                   <thead className="cyber-table thead">
                     <tr aria-hidden="true">
                       <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider md:hidden"></th>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Cliente</th>
+                      <th className="px-2 py-2 md:px-4 md:py-3 text-left text-[10px] md:text-xs font-medium text-gray-400 uppercase tracking-wider">Cliente</th>
                       <th className="hidden md:table-cell px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Início</th>
                       <th className="hidden md:table-cell px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Término</th>
                       <th className="hidden md:table-cell px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Tempo restante</th>
                       <th className="hidden md:table-cell px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Descrição</th>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Status</th>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Ações</th>
+                      <th className="px-2 py-2 md:px-4 md:py-3 text-left text-[10px] md:text-xs font-medium text-gray-400 uppercase tracking-wider">Status</th>
+                      <th className="px-2 py-2 md:px-4 md:py-3 text-left text-[10px] md:text-xs font-medium text-gray-400 uppercase tracking-wider">Ações</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-white/10">
@@ -603,7 +603,7 @@ const CyberTestsList: React.FC = () => {
                               )}
                             </button>
                           </td>
-                          <td className="px-4 py-4">
+                          <td className="px-2 py-2 md:px-4 md:py-4">
                             <div>
                               <div className="text-sm font-medium text-white">{test.clientName}</div>
                               <div className="text-xs text-gray-400">ID: {test.id}</div>
@@ -630,11 +630,11 @@ const CyberTestsList: React.FC = () => {
                             })()}
                           </td>
                           <td className="hidden md:table-cell px-4 py-4 text-sm text-gray-300">{test.notes || ''}</td>
-                          <td className="px-4 py-4">
+                          <td className="px-2 py-2 md:px-4 md:py-4">
                             {(() => { const end = computeEndTime(test); const expired = end.getTime() <= now.getTime(); const status = expired ? 'expired' : test.status; let label = status === 'active' ? 'Ativo' : status === 'expired' ? 'Expirado' : 'convertido'; if (isTestEnv && status === 'active' && idx > 0) { label = '' } return (<span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getStatusColor(status)}`}>{label}</span>); })()}
                           </td>
                           {(() => { const cat = inferCategory(test.clientName || ''); return cat ? (<td className="hidden md:table-cell px-4 py-4 text-xs text-cyan-300">{cat}</td>) : (<td className="hidden md:table-cell px-4 py-4 text-xs text-gray-500"></td>); })()}
-                          <td className="px-4 py-4">
+                          <td className="px-2 py-2 md:px-4 md:py-4">
                             <div className="flex items-center justify-end md:justify-start gap-2">
                               <button onClick={() => setOpenMsgTestId(openMsgTestId === test.id ? null : test.id)} className="p-2 rounded hover:bg-emerald-500/20 text-emerald-400" title="Enviar Mensagem"><PaperAirplaneIcon className="w-5 h-5" /></button>
                               <button onClick={() => handleEdit(test)} className="p-2 rounded hover:bg-cyan-500/20 text-cyan-400" title="Editar"><PencilIcon className="w-5 h-5" /></button>

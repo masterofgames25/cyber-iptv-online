@@ -13,7 +13,9 @@ import {
   SparklesIcon,
   CpuChipIcon,
   ExclamationTriangleIcon,
-  EyeIcon
+  EyeIcon,
+  ChevronDownIcon,
+  ChevronUpIcon
 } from '@heroicons/react/24/outline';
 import { formatCurrency } from '../utils/format';
 import { getExpirationStatus, formatDateStringForDisplay, parseDateString } from '../utils/date';
@@ -79,6 +81,17 @@ export const CyberClientsList: React.FC = () => {
   const cancelBtnRef = useRef<HTMLButtonElement | null>(null);
   const [viewingClient, setViewingClient] = useState<Client | null>(null);
   const [copiedField, setCopiedField] = useState<string | null>(null);
+  const [expandedRows, setExpandedRows] = useState<Set<number>>(new Set());
+
+  const toggleRow = (id: number) => {
+    const newSet = new Set(expandedRows);
+    if (newSet.has(id)) {
+      newSet.delete(id);
+    } else {
+      newSet.add(id);
+    }
+    setExpandedRows(newSet);
+  };
 
   const handleCopy = (text: string, field: string) => {
     navigator.clipboard.writeText(text);
@@ -446,16 +459,17 @@ export const CyberClientsList: React.FC = () => {
             <table className="w-full">
               <thead className="cyber-table thead">
                 <tr>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Cliente</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Plano</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Valor</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Servidor</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Dispositivo</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Aplicativo</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Vencimento</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider md:hidden"></th>
+                  <th className="px-2 py-2 md:px-4 md:py-3 text-left text-[10px] md:text-xs font-medium text-gray-400 uppercase tracking-wider">Cliente</th>
+                  <th className="hidden md:table-cell px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Plano</th>
+                  <th className="hidden md:table-cell px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Valor</th>
+                  <th className="hidden lg:table-cell px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Servidor</th>
+                  <th className="hidden xl:table-cell px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Dispositivo</th>
+                  <th className="hidden xl:table-cell px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Aplicativo</th>
+                  <th className="hidden md:table-cell px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Vencimento</th>
 
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Status</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Ações</th>
+                  <th className="px-2 py-2 md:px-4 md:py-3 text-left text-[10px] md:text-xs font-medium text-gray-400 uppercase tracking-wider">Status</th>
+                  <th className="px-2 py-2 md:px-4 md:py-3 text-left text-[10px] md:text-xs font-medium text-gray-400 uppercase tracking-wider text-right md:text-left">Ações</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/10">
@@ -471,96 +485,166 @@ export const CyberClientsList: React.FC = () => {
                     borderColor: isExpired ? 'border-red-500/30' : isNear ? 'border-yellow-500/30' : 'border-cyan-500/30'
                   };
                   return (
-                    <tr key={client.id} className="hover:bg-white/5 transition-colors">
-                      <td className="px-4 py-4">
-                        <div>
-                          <div className="text-sm font-medium text-white">{client.nome}</div>
-                          <div className="text-xs text-gray-400">{formatPhone(client.whatsapp)}</div>
-                        </div>
-                      </td>
-                      <td className="px-4 py-4 text-sm text-cyber-highlight font-semibold">{client.plano}</td>
-                      <td className="px-4 py-4 text-sm text-green-400">{formatCurrency(parseFloat(client.valor.toString()) || 0)}</td>
-                      <td className="px-4 py-4 text-sm">
-                        <div className="flex items-center gap-1">
-                          <BoltIcon className="w-4 h-4 text-cyan-400" />
-                          <span className="text-cyber-primary">{client.servidor}</span>
-                        </div>
-                      </td>
-                      <td className="px-4 py-4 text-sm">
-                        <div className="flex items-center gap-1">
-                          <CpuChipIcon className="w-4 h-4 text-blue-400" />
-                          <span className="text-cyber-primary">{client.dispositivo}</span>
-                        </div>
-                      </td>
-                      <td className="px-4 py-4 text-sm">
-                        <div className="flex items-center gap-1">
-                          <SparklesIcon className="w-4 h-4 text-purple-400" />
-                          <span className="text-cyber-primary">{client.aplicativo || '—'}</span>
-                        </div>
-                      </td>
-                      <td className="px-4 py-4 text-sm">
-                        <div className="flex items-center gap-1">
-                          <ClockIcon className="w-4 h-4 text-gray-400" />
-                          <span className="text-gray-300">{formatDateStringForDisplay(client.vencimento)}</span>
-                        </div>
-                      </td>
+                    <React.Fragment key={client.id}>
+                      <tr className={`hover:bg-white/5 transition-colors ${expandedRows.has(client.id) ? 'bg-white/5' : ''}`}>
+                        <td className="px-4 py-4 md:hidden">
+                          <button
+                            onClick={() => toggleRow(client.id)}
+                            className="p-1 rounded-full hover:bg-white/10 text-gray-400"
+                          >
+                            {expandedRows.has(client.id) ? (
+                              <ChevronUpIcon className="w-5 h-5" />
+                            ) : (
+                              <ChevronDownIcon className="w-5 h-5" />
+                            )}
+                          </button>
+                        </td>
+                        <td className="px-2 py-2 md:px-4 md:py-4">
+                          <div>
+                            <div className="text-sm font-medium text-white">{client.nome}</div>
+                            <div className="text-[10px] md:text-xs text-gray-400">{formatPhone(client.whatsapp)}</div>
+                          </div>
+                        </td>
+                        <td className="hidden md:table-cell px-4 py-4 text-sm text-cyber-highlight font-semibold">{client.plano}</td>
+                        <td className="hidden md:table-cell px-4 py-4 text-sm text-green-400">{formatCurrency(parseFloat(client.valor.toString()) || 0)}</td>
+                        <td className="hidden lg:table-cell px-4 py-4 text-sm">
+                          <div className="flex items-center gap-1">
+                            <BoltIcon className="w-4 h-4 text-cyan-400" />
+                            <span className="text-cyber-primary">{client.servidor}</span>
+                          </div>
+                        </td>
+                        <td className="hidden xl:table-cell px-4 py-4 text-sm">
+                          <div className="flex items-center gap-1">
+                            <CpuChipIcon className="w-4 h-4 text-blue-400" />
+                            <span className="text-cyber-primary">{client.dispositivo}</span>
+                          </div>
+                        </td>
+                        <td className="hidden xl:table-cell px-4 py-4 text-sm">
+                          <div className="flex items-center gap-1">
+                            <SparklesIcon className="w-4 h-4 text-purple-400" />
+                            <span className="text-cyber-primary">{client.aplicativo || '—'}</span>
+                          </div>
+                        </td>
+                        <td className="hidden md:table-cell px-4 py-4 text-sm">
+                          <div className="flex items-center gap-1">
+                            <ClockIcon className="w-4 h-4 text-gray-400" />
+                            <span className="text-gray-300">{formatDateStringForDisplay(client.vencimento)}</span>
+                          </div>
+                        </td>
 
-                      <td className="px-4 py-4">
-                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${expirationInfo.borderColor} ${expirationInfo.bgColor} ${expirationInfo.color}`}>
-                          {expirationInfo.text}
-                        </span>
-                        <span
-                          className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ml-2 ${client.statusPagamento === 'Pago'
-                            ? 'border-green-500/30 bg-green-900/20 text-green-300'
-                            : 'border-cyan-500/30 bg-cyan-900/20 text-cyan-300'
-                            }`}
-                        >
-                          {client.statusPagamento === 'Pago' ? 'Pagamento Pago' : 'Pagamento Pendente'}
-                        </span>
-                        {(() => {
-                          const info = expStatusMap[client.id] || getExpirationStatus(client.vencimento); const isExpired = info.status === 'Vencido'; return (
-                            <span
-                              className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ml-2 ${isExpired
-                                ? 'border-red-500/30 bg-red-900/20 text-red-300'
-                                : (client.situacao === 'Ativo'
+                        <td className="px-2 py-2 md:px-4 md:py-4">
+                          <div className="flex flex-col gap-1 items-start">
+                            <div className="flex items-center gap-1">
+                              <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${expirationInfo.borderColor} ${expirationInfo.bgColor} ${expirationInfo.color}`}>
+                                {expirationInfo.text}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <span
+                                className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${client.statusPagamento === 'Pago'
                                   ? 'border-green-500/30 bg-green-900/20 text-green-300'
-                                  : 'border-red-500/30 bg-red-900/20 text-red-300')
-                                }`}
-                            >
-                              {isExpired ? 'Expirado' : client.situacao}
-                            </span>
-                          );
-                        })()}
-                      </td>
-                      <td className="px-4 py-4">
-                        <div className="flex items-center gap-3">
-                          <button onClick={() => openWhatsAppClient(client)} className="p-2 rounded hover:bg-green-500/20 text-green-400" title="WhatsApp">
-                            <PaperAirplaneIcon className="w-6 h-6" />
-                          </button>
-                          <button onClick={(e) => {
-                            e.stopPropagation();
-                            console.log('Visualizar clicked', client);
-                            setViewingClient(client);
-                          }} className="p-2 rounded hover:bg-purple-500/20 text-purple-400" title="Visualizar">
-                            <EyeIcon className="w-6 h-6" />
-                          </button>
-                          <button onClick={() => handleEditClient(client)} className="p-2 rounded hover:bg-cyan-500/20 text-cyan-400" title="Editar" aria-label="Editar cliente">
-                            <PencilIcon className="w-6 h-6" />
-                          </button>
-                          <button onClick={() => handleDeleteClient(client)} className="p-2 rounded hover:bg-red-500/20 text-red-400" title="Excluir" aria-label="Excluir cliente">
-                            <TrashIcon className="w-6 h-6" />
-                          </button>
-                          <button onClick={() => handleRenewClient(client)} className="p-2 rounded hover:bg-blue-500/20 text-blue-400" title="Renovar">
-                            <ClockIcon className="w-6 h-6" />
-                          </button>
-                          {client.statusPagamento === 'Pendente' && (
-                            <button onClick={() => handleMarkAsPaid(client.id)} className="p-2 rounded hover:bg-emerald-500/20 text-emerald-400" title="Marcar Pago">
-                              <CheckCircleIcon className="w-6 h-6" />
+                                  : 'border-cyan-500/30 bg-cyan-900/20 text-cyan-300'
+                                  }`}
+                              >
+                                {client.statusPagamento === 'Pago' ? 'Pago' : 'Pendente'}
+                              </span>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-2 py-2 md:px-4 md:py-4 text-right md:text-left">
+                          <div className="flex items-center justify-end md:justify-start gap-1">
+                            <button onClick={() => openWhatsAppClient(client)} className="p-2 rounded hover:bg-green-500/20 text-green-400" title="WhatsApp">
+                              <PaperAirplaneIcon className="w-5 h-5" />
                             </button>
-                          )}
-                        </div>
-                      </td>
-                    </tr>
+                            <button onClick={(e) => {
+                              e.stopPropagation();
+                              console.log('Visualizar clicked', client);
+                              setViewingClient(client);
+                            }} className="p-2 rounded hover:bg-purple-500/20 text-purple-400 hidden sm:block" title="Visualizar">
+                              <EyeIcon className="w-5 h-5" />
+                            </button>
+                            <button onClick={() => handleEditClient(client)} className="p-2 rounded hover:bg-cyan-500/20 text-cyan-400" title="Editar" aria-label="Editar cliente">
+                              <PencilIcon className="w-5 h-5" />
+                            </button>
+                            <div className="hidden sm:flex gap-1">
+                              <button onClick={() => handleDeleteClient(client)} className="p-2 rounded hover:bg-red-500/20 text-red-400" title="Excluir" aria-label="Excluir cliente">
+                                <TrashIcon className="w-5 h-5" />
+                              </button>
+                              <button onClick={() => handleRenewClient(client)} className="p-2 rounded hover:bg-blue-500/20 text-blue-400" title="Renovar">
+                                <ClockIcon className="w-5 h-5" />
+                              </button>
+                              {client.statusPagamento === 'Pendente' && (
+                                <button onClick={() => handleMarkAsPaid(client.id)} className="p-2 rounded hover:bg-emerald-500/20 text-emerald-400" title="Marcar Pago">
+                                  <CheckCircleIcon className="w-5 h-5" />
+                                </button>
+                              )}
+                            </div>
+
+                            {/* Mobile actions dropdown or extra buttons could go here if needed, but keeping it simple for now */}
+                          </div>
+                        </td>
+                      </tr>
+                      {expandedRows.has(client.id) && (
+                        <tr className="bg-white/5 md:hidden">
+                          <td colSpan={5} className="px-4 pb-4 pt-2 border-b border-white/5">
+                            <motion.div
+                              initial={{ opacity: 0, height: 0 }}
+                              animate={{ opacity: 1, height: 'auto' }}
+                              exit={{ opacity: 0, height: 0 }}
+                              className="grid grid-cols-2 gap-4 text-sm"
+                            >
+                              <div className="space-y-1">
+                                <p className="text-xs text-gray-500 uppercase">Plano</p>
+                                <p className="text-cyber-highlight font-semibold">{client.plano}</p>
+                              </div>
+                              <div className="space-y-1">
+                                <p className="text-xs text-gray-500 uppercase">Valor</p>
+                                <p className="text-green-400 font-semibold">{formatCurrency(parseFloat(client.valor.toString()) || 0)}</p>
+                              </div>
+                              <div className="space-y-1">
+                                <p className="text-xs text-gray-500 uppercase">Vencimento</p>
+                                <p className="text-gray-300">{formatDateStringForDisplay(client.vencimento)}</p>
+                              </div>
+                              <div className="space-y-1">
+                                <p className="text-xs text-gray-500 uppercase">Servidor</p>
+                                <div className="flex items-center gap-1">
+                                  <BoltIcon className="w-3 h-3 text-cyan-400" />
+                                  <span className="text-gray-300">{client.servidor}</span>
+                                </div>
+                              </div>
+                              <div className="space-y-1">
+                                <p className="text-xs text-gray-500 uppercase">Dispositivo</p>
+                                <div className="flex items-center gap-1">
+                                  <CpuChipIcon className="w-3 h-3 text-blue-400" />
+                                  <span className="text-gray-300">{client.dispositivo}</span>
+                                </div>
+                              </div>
+                              <div className="space-y-1">
+                                <p className="text-xs text-gray-500 uppercase">Aplicativo</p>
+                                <div className="flex items-center gap-1">
+                                  <SparklesIcon className="w-3 h-3 text-purple-400" />
+                                  <span className="text-gray-300">{client.aplicativo || '-'}</span>
+                                </div>
+                              </div>
+
+                              <div className="col-span-2 pt-2 flex gap-2 justify-end border-t border-white/10 mt-2">
+                                <button onClick={() => handleDeleteClient(client)} className="flex items-center gap-1 px-3 py-1 rounded bg-red-500/10 text-red-400 text-xs border border-red-500/20">
+                                  <TrashIcon className="w-3 h-3" /> Excluir
+                                </button>
+                                <button onClick={() => handleRenewClient(client)} className="flex items-center gap-1 px-3 py-1 rounded bg-blue-500/10 text-blue-400 text-xs border border-blue-500/20">
+                                  <ClockIcon className="w-3 h-3" /> Renovar
+                                </button>
+                                {client.statusPagamento === 'Pendente' && (
+                                  <button onClick={() => handleMarkAsPaid(client.id)} className="flex items-center gap-1 px-3 py-1 rounded bg-emerald-500/10 text-emerald-400 text-xs border border-emerald-500/20">
+                                    <CheckCircleIcon className="w-3 h-3" /> Pagar
+                                  </button>
+                                )}
+                              </div>
+                            </motion.div>
+                          </td>
+                        </tr>
+                      )}
+                    </React.Fragment>
                   );
                 })}
               </tbody>

@@ -45,7 +45,7 @@ export const CyberSidebar: React.FC<CyberSidebarProps> = ({ currentView, setCurr
 
       {/* Sidebar Container */}
       <div className={`
-        fixed md:relative inset-y-0 left-0 z-50
+        fixed md:relative inset-y-0 left-0 z-[100]
         w-64 h-full
         glass border-r border-purple-500/20 p-6 flex flex-col
         transform transition-transform duration-300 ease-in-out
