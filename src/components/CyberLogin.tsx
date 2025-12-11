@@ -1,28 +1,62 @@
 import React, { useState } from 'react';
 import { supabase } from '../lib/supabase';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { CyberpunkLoader } from './CyberpunkLoader';
 
 export const CyberLogin: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [isSignUp, setIsSignUp] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
-    const handleLogin = async (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
         setError(null);
+        setSuccessMessage(null);
 
-        const { error } = await supabase.auth.signInWithPassword({
-            email,
-            password,
-        });
-
-        if (error) {
-            setError(error.message);
+        if (isSignUp && password !== confirmPassword) {
+            setError('As senhas não coincidem.');
+            setLoading(false);
+            return;
         }
-        setLoading(false);
+
+        if (password.length < 6) {
+            setError('A senha deve ter pelo menos 6 caracteres.');
+            setLoading(false);
+            return;
+        }
+
+        try {
+            if (isSignUp) {
+                const { error, data } = await supabase.auth.signUp({
+                    email,
+                    password,
+                });
+                if (error) throw error;
+                if (data.user && data.session) {
+                    // User created and logged in automatically (if email confirm is off)
+                    // Or just created
+                }
+                setSuccessMessage('Conta criada com sucesso! Verifique seu email se necessário.');
+                if (!data.session) {
+                    // If email confirmation is required, stays on login screen
+                }
+            } else {
+                const { error } = await supabase.auth.signInWithPassword({
+                    email,
+                    password,
+                });
+                if (error) throw error;
+            }
+        } catch (err: any) {
+            setError(err.message || 'Ocorreu um erro.');
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -39,11 +73,14 @@ export const CyberLogin: React.FC = () => {
                 transition={{ duration: 0.5 }}
                 className="z-10 bg-gray-900/80 backdrop-blur-md p-8 rounded-lg border border-[#00ff9d]/30 shadow-[0_0_50px_rgba(0,255,157,0.1)] w-full max-w-md"
             >
-                <h2 className="text-3xl font-bold mb-6 text-center text-transparent bg-clip-text bg-gradient-to-r from-[#00ff9d] to-[#00b8ff] uppercase tracking-widest">
+                <h2 className="text-3xl font-bold mb-2 text-center text-transparent bg-clip-text bg-gradient-to-r from-[#00ff9d] to-[#00b8ff] uppercase tracking-widest">
                     Sistema Neural
                 </h2>
+                <p className="text-center text-gray-400 text-xs mb-6 tracking-wider">
+                    {isSignUp ? 'INICIANDO PROTOCOLO DE REGISTRO' : 'AUTENTICAÇÃO NECESSÁRIA'}
+                </p>
 
-                <form onSubmit={handleLogin} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
                         <label className="block text-[#00ff9d] text-sm font-bold mb-2 tracking-wider">
                             IDENTIFICADOR (EMAIL)
@@ -72,6 +109,29 @@ export const CyberLogin: React.FC = () => {
                         />
                     </div>
 
+                    <AnimatePresence>
+                        {isSignUp && (
+                            <motion.div
+                                initial={{ opacity: 0, height: 0 }}
+                                animate={{ opacity: 1, height: 'auto' }}
+                                exit={{ opacity: 0, height: 0 }}
+                                className="overflow-hidden"
+                            >
+                                <label className="block text-[#ff00ff] text-sm font-bold mb-2 tracking-wider">
+                                    CONFIRMAR CHAVE
+                                </label>
+                                <input
+                                    type="password"
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                    className="w-full bg-black/50 border border-[#ff00ff]/50 rounded p-3 text-white focus:outline-none focus:border-[#ff00ff] focus:shadow-[0_0_15px_rgba(255,0,255,0.3)] transition-all"
+                                    placeholder="••••••••"
+                                    required={isSignUp}
+                                />
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+
                     {error && (
                         <motion.div
                             initial={{ opacity: 0 }}
@@ -79,6 +139,16 @@ export const CyberLogin: React.FC = () => {
                             className="p-3 bg-red-900/40 border border-red-500/50 rounded text-red-200 text-sm text-center"
                         >
                             {error}
+                        </motion.div>
+                    )}
+
+                    {successMessage && (
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            className="p-3 bg-green-900/40 border border-green-500/50 rounded text-green-200 text-sm text-center"
+                        >
+                            {successMessage}
                         </motion.div>
                     )}
 
@@ -90,9 +160,25 @@ export const CyberLogin: React.FC = () => {
                         {loading ? (
                             <CyberpunkLoader size="sm" color="#00ff9d" />
                         ) : (
-                            <span className="group-hover:tracking-widest transition-all duration-300">ACESSAR SISTEMA</span>
+                            <span className="group-hover:tracking-widest transition-all duration-300">
+                                {isSignUp ? 'REGISTRAR ACESSO' : 'ACESSAR SISTEMA'}
+                            </span>
                         )}
                     </button>
+
+                    <div className="text-center pt-2">
+                        <button
+                            type="button"
+                            onClick={() => {
+                                setIsSignUp(!isSignUp);
+                                setError(null);
+                                setSuccessMessage(null);
+                            }}
+                            className="text-xs text-gray-500 hover:text-[#00ff9d] hover:underline tracking-wider transition-colors"
+                        >
+                            {isSignUp ? 'JÁ POSSUI ACESSO? ENTRAR' : 'NÃO POSSUI ACESSO? REGISTRAR'}
+                        </button>
+                    </div>
                 </form>
             </motion.div>
         </div>
