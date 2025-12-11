@@ -13,7 +13,9 @@ import {
   UserPlusIcon,
   CalendarIcon,
   ExclamationTriangleIcon,
-  PaperAirplaneIcon
+  PaperAirplaneIcon,
+  ChevronDownIcon,
+  ChevronUpIcon
 } from '@heroicons/react/24/outline';
 import CyberClientForm from './CyberClientForm';
 import CyberTestForm from './CyberTestForm';
@@ -55,6 +57,18 @@ const CyberTestsList: React.FC = () => {
   const searchRef = useRef<HTMLInputElement | null>(null);
   const formRef = useRef<HTMLDivElement | null>(null);
   const [openMsgTestId, setOpenMsgTestId] = useState<number | null>(null);
+  const [expandedRows, setExpandedRows] = useState<Set<number>>(new Set());
+
+  const toggleRow = (id: number) => {
+    const newSet = new Set(expandedRows);
+    if (newSet.has(id)) {
+      newSet.delete(id);
+    } else {
+      newSet.add(id);
+    }
+    setExpandedRows(newSet);
+  };
+
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const paginatedTests = React.useMemo(() => {
@@ -563,67 +577,130 @@ const CyberTestsList: React.FC = () => {
                 <table className="w-full">
                   <thead className="cyber-table thead">
                     <tr aria-hidden="true">
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider md:hidden"></th>
                       <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Cliente</th>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Início</th>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Término</th>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Tempo restante</th>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Descrição</th>
+                      <th className="hidden md:table-cell px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Início</th>
+                      <th className="hidden md:table-cell px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Término</th>
+                      <th className="hidden md:table-cell px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Tempo restante</th>
+                      <th className="hidden md:table-cell px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Descrição</th>
                       <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Status</th>
                       <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Ações</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-white/10">
                     {filteredTests.map((test, idx) => (
-                      <tr key={test.id} className="hover:bg-white/5 transition-colors">
-                        <td className="px-4 py-4">
-                          <div>
-                            <div className="text-sm font-medium text-white">{test.clientName}</div>
-                            <div className="text-xs text-gray-400">ID: {test.id}</div>
-                            {(() => {
-                              const cat = inferCategory(test.clientName || ''); const url = cat === 'performance' ? 'http://teste-velocidade.example.com' : cat === 'canais' ? 'http://teste-canais.example.com' : cat === 'qualidade' ? 'http://teste-qualidade.example.com' : ''; return url ? (
-                                <div className="mt-1"><a href={url} className="text-cyan-300 underline" target="_blank" rel="noreferrer noopener">{url}</a></div>
-                              ) : null;
-                            })()}
-                          </div>
-                        </td>
-                        <td className="px-4 py-4 text-sm text-gray-400">{formatBR(test.startAt || test.startDate)}</td>
-                        <td className="px-4 py-4 text-sm text-gray-400">{formatBR(test.endAt || test.endDate)}</td>
-                        <td className="px-4 py-4 text-sm">
-                          {(() => {
-                            const end = computeEndTime(test);
-                            const { ms, days, hours, minutes } = getRemainingParts(end);
-                            if (ms <= 0) return <span className="text-red-300">Expirado</span>;
-
-                            const near = ms > 0 && ms <= 2 * 3600000;
-                            const danger = ms > 0 && ms <= 10 * 60000;
-                            const cls = danger ? 'text-red-400' : near ? 'text-yellow-300' : 'text-cyan-300';
-
-                            return <span className={cls}>{`${days}d ${hours}h ${minutes}m`}</span>;
-                          })()}
-                        </td>
-                        <td className="px-4 py-4 text-sm text-gray-300">{test.notes || ''}</td>
-                        <td className="px-4 py-4">
-                          {(() => { const end = computeEndTime(test); const expired = end.getTime() <= now.getTime(); const status = expired ? 'expired' : test.status; let label = status === 'active' ? 'Ativo' : status === 'expired' ? 'Expirado' : 'convertido'; if (isTestEnv && status === 'active' && idx > 0) { label = '' } return (<span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getStatusColor(status)}`}>{label}</span>); })()}
-                        </td>
-                        {(() => { const cat = inferCategory(test.clientName || ''); return cat ? (<td className="px-4 py-4 text-xs text-cyan-300">{cat}</td>) : (<td className="px-4 py-4 text-xs text-gray-500"></td>); })()}
-                        <td className="px-4 py-4">
-                          <div className="flex items-center gap-2">
-                            {test.status === 'active' && (
-                              <button onClick={() => openClientForm(test)} className="p-2 rounded hover:bg-green-500/20 text-green-400" title="Cadastrar Cliente"><UserPlusIcon className="w-6 h-6" /></button>
-                            )}
-                            <button onClick={() => setOpenMsgTestId(openMsgTestId === test.id ? null : test.id)} className="p-2 rounded hover:bg-emerald-500/20 text-emerald-400" title="Enviar Mensagem"><PaperAirplaneIcon className="w-6 h-6" /></button>
-                            <button onClick={() => handleEdit(test)} className="p-2 rounded hover:bg-cyan-500/20 text-cyan-400" title="Editar"><PencilIcon className="w-6 h-6" /></button>
-                            <button onClick={() => handleDelete(test.id)} className="p-2 rounded hover:bg-red-500/20 text-red-400" title="Excluir"><TrashIcon className="w-6 h-6" /></button>
-                          </div>
-                          {openMsgTestId === test.id && (
-                            <div className="mt-2 flex gap-2">
-                              <button onClick={() => sendWhatsAppMessage(test, 'activated')} className="px-3 py-1 rounded bg-green-500/20 text-green-300 border border-green-500/30">Ativado</button>
-                              <button onClick={() => sendWhatsAppMessage(test, 'expiring')} className="px-3 py-1 rounded bg-yellow-500/20 text-yellow-300 border border-yellow-500/30">Vencendo</button>
-                              <button onClick={() => sendWhatsAppMessage(test, 'expired')} className="px-3 py-1 rounded bg-red-500/20 text-red-300 border border-red-500/30">Expirado</button>
+                      <React.Fragment key={test.id}>
+                        <tr className={`hover:bg-white/5 transition-colors ${expandedRows.has(test.id) ? 'bg-white/5' : ''}`}>
+                          <td className="px-4 py-4 md:hidden">
+                            <button
+                              onClick={() => toggleRow(test.id)}
+                              className="p-1 rounded-full hover:bg-white/10 text-gray-400"
+                            >
+                              {expandedRows.has(test.id) ? (
+                                <ChevronUpIcon className="w-5 h-5" />
+                              ) : (
+                                <ChevronDownIcon className="w-5 h-5" />
+                              )}
+                            </button>
+                          </td>
+                          <td className="px-4 py-4">
+                            <div>
+                              <div className="text-sm font-medium text-white">{test.clientName}</div>
+                              <div className="text-xs text-gray-400">ID: {test.id}</div>
+                              {(() => {
+                                const cat = inferCategory(test.clientName || ''); const url = cat === 'performance' ? 'http://teste-velocidade.example.com' : cat === 'canais' ? 'http://teste-canais.example.com' : cat === 'qualidade' ? 'http://teste-qualidade.example.com' : ''; return url ? (
+                                  <div className="mt-1"><a href={url} className="text-cyan-300 underline" target="_blank" rel="noreferrer noopener">{url}</a></div>
+                                ) : null;
+                              })()}
                             </div>
-                          )}
-                        </td>
-                      </tr>
+                          </td>
+                          <td className="hidden md:table-cell px-4 py-4 text-sm text-gray-400">{formatBR(test.startAt || test.startDate)}</td>
+                          <td className="hidden md:table-cell px-4 py-4 text-sm text-gray-400">{formatBR(test.endAt || test.endDate)}</td>
+                          <td className="hidden md:table-cell px-4 py-4 text-sm">
+                            {(() => {
+                              const end = computeEndTime(test);
+                              const { ms, days, hours, minutes } = getRemainingParts(end);
+                              if (ms <= 0) return <span className="text-red-300">Expirado</span>;
+
+                              const near = ms > 0 && ms <= 2 * 3600000;
+                              const danger = ms > 0 && ms <= 10 * 60000;
+                              const cls = danger ? 'text-red-400' : near ? 'text-yellow-300' : 'text-cyan-300';
+
+                              return <span className={cls}>{`${days}d ${hours}h ${minutes}m`}</span>;
+                            })()}
+                          </td>
+                          <td className="hidden md:table-cell px-4 py-4 text-sm text-gray-300">{test.notes || ''}</td>
+                          <td className="px-4 py-4">
+                            {(() => { const end = computeEndTime(test); const expired = end.getTime() <= now.getTime(); const status = expired ? 'expired' : test.status; let label = status === 'active' ? 'Ativo' : status === 'expired' ? 'Expirado' : 'convertido'; if (isTestEnv && status === 'active' && idx > 0) { label = '' } return (<span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getStatusColor(status)}`}>{label}</span>); })()}
+                          </td>
+                          {(() => { const cat = inferCategory(test.clientName || ''); return cat ? (<td className="hidden md:table-cell px-4 py-4 text-xs text-cyan-300">{cat}</td>) : (<td className="hidden md:table-cell px-4 py-4 text-xs text-gray-500"></td>); })()}
+                          <td className="px-4 py-4">
+                            <div className="flex items-center justify-end md:justify-start gap-2">
+                              <button onClick={() => setOpenMsgTestId(openMsgTestId === test.id ? null : test.id)} className="p-2 rounded hover:bg-emerald-500/20 text-emerald-400" title="Enviar Mensagem"><PaperAirplaneIcon className="w-5 h-5" /></button>
+                              <button onClick={() => handleEdit(test)} className="p-2 rounded hover:bg-cyan-500/20 text-cyan-400" title="Editar"><PencilIcon className="w-5 h-5" /></button>
+                              <div className="hidden md:flex gap-2">
+                                {test.status === 'active' && (
+                                  <button onClick={() => openClientForm(test)} className="p-2 rounded hover:bg-green-500/20 text-green-400" title="Cadastrar Cliente"><UserPlusIcon className="w-5 h-5" /></button>
+                                )}
+                                <button onClick={() => handleDelete(test.id)} className="p-2 rounded hover:bg-red-500/20 text-red-400" title="Excluir"><TrashIcon className="w-5 h-5" /></button>
+                              </div>
+                            </div>
+                            {openMsgTestId === test.id && (
+                              <div className="mt-2 flex gap-2 flex-wrap">
+                                <button onClick={() => sendWhatsAppMessage(test, 'activated')} className="px-3 py-1 rounded bg-green-500/20 text-green-300 border border-green-500/30 text-xs">Ativado</button>
+                                <button onClick={() => sendWhatsAppMessage(test, 'expiring')} className="px-3 py-1 rounded bg-yellow-500/20 text-yellow-300 border border-yellow-500/30 text-xs">Vencendo</button>
+                                <button onClick={() => sendWhatsAppMessage(test, 'expired')} className="px-3 py-1 rounded bg-red-500/20 text-red-300 border border-red-500/30 text-xs">Expirado</button>
+                              </div>
+                            )}
+                          </td>
+                        </tr>
+                        {expandedRows.has(test.id) && (
+                          <tr className="md:hidden bg-white/5">
+                            <td colSpan={5} className="px-4 pb-4 pt-2 border-b border-white/5">
+                              <motion.div
+                                initial={{ opacity: 0, height: 0 }}
+                                animate={{ opacity: 1, height: 'auto' }}
+                                exit={{ opacity: 0, height: 0 }}
+                                className="grid grid-cols-2 gap-4 text-sm"
+                              >
+                                <div className="space-y-1">
+                                  <p className="text-xs text-gray-500 uppercase">Início</p>
+                                  <p className="text-gray-300">{formatBR(test.startAt || test.startDate)}</p>
+                                </div>
+                                <div className="space-y-1">
+                                  <p className="text-xs text-gray-500 uppercase">Término</p>
+                                  <p className="text-gray-300">{formatBR(test.endAt || test.endDate)}</p>
+                                </div>
+                                <div className="space-y-1 col-span-2">
+                                  <p className="text-xs text-gray-500 uppercase">Tempo Restante</p>
+                                  {(() => {
+                                    const end = computeEndTime(test);
+                                    const { ms, days, hours, minutes } = getRemainingParts(end);
+                                    if (ms <= 0) return <span className="text-red-300">Expirado</span>;
+                                    return <span className="text-cyan-300">{`${days}d ${hours}h ${minutes}m`}</span>;
+                                  })()}
+                                </div>
+                                {test.notes && (
+                                  <div className="space-y-1 col-span-2">
+                                    <p className="text-xs text-gray-500 uppercase">Notas</p>
+                                    <p className="text-gray-300">{test.notes}</p>
+                                  </div>
+                                )}
+                                <div className="col-span-2 pt-2 flex gap-2 justify-end border-t border-white/10 mt-2">
+                                  <button onClick={() => handleDelete(test.id)} className="flex items-center gap-1 px-3 py-1 rounded bg-red-500/10 text-red-400 text-xs border border-red-500/20">
+                                    <TrashIcon className="w-3 h-3" /> Excluir
+                                  </button>
+                                  {test.status === 'active' && (
+                                    <button onClick={() => openClientForm(test)} className="flex items-center gap-1 px-3 py-1 rounded bg-green-500/10 text-green-400 text-xs border border-green-500/20">
+                                      <UserPlusIcon className="w-3 h-3" /> Cadastrar
+                                    </button>
+                                  )}
+                                </div>
+                              </motion.div>
+                            </td>
+                          </tr>
+                        )}
+                      </React.Fragment>
                     ))}
                   </tbody>
                 </table>
