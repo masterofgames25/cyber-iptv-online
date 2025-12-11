@@ -21,11 +21,11 @@ interface CyberClientFormProps {
   };
 }
 
-const CyberClientForm: React.FC<CyberClientFormProps> = ({ 
-  client, 
-  onClose, 
-  onSave, 
-  initialData 
+const CyberClientForm: React.FC<CyberClientFormProps> = ({
+  client,
+  onClose,
+  onSave,
+  initialData
 }) => {
   const unique = <T,>(arr: T[]) => Array.from(new Set((arr || []).filter(Boolean))) as T[];
   const { updateClient, planos, servidores, formasPagamento, dispositivos, aplicativos, prospeccoes } = useData();
@@ -166,7 +166,7 @@ const CyberClientForm: React.FC<CyberClientFormProps> = ({
   const formatMACAddress = (value: string) => {
     const cleanValue = value.replace(/[^a-fA-F0-9]/g, '');
     if (cleanValue.length > 12) return value;
-    
+
     const formatted = cleanValue.match(/.{1,2}/g)?.join(':') || '';
     return formatted.toUpperCase();
   };
@@ -175,11 +175,11 @@ const CyberClientForm: React.FC<CyberClientFormProps> = ({
     try {
       const activation = parseDateString(activationDate);
       if (!activation) return '';
-      
+
       const parsed = parseDateString(String(activation));
       const expiration = parsed || new Date(activation);
       expiration.setMonth(expiration.getMonth() + planMonths);
-      
+
       return expiration.toISOString().split('T')[0];
     } catch {
       return '';
@@ -221,7 +221,7 @@ const CyberClientForm: React.FC<CyberClientFormProps> = ({
     if (field === 'macAddress') {
       value = formatMACAddress(value);
     }
-    
+
     setFormData(prev => ({ ...prev, [field]: value }));
     if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: '' }));
@@ -230,7 +230,7 @@ const CyberClientForm: React.FC<CyberClientFormProps> = ({
     if (field === 'vencimento' && client && client.id) {
       try {
         const d = parseDateString(String(value));
-        const iso = d ? `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}` : String(value);
+        const iso = d ? `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}` : String(value);
         window.dispatchEvent(new CustomEvent('clientDatePreviewChanged', { detail: { id: client.id, vencimento: iso } }));
         if (!d) {
           setErrors(prev => ({ ...prev, vencimento: 'Data inválida' }));
@@ -248,7 +248,7 @@ const CyberClientForm: React.FC<CyberClientFormProps> = ({
         const updated = { ...client, vencimento: iso };
         updateClient(updated as any);
         setVencimentoSaved(true);
-      } catch {}
+      } catch { }
     }
   };
 
@@ -341,336 +341,331 @@ const CyberClientForm: React.FC<CyberClientFormProps> = ({
 
   const renderMainSection = () => (
     <div className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
-                Nome Completo *
-              </label>
-                <input
-                  type="text"
-                value={formData.nome ?? ''}
-                  onChange={(e) => handleInputChange('nome', e.target.value)}
-                  className={`w-full px-3 py-2 input-cyber ${
-                    errors.nome ? 'border-red-500' : ''
-                  }`}
-                  placeholder="Digite o nome completo"
-                />
-                {errors.nome && (
-                  <p className="mt-1 text-sm text-red-400">{errors.nome}</p>
-                )}
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  WhatsApp *
-                </label>
-                <input
-                  type="text"
-                value={formData.whatsapp ?? ''}
-                  onChange={(e) => handleWhatsAppChange(e.target.value)}
-                  className={`w-full px-3 py-2 input-cyber ${
-                    errors.whatsapp ? 'border-red-500' : ''
-                  }`}
-                  placeholder="Ex: 5511999999999 ou +351..."
-                />
-                {errors.whatsapp && (
-                  <p className="mt-1 text-sm text-red-400">{errors.whatsapp}</p>
-                )}
-            </div>
-          </div>
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-300 mb-2">
+            Nome Completo *
+          </label>
+          <input
+            type="text"
+            value={formData.nome ?? ''}
+            onChange={(e) => handleInputChange('nome', e.target.value)}
+            className={`w-full px-3 py-2 input-cyber ${errors.nome ? 'border-red-500' : ''
+              }`}
+            placeholder="Digite o nome completo"
+          />
+          {errors.nome && (
+            <p className="mt-1 text-sm text-red-400">{errors.nome}</p>
+          )}
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-300 mb-2">
+            WhatsApp *
+          </label>
+          <input
+            type="text"
+            value={formData.whatsapp ?? ''}
+            onChange={(e) => handleWhatsAppChange(e.target.value)}
+            className={`w-full px-3 py-2 input-cyber ${errors.whatsapp ? 'border-red-500' : ''
+              }`}
+            placeholder="Ex: 5511999999999 ou +351..."
+          />
+          {errors.whatsapp && (
+            <p className="mt-1 text-sm text-red-400">{errors.whatsapp}</p>
+          )}
+        </div>
+      </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
-                Login *
-              </label>
-              <input
-                type="text"
-                value={formData.login ?? ''}
-                onChange={(e) => handleInputChange('login', e.target.value)}
-                className={`w-full px-3 py-2 input-cyber ${
-                  errors.login ? 'border-red-500' : ''
-                }`}
-                placeholder="Login de acesso"
-              />
-              {errors.login && (
-                <p className="mt-1 text-sm text-red-400">{errors.login}</p>
-              )}
-            </div>
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-300 mb-2">
+            Login *
+          </label>
+          <input
+            type="text"
+            value={formData.login ?? ''}
+            onChange={(e) => handleInputChange('login', e.target.value)}
+            className={`w-full px-3 py-2 input-cyber ${errors.login ? 'border-red-500' : ''
+              }`}
+            placeholder="Login de acesso"
+          />
+          {errors.login && (
+            <p className="mt-1 text-sm text-red-400">{errors.login}</p>
+          )}
+        </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
-                Senha *
-              </label>
-              <input
-                type="text"
-                value={formData.senha ?? ''}
-                onChange={(e) => handleInputChange('senha', e.target.value)}
-                className={`w-full px-3 py-2 input-cyber ${
-                  errors.senha ? 'border-red-500' : ''
-                }`}
-                placeholder="Senha de acesso"
-              />
-              {errors.senha && (
-                <p className="mt-1 text-sm text-red-400">{errors.senha}</p>
-              )}
-            </div>
-          </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-300 mb-2">
+            Senha *
+          </label>
+          <input
+            type="text"
+            value={formData.senha ?? ''}
+            onChange={(e) => handleInputChange('senha', e.target.value)}
+            className={`w-full px-3 py-2 input-cyber ${errors.senha ? 'border-red-500' : ''
+              }`}
+            placeholder="Senha de acesso"
+          />
+          {errors.senha && (
+            <p className="mt-1 text-sm text-red-400">{errors.senha}</p>
+          )}
+        </div>
+      </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
-                Prospecção
-              </label>
-              <select
-                value={formData.prospeccao}
-                onChange={(e) => handleInputChange('prospeccao', e.target.value)}
-                className="w-full px-3 py-2 select-cyber"
-              >
-                {leadSources.map(source => (
-                  <option key={source} value={source}>{source}</option>
-                ))}
-              </select>
-            </div>
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-300 mb-2">
+            Prospecção
+          </label>
+          <select
+            value={formData.prospeccao}
+            onChange={(e) => handleInputChange('prospeccao', e.target.value)}
+            className="w-full px-3 py-2 select-cyber"
+          >
+            {leadSources.map(source => (
+              <option key={source} value={source}>{source}</option>
+            ))}
+          </select>
+        </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
-                Situação
-              </label>
-              <select
-                value={formData.situacao}
-                onChange={(e) => handleInputChange('situacao', e.target.value)}
-                className="w-full px-3 py-2 select-cyber"
-              >
-                <option value="Ativo">Ativo</option>
-                <option value="Inativo">Inativo</option>
-              </select>
-            </div>
-          </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-300 mb-2">
+            Situação
+          </label>
+          <select
+            value={formData.situacao}
+            onChange={(e) => handleInputChange('situacao', e.target.value)}
+            className="w-full px-3 py-2 select-cyber"
+          >
+            <option value="Ativo">Ativo</option>
+            <option value="Inativo">Inativo</option>
+          </select>
+        </div>
+      </div>
 
-          <div className="relative bg-gradient-to-br from-purple-900/10 to-cyan-900/10 rounded-xl p-1 border border-purple-500/30">
-            <div className="bg-black/40 rounded-lg p-4">
-              <label className="block text-sm font-semibold text-gray-300 mb-3">
-                Observações
-              </label>
-              <textarea
-                value={formData.observacoes ?? ''}
-                onChange={(e) => handleInputChange('observacoes', e.target.value)}
-                rows={4}
-                className="w-full px-4 py-3 bg-black/50 text-white rounded-lg border-2 border-transparent focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/50 focus:bg-black/70 resize-none transition-all duration-300 placeholder-gray-500"
-                placeholder="Observações sobre o cliente..."
-              />
-            </div>
-          </div>
+      <div className="relative bg-gradient-to-br from-purple-900/10 to-cyan-900/10 rounded-xl p-1 border border-purple-500/30">
+        <div className="bg-black/40 rounded-lg p-4">
+          <label className="block text-sm font-semibold text-gray-300 mb-3">
+            Observações
+          </label>
+          <textarea
+            value={formData.observacoes ?? ''}
+            onChange={(e) => handleInputChange('observacoes', e.target.value)}
+            rows={4}
+            className="w-full px-4 py-3 bg-black/50 text-white rounded-lg border-2 border-transparent focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/50 focus:bg-black/70 resize-none transition-all duration-300 placeholder-gray-500"
+            placeholder="Observações sobre o cliente..."
+          />
+        </div>
+      </div>
     </div>
   );
 
   const renderSubscriptionSection = () => (
     <div className="space-y-4">
-            <div className="bg-yellow-900/20 border border-yellow-500/30 rounded-lg p-3 mb-4">
-              <p className="text-yellow-400 text-sm">
-                <strong>Atenção:</strong> O vencimento e valor são preenchidos automaticamente com base no plano, mas podem ser alterados manualmente.
-              </p>
-            </div>
+      <div className="bg-yellow-900/20 border border-yellow-500/30 rounded-lg p-3 mb-4">
+        <p className="text-yellow-400 text-sm">
+          <strong>Atenção:</strong> O vencimento e valor são preenchidos automaticamente com base no plano, mas podem ser alterados manualmente.
+        </p>
+      </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Plano
-                </label>
-                <select
-                  value={formData.plano}
-                  onChange={(e) => handleInputChange('plano', e.target.value)}
-                  className="w-full px-3 py-2 select-cyber"
-                >
-                  <option value="">Selecione um plano</option>
-                  {plans.map(plan => (
-                    <option key={plan.id} value={plan.name}>
-                      {plan.name} - R$ {plan.price}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Valor (R$) *
-                </label>
-                <input
-                  type="text"
-                  value={formData.valor ?? ''}
-                  onChange={(e) => handleCurrencyChange(e.target.value)}
-                  className={`w-full px-3 py-2 input-cyber ${
-                    errors.valor ? 'border-red-500' : ''
-                  }`}
-                  placeholder="0,00"
-                />
-                {errors.valor && (
-                  <p className="mt-1 text-sm text-red-400">{errors.valor}</p>
-                )}
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <CyberDateInput
-                value={formData.ativacao}
-                onChange={(value) => handleInputChange('ativacao', value)}
-                className={`w-full px-3 py-2 input-cyber ${errors.ativacao ? 'border-red-500' : ''}`}
-                label="Ativação *"
-                error={errors.ativacao}
-                calendar
-              />
-
-          <CyberDateInput
-            value={formData.vencimento}
-            onChange={(value) => handleInputChange('vencimento', value)}
-            className={`w-full px-3 py-2 input-cyber ${errors.vencimento ? 'border-red-500' : ''}`}
-            label="Vencimento *"
-            error={errors.vencimento}
-            calendar
-          />
-          {vencimentoSaved && !errors.vencimento && (
-            <div className="text-green-400 text-xs font-semibold">Data de vencimento atualizada</div>
-          )}
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-300 mb-2">
+            Plano
+          </label>
+          <select
+            value={formData.plano}
+            onChange={(e) => handleInputChange('plano', e.target.value)}
+            className="w-full px-3 py-2 select-cyber"
+          >
+            <option value="">Selecione um plano</option>
+            {plans.map(plan => (
+              <option key={plan.id} value={plan.name}>
+                {plan.name} - R$ {plan.price}
+              </option>
+            ))}
+          </select>
         </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Forma de Pagamento
-                </label>
-                <select
-                  value={formData.formaPagamento}
-                  onChange={(e) => handleInputChange('formaPagamento', e.target.value)}
-                  className="w-full px-3 py-2 select-cyber"
-                >
-                  <option value="">Selecione a forma de pagamento</option>
-                  {paymentMethods.map(method => (
-                    <option key={method} value={method}>{method}</option>
-                  ))}
-                </select>
-              </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-300 mb-2">
+            Valor (R$) *
+          </label>
+          <input
+            type="text"
+            value={formData.valor ?? ''}
+            onChange={(e) => handleCurrencyChange(e.target.value)}
+            className={`w-full px-3 py-2 input-cyber ${errors.valor ? 'border-red-500' : ''
+              }`}
+            placeholder="0,00"
+          />
+          {errors.valor && (
+            <p className="mt-1 text-sm text-red-400">{errors.valor}</p>
+          )}
+        </div>
+      </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Status do Pagamento
-                </label>
-                <select
-                  value={formData.statusPagamento}
-                  onChange={(e) => handleInputChange('statusPagamento', e.target.value)}
-                  className="w-full px-3 py-2 select-cyber"
-                >
-                  <option value="Pendente">Pendente</option>
-                  <option value="Pago">Pago</option>
-                </select>
-              </div>
-            </div>
+      <div className="grid grid-cols-2 gap-4">
+        <CyberDateInput
+          value={formData.ativacao}
+          onChange={(value) => handleInputChange('ativacao', value)}
+          className={`w-full px-3 py-2 input-cyber ${errors.ativacao ? 'border-red-500' : ''}`}
+          label="Ativação *"
+          error={errors.ativacao}
+          calendar
+        />
+
+        <CyberDateInput
+          value={formData.vencimento}
+          onChange={(value) => handleInputChange('vencimento', value)}
+          className={`w-full px-3 py-2 input-cyber ${errors.vencimento ? 'border-red-500' : ''}`}
+          label="Vencimento *"
+          error={errors.vencimento}
+          calendar
+        />
+        {vencimentoSaved && !errors.vencimento && (
+          <div className="text-green-400 text-xs font-semibold">Data de vencimento atualizada</div>
+        )}
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-300 mb-2">
+            Forma de Pagamento
+          </label>
+          <select
+            value={formData.formaPagamento}
+            onChange={(e) => handleInputChange('formaPagamento', e.target.value)}
+            className="w-full px-3 py-2 select-cyber"
+          >
+            <option value="">Selecione a forma de pagamento</option>
+            {paymentMethods.map(method => (
+              <option key={method} value={method}>{method}</option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-300 mb-2">
+            Status do Pagamento
+          </label>
+          <select
+            value={formData.statusPagamento}
+            onChange={(e) => handleInputChange('statusPagamento', e.target.value)}
+            className="w-full px-3 py-2 select-cyber"
+          >
+            <option value="Pendente">Pendente</option>
+            <option value="Pago">Pago</option>
+          </select>
+        </div>
+      </div>
     </div>
   );
 
   const renderConnectionSection = () => (
     <div className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="relative">
-                <label className="block text-sm font-medium text-gray-300 mb-2">Servidor</label>
-                <button type="button" onClick={() => { setServers(unique(getServers())); setOpenServerSelect(v => !v); }} className="w-full px-3 py-2 select-cyber flex items-center justify-between">
-                  <span>{formData.servidor || 'Selecione o servidor'}</span>
-                  <span>▾</span>
+      <div className="grid grid-cols-2 gap-4">
+        <div className="relative">
+          <label className="block text-sm font-medium text-gray-300 mb-2">Servidor</label>
+          <button type="button" onClick={() => { setServers(unique(getServers())); setOpenServerSelect(v => !v); }} className="w-full px-3 py-2 select-cyber flex items-center justify-between">
+            <span>{formData.servidor || 'Selecione o servidor'}</span>
+            <span>▾</span>
+          </button>
+          {openServerSelect && (
+            <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="absolute z-[60] mt-2 w-full rounded-xl p-2 max-h-52 overflow-auto shadow-xl border border-purple-500/50 bg-gradient-to-br from-[#0a0a0f] via-[#0a0a0f] to-[#0a0a0f]">
+              {servers.map(server => (
+                <button key={server} type="button" onClick={() => { handleInputChange('servidor', server); setOpenServerSelect(false); }} className="w-full text-left py-2 px-2 rounded hover:bg-[#12121a] transition text-white text-sm">
+                  {server}
                 </button>
-                {openServerSelect && (
-                  <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="absolute z-[60] mt-2 w-full rounded-xl p-2 max-h-52 overflow-auto shadow-xl border border-purple-500/50 bg-gradient-to-br from-[#0a0a0f] via-[#0a0a0f] to-[#0a0a0f]">
-                    {servers.map(server => (
-                      <button key={server} type="button" onClick={() => { handleInputChange('servidor', server); setOpenServerSelect(false); }} className="w-full text-left py-2 px-2 rounded hover:bg-[#12121a] transition text-white text-sm">
-                        {server}
-                      </button>
-                    ))}
-                  </motion.div>
-                )}
-                {formData.servidor && (
-                  <div className="mt-2 text-xs text-gray-300">
-                    <span className="inline-block mr-3">Custo: R$ {Number(getServerCostMap()[formData.servidor] || 0).toFixed(2)}</span>
-                    <span className="inline-block">Crédito: R$ {Number(getServerCreditPriceMap()[formData.servidor] || 0).toFixed(2)}</span>
-                  </div>
-                )}
-              </div>
+              ))}
+            </motion.div>
+          )}
+          {formData.servidor && (
+            <div className="mt-2 text-xs text-gray-300">
+              <span className="inline-block mr-3">Custo: R$ {Number(getServerCostMap()[formData.servidor] || 0).toFixed(2)}</span>
+              <span className="inline-block">Crédito: R$ {Number(getServerCreditPriceMap()[formData.servidor] || 0).toFixed(2)}</span>
+            </div>
+          )}
+        </div>
 
-              <div className="relative">
-                <label className="block text-sm font-medium text-gray-300 mb-2">Dispositivo</label>
-                <button type="button" onClick={() => { setDevices(unique(getDevices())); setOpenDeviceSelect(v => !v); }} className="w-full px-3 py-2 select-cyber flex items-center justify-between">
-                  <span>{formData.dispositivo || 'Selecione o dispositivo'}</span>
-                  <span>▾</span>
+        <div className="relative">
+          <label className="block text-sm font-medium text-gray-300 mb-2">Dispositivo</label>
+          <button type="button" onClick={() => { setDevices(unique(getDevices())); setOpenDeviceSelect(v => !v); }} className="w-full px-3 py-2 select-cyber flex items-center justify-between">
+            <span>{formData.dispositivo || 'Selecione o dispositivo'}</span>
+            <span>▾</span>
+          </button>
+          {openDeviceSelect && (
+            <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="absolute z-[60] mt-2 w-full rounded-xl p-2 max-h-52 overflow-auto shadow-xl border border-purple-500/50 bg-gradient-to-br from-[#0a0a0f] via-[#0a0a0f] to-[#0a0a0f]">
+              {devices.map(device => (
+                <button key={device} type="button" onClick={() => { handleInputChange('dispositivo', device); setOpenDeviceSelect(false); }} className="w-full text-left py-2 px-2 rounded hover:bg-[#12121a] transition text-white text-sm">
+                  {device}
                 </button>
-                {openDeviceSelect && (
-                  <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="absolute z-[60] mt-2 w-full rounded-xl p-2 max-h-52 overflow-auto shadow-xl border border-purple-500/50 bg-gradient-to-br from-[#0a0a0f] via-[#0a0a0f] to-[#0a0a0f]">
-                    {devices.map(device => (
-                      <button key={device} type="button" onClick={() => { handleInputChange('dispositivo', device); setOpenDeviceSelect(false); }} className="w-full text-left py-2 px-2 rounded hover:bg-[#12121a] transition text-white text-sm">
-                        {device}
-                      </button>
-                    ))}
-                  </motion.div>
-                )}
-              </div>
-            </div>
+              ))}
+            </motion.div>
+          )}
+        </div>
+      </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <div className="relative">
-                <label className="block text-sm font-medium text-gray-300 mb-2">Aplicativo</label>
-                <button type="button" onClick={() => { setApps(unique(getApplications())); setOpenAppSelect(v => !v); }} className="w-full px-3 py-2 select-cyber flex items-center justify-between">
-                  <span>{formData.aplicativo || 'Selecione o aplicativo'}</span>
-                  <span>▾</span>
+      <div className="grid grid-cols-2 gap-4">
+        <div className="relative">
+          <label className="block text-sm font-medium text-gray-300 mb-2">Aplicativo</label>
+          <button type="button" onClick={() => { setApps(unique(getApplications())); setOpenAppSelect(v => !v); }} className="w-full px-3 py-2 select-cyber flex items-center justify-between">
+            <span>{formData.aplicativo || 'Selecione o aplicativo'}</span>
+            <span>▾</span>
+          </button>
+          {openAppSelect && (
+            <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="absolute z-[60] mt-2 w-full rounded-xl p-2 max-h-52 overflow-auto shadow-xl border border-purple-500/50 bg-gradient-to-br from-[#0a0a0f] via-[#0a0a0f] to-[#0a0a0f]">
+              {apps.map(app => (
+                <button key={app} type="button" onClick={() => { handleInputChange('aplicativo', app); setOpenAppSelect(false); }} className="w-full text-left py-2 px-2 rounded hover:bg[#12121a] transition text-white text-sm">
+                  {app}
                 </button>
-                {openAppSelect && (
-                  <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="absolute z-[60] mt-2 w-full rounded-xl p-2 max-h-52 overflow-auto shadow-xl border border-purple-500/50 bg-gradient-to-br from-[#0a0a0f] via-[#0a0a0f] to-[#0a0a0f]">
-                    {apps.map(app => (
-                      <button key={app} type="button" onClick={() => { handleInputChange('aplicativo', app); setOpenAppSelect(false); }} className="w-full text-left py-2 px-2 rounded hover:bg[#12121a] transition text-white text-sm">
-                        {app}
-                      </button>
-                    ))}
-                  </motion.div>
-                )}
-              </div>
+              ))}
+            </motion.div>
+          )}
+        </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Endereço MAC
-                </label>
-                <input
-                  type="text"
-                  value={formData.macAddress}
-                  onChange={(e) => handleInputChange('macAddress', e.target.value)}
-                  className="w-full px-3 py-2 input-cyber"
-                  placeholder="XX:XX:XX:XX:XX:XX"
-                  maxLength={17}
-                />
-              </div>
-            </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-300 mb-2">
+            Endereço MAC
+          </label>
+          <input
+            type="text"
+            value={formData.macAddress}
+            onChange={(e) => handleInputChange('macAddress', e.target.value)}
+            className="w-full px-3 py-2 input-cyber"
+            placeholder="XX:XX:XX:XX:XX:XX"
+            maxLength={17}
+          />
+        </div>
+      </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
-                Chave do Dispositivo
-              </label>
-              <input
-                type="text"
-                value={formData.chaveDispositivo}
-                onChange={(e) => handleInputChange('chaveDispositivo', e.target.value)}
-                className="w-full px-3 py-2 input-cyber"
-                placeholder="Chave do dispositivo"
-              />
-            </div>
+      <div>
+        <label className="block text-sm font-medium text-gray-300 mb-2">
+          Chave do Dispositivo
+        </label>
+        <input
+          type="text"
+          value={formData.chaveDispositivo}
+          onChange={(e) => handleInputChange('chaveDispositivo', e.target.value)}
+          className="w-full px-3 py-2 input-cyber"
+          placeholder="Chave do dispositivo"
+        />
+      </div>
 
-            <div className="relative bg-gradient-to-br from-purple-900/10 to-cyan-900/10 rounded-xl p-1 border border-purple-500/30">
-              <div className="bg-black/40 rounded-lg p-4">
-                <label className="block text-sm font-semibold text-gray-300 mb-3">
-                  Lista M3U
-                </label>
-                <textarea
-                value={formData.listaM3U ?? ''}
-                  onChange={(e) => handleInputChange('listaM3U', e.target.value)}
-                  rows={4}
-                  className="w-full px-4 py-3 bg-black/50 text-white rounded-lg border-2 border-transparent focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/50 focus:bg-black/70 resize-none transition-all duration-300 placeholder-gray-500"
-                  placeholder="URL da lista M3U"
-                />
-              </div>
-            </div>
+      <div className="relative bg-gradient-to-br from-purple-900/10 to-cyan-900/10 rounded-xl p-1 border border-purple-500/30">
+        <div className="bg-black/40 rounded-lg p-4">
+          <label className="block text-sm font-semibold text-gray-300 mb-3">
+            Lista M3U
+          </label>
+          <textarea
+            value={formData.listaM3U ?? ''}
+            onChange={(e) => handleInputChange('listaM3U', e.target.value)}
+            rows={4}
+            className="w-full px-4 py-3 bg-black/50 text-white rounded-lg border-2 border-transparent focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/50 focus:bg-black/70 resize-none transition-all duration-300 placeholder-gray-500"
+            placeholder="URL da lista M3U"
+          />
+        </div>
+      </div>
     </div>
   );
 
@@ -692,7 +687,7 @@ const CyberClientForm: React.FC<CyberClientFormProps> = ({
       initial={false}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[200] flex items-center justify-center p-4"
       onClick={onClose}
     >
       <motion.div
@@ -736,33 +731,30 @@ const CyberClientForm: React.FC<CyberClientFormProps> = ({
             <button
               type="button"
               onClick={() => setActiveTab('main')}
-              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
-                activeTab === 'main'
+              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${activeTab === 'main'
                   ? 'bg-cyan-500/20 text-cyan-400'
                   : 'text-gray-400 hover:text-white'
-              }`}
+                }`}
             >
               Dados Principais
             </button>
             <button
               type="button"
               onClick={() => setActiveTab('subscription')}
-              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
-                activeTab === 'subscription'
+              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${activeTab === 'subscription'
                   ? 'bg-cyan-500/20 text-cyan-400'
                   : 'text-gray-400 hover:text-white'
-              }`}
+                }`}
             >
               Assinatura
             </button>
             <button
               type="button"
               onClick={() => setActiveTab('connection')}
-              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
-                activeTab === 'connection'
+              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${activeTab === 'connection'
                   ? 'bg-cyan-500/20 text-cyan-400'
                   : 'text-gray-400 hover:text-white'
-              }`}
+                }`}
             >
               Conexão
             </button>
