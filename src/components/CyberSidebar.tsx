@@ -66,9 +66,12 @@ export const CyberSidebar: React.FC<CyberSidebarProps> = ({ currentView, setCurr
       {/* Render Profile Modal */}
       {showProfileModal && <CyberProfileModal onClose={() => setShowProfileModal(false)} />}
 
-      <div className={`fixed left-0 top-0 h-full background-cyber border-r border-purple-500/20 z-[100] transition-all duration-300 flex flex-col
+      <div className={`
+        fixed md:relative inset-y-0 left-0 z-[100]
+        w-64 h-full
+        glass border-r border-purple-500/20 flex flex-col
+        transition-all duration-300
         ${isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
-        w-64
       `}>
         {/* Mobile Close Button */}
         <div className="md:hidden flex justify-end p-4">
