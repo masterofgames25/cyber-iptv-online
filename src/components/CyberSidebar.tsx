@@ -1,15 +1,16 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { 
-  HomeIcon, 
-  UsersIcon, 
+import {
+  HomeIcon,
+  UsersIcon,
   MegaphoneIcon,
   ChartBarIcon,
   Cog6ToothIcon,
   CurrencyDollarIcon,
   BanknotesIcon,
   UserGroupIcon,
-  BeakerIcon
+  BeakerIcon,
+  ArrowDownTrayIcon
 } from '@heroicons/react/24/outline';
 
 interface CyberSidebarProps {
@@ -31,9 +32,9 @@ export const CyberSidebar: React.FC<CyberSidebarProps> = ({ currentView, setCurr
   ];
 
   return (
-    <div className="w-64 min-h-screen glass border-r border-purple-500/20 p-6">
+    <div className="w-64 min-h-screen glass border-r border-purple-500/20 p-6 flex flex-col">
       <div className="mb-8">
-        <motion.h1 
+        <motion.h1
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           className="text-2xl font-bold neon-text text-center mb-2"
@@ -42,12 +43,12 @@ export const CyberSidebar: React.FC<CyberSidebarProps> = ({ currentView, setCurr
         </motion.h1>
         <div className="h-px bg-gradient-to-r from-purple-500 to-pink-500"></div>
       </div>
-      
-      <nav className="space-y-3">
+
+      <nav className="space-y-3 flex-1 overflow-y-auto custom-scrollbar">
         {menuItems.map((item, index) => {
           const Icon = item.icon;
           const isActive = currentView === item.id;
-          
+
           return (
             <motion.button
               key={item.id}
@@ -59,8 +60,8 @@ export const CyberSidebar: React.FC<CyberSidebarProps> = ({ currentView, setCurr
               onClick={() => setCurrentView(item.id as any)}
               className={`
                 w-full flex items-center gap-4 p-4 rounded-xl transition-all duration-300
-                ${isActive 
-                  ? `bg-gradient-to-r ${item.color} text-white shadow-lg` 
+                ${isActive
+                  ? `bg-gradient-to-r ${item.color} text-white shadow-lg`
                   : 'glass text-gray-300 hover:text-white hover:bg-purple-500/20'
                 }
               `}
@@ -77,8 +78,9 @@ export const CyberSidebar: React.FC<CyberSidebarProps> = ({ currentView, setCurr
           );
         })}
       </nav>
-      
-      <div className="mt-auto pt-8">
+
+      <div className="mt-4 pt-4 border-t border-gray-800">
+        <InstallPrompt />
         <div className="glass rounded-xl p-4">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
@@ -90,6 +92,42 @@ export const CyberSidebar: React.FC<CyberSidebarProps> = ({ currentView, setCurr
         </div>
       </div>
     </div>
+  );
+};
+
+const InstallPrompt: React.FC = () => {
+  const [deferredPrompt, setDeferredPrompt] = React.useState<any>(null);
+
+  React.useEffect(() => {
+    const handler = (e: any) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
+    window.addEventListener('beforeinstallprompt', handler);
+    return () => window.removeEventListener('beforeinstallprompt', handler);
+  }, []);
+
+  const handleInstall = async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === 'accepted') {
+      setDeferredPrompt(null);
+    }
+  };
+
+  if (!deferredPrompt) return null;
+
+  return (
+    <motion.button
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      onClick={handleInstall}
+      className="w-full mb-4 p-3 rounded-xl bg-gradient-to-r from-cyan-600 to-blue-600 text-white font-bold shadow-[0_0_15px_rgba(8,145,178,0.5)] flex items-center justify-center gap-2 group"
+    >
+      <ArrowDownTrayIcon className="w-5 h-5 group-hover:animate-bounce" />
+      <span className="text-sm">INSTALAR APP</span>
+    </motion.button>
   );
 };
 
