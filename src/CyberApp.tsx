@@ -30,6 +30,7 @@ const CyberApp: React.FC = () => {
   const { user, loading: authLoading } = useAuth();
   const [currentView, setCurrentView] = useState<ViewType>('dashboard');
   const [isLoading, setIsLoading] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { notifySystemUpdate, notifyPaymentReceived, notifySubscriptionExpiring, notifyError, notifyNewLead } = useRealTimeNotifications();
 
   useEffect(() => {
@@ -107,10 +108,7 @@ const CyberApp: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen cyber-background text-white overflow-hidden relative">
-      {/* Cyberpunk Background Effects */}
-
-
+    <div className="min-h-screen cyber-background text-white overflow-hidden relative font-sans">
       {/* Loading Screen */}
       <AnimatePresence>
         {isLoading && (
@@ -118,27 +116,46 @@ const CyberApp: React.FC = () => {
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
-            className="fixed inset-0 cyber-background flex items-center justify-center z-50"
+            className="fixed inset-0 cyber-background flex items-center justify-center z-[100]"
           >
             <CyberpunkLoader size="lg" text="INICIANDO SISTEMA NEURAL..." color="#00FFFF" />
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Main Content */}
-      {!isLoading && (
-        <div className="flex relative z-10">
-          {/* Sidebar Cyberpunk */}
-          <CyberSidebar currentView={currentView} setCurrentView={setCurrentView} />
+      <div className="flex flex-col md:flex-row h-screen overflow-hidden relative z-10">
 
-          {/* Conteúdo Principal */}
-          <div className="flex-1 p-6">
-            {renderContent()}
+        {/* Mobile Header */}
+        <div className="md:hidden flex items-center justify-between p-4 glass border-b border-purple-500/20 z-40 shrink-0">
+          <div className="flex items-center gap-2">
+            <span className="text-xl font-bold neon-text">⚡ CYBER IPTV</span>
           </div>
+          <button
+            onClick={() => setIsSidebarOpen(true)}
+            className="p-2 text-cyan-400 hover:text-white transition-colors"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+          </button>
         </div>
-      )}
 
+        {/* Sidebar Cyberpunk - Responsive Wrapper */}
+        <CyberSidebar
+          currentView={currentView}
+          setCurrentView={(view) => {
+            setCurrentView(view);
+            setIsSidebarOpen(false); // Close sidebar on selection (mobile)
+          }}
+          isOpen={isSidebarOpen}
+          onClose={() => setIsSidebarOpen(false)}
+        />
 
+        {/* Conteúdo Principal */}
+        <div className="flex-1 overflow-y-auto overflow-x-hidden p-4 md:p-6 w-full relative">
+          {renderContent()}
+        </div>
+      </div>
 
       {/* Notification Center */}
       <CyberpunkNotificationCenter position="top-right" />

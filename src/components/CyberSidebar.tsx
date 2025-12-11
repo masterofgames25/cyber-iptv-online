@@ -16,9 +16,11 @@ import {
 interface CyberSidebarProps {
   currentView: 'dashboard' | 'clients' | 'leads' | 'billing' | 'financial' | 'resellers' | 'reports' | 'tests' | 'settings';
   setCurrentView: (view: 'dashboard' | 'clients' | 'leads' | 'billing' | 'financial' | 'resellers' | 'reports' | 'tests' | 'settings') => void;
+  isOpen?: boolean;
+  onClose?: () => void;
 }
 
-export const CyberSidebar: React.FC<CyberSidebarProps> = ({ currentView, setCurrentView }) => {
+export const CyberSidebar: React.FC<CyberSidebarProps> = ({ currentView, setCurrentView, isOpen = false, onClose }) => {
   const menuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: HomeIcon, color: 'from-purple-500 to-pink-500' },
     { id: 'clients', label: 'Clientes', icon: UsersIcon, color: 'from-cyan-500 to-blue-500' },
@@ -32,66 +34,91 @@ export const CyberSidebar: React.FC<CyberSidebarProps> = ({ currentView, setCurr
   ];
 
   return (
-    <div className="w-64 min-h-screen glass border-r border-purple-500/20 p-6 flex flex-col">
-      <div className="mb-8">
-        <motion.h1
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="text-2xl font-bold neon-text text-center mb-2"
+    <>
+      {/* Mobile Backdrop */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black/80 backdrop-blur-sm z-40 md:hidden"
+          onClick={onClose}
+        />
+      )}
+
+      {/* Sidebar Container */}
+      <div className={`
+        fixed md:relative inset-y-0 left-0 z-50
+        w-64 h-full
+        glass border-r border-purple-500/20 p-6 flex flex-col
+        transform transition-transform duration-300 ease-in-out
+        ${isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+      `}>
+
+        {/* Mobile Close Button */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 p-2 text-gray-400 hover:text-white md:hidden"
         >
-          ⚡ CYBER IPTV
-        </motion.h1>
-        <div className="h-px bg-gradient-to-r from-purple-500 to-pink-500"></div>
-      </div>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
 
-      <nav className="space-y-3 flex-1 overflow-y-auto custom-scrollbar">
-        {menuItems.map((item, index) => {
-          const Icon = item.icon;
-          const isActive = currentView === item.id;
+        <div className="mb-8 mt-2 md:mt-0">
+          <motion.h1
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="text-2xl font-bold neon-text text-center mb-2"
+          >
+            ⚡ CYBER
+          </motion.h1>
+          <div className="h-px bg-gradient-to-r from-purple-500 to-pink-500"></div>
+        </div>
 
-          return (
-            <motion.button
-              key={item.id}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.1 }}
-              whileHover={{ scale: 1.02, x: 5 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={() => setCurrentView(item.id as any)}
-              className={`
-                w-full flex items-center gap-4 p-4 rounded-xl transition-all duration-300
-                ${isActive
-                  ? `bg-gradient-to-r ${item.color} text-white shadow-lg`
-                  : 'glass text-gray-300 hover:text-white hover:bg-purple-500/20'
-                }
-              `}
-            >
-              <Icon className="w-6 h-6" />
-              <span className="font-semibold">{item.label}</span>
-              {isActive && (
-                <motion.div
-                  layoutId="activeIndicator"
-                  className="ml-auto w-2 h-2 bg-cyan-400 rounded-full shadow-lg shadow-cyan-400/50"
-                />
-              )}
-            </motion.button>
-          );
-        })}
-      </nav>
+        <nav className="space-y-3 flex-1 overflow-y-auto custom-scrollbar">
+          {menuItems.map((item, index) => {
+            const Icon = item.icon;
+            const isActive = currentView === item.id;
 
-      <div className="mt-4 pt-4 border-t border-gray-800">
-        <InstallPrompt />
-        <div className="glass rounded-xl p-4">
-          <div className="flex items-center gap-3 mb-3">
-            <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-            <span className="text-sm text-gray-400">Sistema Online</span>
-          </div>
-          <div className="text-xs text-gray-500">
-            Versão Cyberpunk 1.0
+            return (
+              <motion.button
+                key={item.id}
+                whileHover={{ scale: 1.02, x: 5 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => setCurrentView(item.id as any)}
+                className={`
+                  w-full flex items-center gap-4 p-4 rounded-xl transition-all duration-300
+                  ${isActive
+                    ? `bg-gradient-to-r ${item.color} text-white shadow-lg`
+                    : 'glass text-gray-300 hover:text-white hover:bg-purple-500/20'
+                  }
+                `}
+              >
+                <Icon className="w-6 h-6 shrink-0" />
+                <span className="font-semibold">{item.label}</span>
+                {isActive && (
+                  <motion.div
+                    layoutId="activeIndicator"
+                    className="ml-auto w-2 h-2 bg-cyan-400 rounded-full shadow-lg shadow-cyan-400/50"
+                  />
+                )}
+              </motion.button>
+            );
+          })}
+        </nav>
+
+        <div className="mt-4 pt-4 border-t border-gray-800">
+          <InstallPrompt />
+          <div className="glass rounded-xl p-4">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+              <span className="text-sm text-gray-400">Sistema Online</span>
+            </div>
+            <div className="text-xs text-gray-500">
+              Versão Cyberpunk 1.1
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
