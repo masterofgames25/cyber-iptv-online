@@ -165,12 +165,12 @@ const CyberBillingManager: React.FC<CyberBillingManagerProps> = () => {
           <table className="w-full">
             <thead className="cyber-table thead">
               <tr>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Cliente</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Plano</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Valor</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Vencimento</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Status</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Ações</th>
+                <th className="px-2 py-2 md:px-4 md:py-3 text-left text-[10px] md:text-xs font-medium text-gray-400 uppercase tracking-wider">Cliente</th>
+                <th className="hidden md:table-cell px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Plano</th>
+                <th className="px-2 py-2 md:px-4 md:py-3 text-left text-[10px] md:text-xs font-medium text-gray-400 uppercase tracking-wider">Valor</th>
+                <th className="px-2 py-2 md:px-4 md:py-3 text-left text-[10px] md:text-xs font-medium text-gray-400 uppercase tracking-wider">Vencimento</th>
+                <th className="px-2 py-2 md:px-4 md:py-3 text-left text-[10px] md:text-xs font-medium text-gray-400 uppercase tracking-wider">Status</th>
+                <th className="px-2 py-2 md:px-4 md:py-3 text-left text-[10px] md:text-xs font-medium text-gray-400 uppercase tracking-wider">Ações</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-white/10">
@@ -185,16 +185,16 @@ const CyberBillingManager: React.FC<CyberBillingManagerProps> = () => {
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.1 }}
                   >
-                    <td className="px-4 py-4">
+                    <td className="px-2 py-2 md:px-4 md:py-4">
                       <div>
-                        <div className="text-sm font-medium text-white">{client.nome}</div>
-                        <div className="text-xs text-gray-400">{formatPhone(client.whatsapp)}</div>
+                        <div className="text-[10px] md:text-sm font-medium text-white">{client.nome}</div>
+                        <div className="text-[10px] md:text-xs text-gray-400">{formatPhone(client.whatsapp)}</div>
                       </div>
                     </td>
-                    <td className="px-4 py-4 text-sm text-gray-400">{client.plano}</td>
-                    <td className="px-4 py-4 text-sm text-green-400">{formatCurrency(parseFloat(client.valor.toString()) || 0)}</td>
-                    <td className="px-4 py-4 text-sm text-gray-400">{formatDateStringForDisplay(client.vencimento)}</td>
-                    <td className="px-4 py-4">
+                    <td className="hidden md:table-cell px-4 py-4 text-sm text-gray-400">{client.plano}</td>
+                    <td className="px-2 py-2 md:px-4 md:py-4 text-[10px] md:text-sm text-green-400">{formatCurrency(parseFloat(client.valor.toString()) || 0)}</td>
+                    <td className="px-2 py-2 md:px-4 md:py-4 text-[10px] md:text-sm text-gray-400">{formatDateStringForDisplay(client.vencimento)}</td>
+                    <td className="px-2 py-2 md:px-4 md:py-4">
                       <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${expirationInfo.borderColor} ${expirationInfo.bgColor} ${expirationInfo.color}`}>
                         {expirationInfo.text}
                       </span>
@@ -204,7 +204,7 @@ const CyberBillingManager: React.FC<CyberBillingManagerProps> = () => {
                         </span>
                       )}
                     </td>
-                    <td className="px-4 py-4">
+                    <td className="px-2 py-2 md:px-4 md:py-4">
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => openWhatsApp(client, 'standard')}
