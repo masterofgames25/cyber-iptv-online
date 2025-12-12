@@ -1010,28 +1010,7 @@ export default function CyberSystemSettings() {
             </button>
           </motion.div>
 
-          {/* Garantir Padrões Essenciais */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="bg-black/30 border border-gray-600 rounded-xl p-6 hover:border-purple-500/50 transition-all duration-300"
-          >
-            <div className="flex items-center mb-4">
-              <CheckCircleIcon className="h-6 w-6 text-purple-400 mr-3" />
-              <h3 className="text-lg font-semibold text-white">Garantir Padrões Essenciais</h3>
-            </div>
-            <p className="text-gray-400 text-sm mb-4">
-              Garante que todos os padrões essenciais do sistema estejam configurados.
-            </p>
-            <button
-              onClick={ensureDefaultConfigs}
-              className="w-full px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-medium rounded hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 flex items-center justify-center"
-            >
-              <CheckCircleIcon className="h-4 w-4 mr-2" />
-              Garantir Padrões
-            </button>
-          </motion.div>
+
         </div>
       </motion.div>
 
