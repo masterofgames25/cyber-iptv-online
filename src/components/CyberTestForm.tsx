@@ -125,26 +125,32 @@ const CyberTestForm: React.FC<CyberTestFormProps> = ({ onTestCreated, onTestUpda
       return;
     }
 
-    const newTest = await addTest(payload);
+    try {
+      const newTest = await addTest(payload);
 
-    // Reset form
-    const now = new Date();
-    const resetDateBR = `${pad(now.getDate())}/${pad(now.getMonth() + 1)}/${now.getFullYear()}`;
-    const resetTime = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
-    setFormData({
-      clientName: '',
-      whatsapp: '',
-      server: servers[0] || '',
-      startDateBR: resetDateBR,
-      startTime: resetTime,
-      durationHours: 3,
-      notes: ''
-    });
+      // Reset form
+      const now = new Date();
+      const resetDateBR = `${pad(now.getDate())}/${pad(now.getMonth() + 1)}/${now.getFullYear()}`;
+      const resetTime = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
+      setFormData({
+        clientName: '',
+        whatsapp: '',
+        server: servers[0] || '',
+        startDateBR: resetDateBR,
+        startTime: resetTime,
+        durationHours: 3,
+        notes: ''
+      });
 
-    setIsSubmitting(false);
-    
-    // Notify parent
-    if (onTestCreated) onTestCreated(newTest);
+      setIsSubmitting(false);
+
+      // Notify parent
+      if (onTestCreated) onTestCreated(newTest);
+    } catch (err) {
+      console.error('Erro ao criar teste:', err);
+      alert('Erro ao criar teste. Verifique as permissões do banco de dados.');
+      setIsSubmitting(false);
+    }
   };
 
   const handleQuickTest = (hours: number) => {
@@ -201,25 +207,25 @@ const CyberTestForm: React.FC<CyberTestFormProps> = ({ onTestCreated, onTestUpda
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="block text-gray-400 text-sm mb-2">WhatsApp{test ? ' (opcional)' : ''}</label>
-          <input
-            type="text"
-            required={!test}
-            value={formData.whatsapp}
-            onChange={(e) => handleWhatsAppChange(e.target.value)}
-            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-cyan-400 focus:outline-none cyberpunk-input"
-            placeholder="Ex: 5511999999999 ou +351..."
-            tabIndex={-1}
-          />
+            <input
+              type="text"
+              required={!test}
+              value={formData.whatsapp}
+              onChange={(e) => handleWhatsAppChange(e.target.value)}
+              className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-cyan-400 focus:outline-none cyberpunk-input"
+              placeholder="Ex: 5511999999999 ou +351..."
+              tabIndex={-1}
+            />
           </div>
           <div>
             <label className="block text-gray-400 text-sm mb-2">Servidor</label>
-          <select
-            aria-hidden="true"
-            value={formData.server}
-            onChange={(e) => { setFormData({ ...formData, server: e.target.value }); setValidated(null); }}
-            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-cyan-400 focus:outline-none cyberpunk-input"
-            tabIndex={-1}
-          >
+            <select
+              aria-hidden="true"
+              value={formData.server}
+              onChange={(e) => { setFormData({ ...formData, server: e.target.value }); setValidated(null); }}
+              className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-cyan-400 focus:outline-none cyberpunk-input"
+              tabIndex={-1}
+            >
               {servers.length === 0 && <option value="">Nenhum servidor cadastrado</option>}
               {servers.map((s) => (
                 <option key={s} value={s}>{s}</option>
@@ -231,85 +237,85 @@ const CyberTestForm: React.FC<CyberTestFormProps> = ({ onTestCreated, onTestUpda
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
             <label className="block text-gray-400 text-sm mb-2">Início (data)</label>
-          <input
-            type="text"
-            required
-            value={formData.startDateBR}
-            onChange={(e) => setFormData({ ...formData, startDateBR: e.target.value })}
-            placeholder="dd/mm/aaaa"
-            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-cyan-400 focus:outline-none cyberpunk-input"
-            tabIndex={-1}
-          />
+            <input
+              type="text"
+              required
+              value={formData.startDateBR}
+              onChange={(e) => setFormData({ ...formData, startDateBR: e.target.value })}
+              placeholder="dd/mm/aaaa"
+              className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-cyan-400 focus:outline-none cyberpunk-input"
+              tabIndex={-1}
+            />
           </div>
           <div>
             <label className="block text-gray-400 text-sm mb-2">Hora</label>
-          <input
-            type="text"
-            required
-            value={formData.startTime}
-            onChange={(e) => setFormData({ ...formData, startTime: e.target.value })}
-            placeholder="HH:mm"
-            inputMode="numeric"
-            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-cyan-400 focus:outline-none cyberpunk-input"
-            tabIndex={-1}
-          />
+            <input
+              type="text"
+              required
+              value={formData.startTime}
+              onChange={(e) => setFormData({ ...formData, startTime: e.target.value })}
+              placeholder="HH:mm"
+              inputMode="numeric"
+              className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-cyan-400 focus:outline-none cyberpunk-input"
+              tabIndex={-1}
+            />
           </div>
           <div>
             <label className="block text-gray-400 text-sm mb-2">Duração (horas)</label>
-          <input
-            type="number"
-            min={1}
-            max={24}
-            required
-            value={formData.durationHours}
-            onChange={(e) => setFormData({ ...formData, durationHours: Number(e.target.value) })}
-            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-cyan-400 focus:outline-none cyberpunk-input"
-            tabIndex={-1}
-          />
+            <input
+              type="number"
+              min={1}
+              max={24}
+              required
+              value={formData.durationHours}
+              onChange={(e) => setFormData({ ...formData, durationHours: Number(e.target.value) })}
+              className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-cyan-400 focus:outline-none cyberpunk-input"
+              tabIndex={-1}
+            />
           </div>
         </div>
 
         <div>
           <label className="block text-gray-400 text-sm mb-2">Duração Rápida</label>
           <div className="flex gap-2">
-          <motion.button
-            type="button"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => handleQuickTest(1)}
-            className="px-3 py-1 bg-gray-700 hover:bg-gray-600 text-white rounded text-sm transition-colors"
-            tabIndex={-1}
-          >
+            <motion.button
+              type="button"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => handleQuickTest(1)}
+              className="px-3 py-1 bg-gray-700 hover:bg-gray-600 text-white rounded text-sm transition-colors"
+              tabIndex={-1}
+            >
               1h
             </motion.button>
-          <motion.button
-            type="button"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => handleQuickTest(3)}
-            className="px-3 py-1 bg-gray-700 hover:bg-gray-600 text-white rounded text-sm transition-colors"
-            tabIndex={-1}
-          >
+            <motion.button
+              type="button"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => handleQuickTest(3)}
+              className="px-3 py-1 bg-gray-700 hover:bg-gray-600 text-white rounded text-sm transition-colors"
+              tabIndex={-1}
+            >
               3h
             </motion.button>
-          <motion.button
-            type="button"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => handleQuickTest(6)}
-            className="px-3 py-1 bg-gray-700 hover:bg-gray-600 text-white rounded text-sm transition-colors"
-            tabIndex={-1}
-          >
+            <motion.button
+              type="button"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => handleQuickTest(6)}
+              className="px-3 py-1 bg-gray-700 hover:bg-gray-600 text-white rounded text-sm transition-colors"
+              tabIndex={-1}
+            >
               6h
             </motion.button>
-          <motion.button
-            type="button"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => handleQuickTest(12)}
-            className="px-3 py-1 bg-gray-700 hover:bg-gray-600 text-white rounded text-sm transition-colors"
-            tabIndex={-1}
-          >
+            <motion.button
+              type="button"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => handleQuickTest(12)}
+              className="px-3 py-1 bg-gray-700 hover:bg-gray-600 text-white rounded text-sm transition-colors"
+              tabIndex={-1}
+            >
               12h
             </motion.button>
           </div>
