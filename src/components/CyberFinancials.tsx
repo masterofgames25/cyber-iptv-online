@@ -109,7 +109,7 @@ const CyberFinancials: React.FC<CyberFinancialsProps> = () => {
     return filtered;
   }, [revenueLog, selectedPeriod, selectedRevenueType]);
 
-  // Calculate financial metrics
+  /* Metrics calculation with fallback logic for expenses */
   const metrics = useMemo(() => {
     if (!revenueLog || !Array.isArray(revenueLog)) {
       return {
@@ -121,9 +121,27 @@ const CyberFinancials: React.FC<CyberFinancialsProps> = () => {
         totalTransactions: 0
       };
     }
+
+    // Get cost map for fallback calculation (if snapshot is missing)
+    const costMap = getServerCostMap();
+
     const committedRevenue = (revenueLog || []).filter((item: any) => item?.status !== 'reverted');
     const totalRevenue = committedRevenue.reduce((sum, item) => sum + (item?.amount || 0), 0);
-    const totalExpenses = committedRevenue.reduce((sum: number, item: any) => sum + Number(item?.costSnapshot || 0), 0);
+
+    // Enhanced expense calculation with fallback
+    const totalExpenses = committedRevenue.reduce((sum: number, item: any) => {
+      let expense = Number(item?.costSnapshot || 0);
+
+      // If snapshot is 0 or missing, try to calculate from current client data
+      if (expense === 0 && item.clientId) {
+        const client = clients.find(c => c.id === item.clientId);
+        if (client && client.servidor) {
+          expense = costMap[client.servidor] ?? 0;
+        }
+      }
+      return sum + expense;
+    }, 0);
+
     const netProfit = totalRevenue - totalExpenses;
     const monthlyRevenue = committedRevenue
       .filter(item => {
